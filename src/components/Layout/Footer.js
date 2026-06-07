@@ -1,0 +1,240 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './Footer.css';
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState('');
+  const [toastMsg, setToastMsg] = useState('');
+  const [toastType, setToastType] = useState('success');
+  const [showToast, setShowToast] = useState(false);
+
+  const showToastNotification = (msg, type = 'success') => {
+    setToastMsg(msg);
+    setToastType(type);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 4000);
+  };
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email.trim()) {
+      showToastNotification('Please enter your email address.', 'error');
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      showToastNotification('Please enter a valid email address.', 'error');
+      return;
+    }
+    showToastNotification('🙏 Subscribed! Ganpati Bappa Morya!', 'success');
+    setEmail('');
+  };
+
+  const quickLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'About Us', path: '/about-us' },
+    { name: 'Committee', path: '/committee' },
+    { name: 'Ganeshotsav', path: '/ganeshotsav' },
+    { name: 'Events', path: '/events' },
+    { name: 'Gallery', path: '/gallery' },
+    { name: 'News', path: '/news' },
+    { name: 'Contact Us', path: '/contact-us' }
+  ];
+
+  const services = [
+    { name: 'Volunteer Registration', path: '/devotee-services/volunteer' },
+    { name: 'Seva Registration', path: '/devotee-services/seva' },
+    { name: 'Donate Online', path: '/donations' },
+    { name: 'Competition Entry', path: '/devotee-services/competition' },
+    { name: 'Feedback', path: '/devotee-services/feedback' },
+    { name: 'Social Activities', path: '/social-activities' }
+  ];
+
+  const socialLinks = [
+    { icon: 'fab fa-facebook-f', url: 'https://facebook.com/dongricharaja', color: '#1877F2', label: 'Facebook' },
+    { icon: 'fab fa-instagram', url: 'https://instagram.com/dongricharaja', color: '#E4405F', label: 'Instagram' },
+    { icon: 'fab fa-youtube', url: 'https://youtube.com/dongricharaja', color: '#FF0000', label: 'YouTube' },
+    { icon: 'fab fa-twitter', url: 'https://twitter.com/dongricharaja', color: '#1DA1F2', label: 'Twitter' },
+    { icon: 'fab fa-whatsapp', url: 'https://wa.me/919876543210', color: '#25D366', label: 'WhatsApp' },
+    { icon: 'fab fa-telegram', url: 'https://t.me/dongricharaja', color: '#26A5E4', label: 'Telegram' }
+  ];
+
+  return (
+    <>
+      {/* Toast Notification */}
+      {showToast && (
+        <div className={`footer-toast footer-toast-${toastType}`} role="alert" aria-live="polite">
+          <i className={toastType === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'}></i>
+          <span>{toastMsg}</span>
+        </div>
+      )}
+
+      <footer className="footer" role="contentinfo">
+        {/* Top Wave */}
+        <div className="footer-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <div className="footer-inner">
+          <div className="container">
+            <div className="footer-grid">
+              {/* Brand Column */}
+              <div className="footer-section footer-brand">
+                <div className="footer-logo">
+                  <div className="footer-logo-icon">
+                    <i className="fas fa-om"></i>
+                  </div>
+                  <div>
+                    <h3>Dongri Cha Raja</h3>
+                    <p>Sarvajani Ganesh Utsav Mandal</p>
+                  </div>
+                </div>
+                <p className="footer-description">
+                  Serving devotees since 1974. Join us in celebrating the spirit of Ganeshotsav with devotion, culture, and unwavering community service.
+                </p>
+                <div className="social-links">
+                  {socialLinks.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      style={{ '--hover-color': social.color }}
+                      className="social-link"
+                    >
+                      <i className={social.icon}></i>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div className="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                  {quickLinks.map((link, index) => (
+                    <li key={index}>
+                      <Link to={link.path}>
+                        <i className="fas fa-chevron-right" aria-hidden="true"></i>
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Services */}
+              <div className="footer-section">
+                <h4>Devotee Services</h4>
+                <ul>
+                  {services.map((service, index) => (
+                    <li key={index}>
+                      <Link to={service.path}>
+                        <i className="fas fa-chevron-right" aria-hidden="true"></i>
+                        {service.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div className="footer-section">
+                <h4>Contact Info</h4>
+                <ul className="contact-info">
+                  <li>
+                    <div className="contact-icon">
+                      <i className="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                      <strong>Address</strong>
+                      <span>Dongri, Mumbai - 400009<br />Maharashtra, India</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="contact-icon">
+                      <i className="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                      <strong>Phone</strong>
+                      <a href="tel:+912223456789"><span>+91 22 2345 6789</span></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="contact-icon">
+                      <i className="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                      <strong>Email</strong>
+                      <a href="mailto:info@dongricharaja.org"><span>info@dongricharaja.org</span></a>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="contact-icon whatsapp-icon">
+                      <i className="fab fa-whatsapp"></i>
+                    </div>
+                    <div>
+                      <strong>WhatsApp</strong>
+                      <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"><span>+91 98765 43210</span></a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Newsletter */}
+            <div className="footer-newsletter">
+              <div className="newsletter-content">
+                <div className="newsletter-text">
+                  <i className="fas fa-bell newsletter-icon"></i>
+                  <div>
+                    <h4>Stay Connected with Bappa</h4>
+                    <p>Get updates on festivals, events, and community news delivered to your inbox.</p>
+                  </div>
+                </div>
+                <form className="newsletter-form" onSubmit={handleSubscribe} noValidate>
+                  <div className="newsletter-input-wrapper">
+                    <i className="fas fa-envelope newsletter-input-icon"></i>
+                    <input
+                      type="email"
+                      id="footer-newsletter-email"
+                      placeholder="Enter your email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      aria-label="Email address for newsletter"
+                    />
+                  </div>
+                  <button type="submit" className="btn-subscribe">
+                    Subscribe
+                    <i className="fas fa-paper-plane"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            {/* Bottom */}
+            <div className="footer-bottom">
+              <p>
+                <i className="fas fa-om footer-bottom-om"></i>
+                &copy; {currentYear} Dongri Cha Raja Sarvajani Ganesh Utsav Mandal. All rights reserved.
+              </p>
+              <div className="footer-bottom-links">
+                <Link to="/legal/privacy-policy">Privacy Policy</Link>
+                <span>·</span>
+                <Link to="/legal/terms">Terms &amp; Conditions</Link>
+                <span>·</span>
+                <Link to="/legal/refund-policy">Refund Policy</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+};
+
+export default Footer;

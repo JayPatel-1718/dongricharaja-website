@@ -1,0 +1,37 @@
+.home-page {
+  overflow-x: hidden;
+}
+
+/* Staggered section reveal — uses IntersectionObserver pattern via CSS */
+.home-page > section {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: sectionReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.home-page > section:nth-child(1)  { animation-delay: 0s; }
+.home-page > section:nth-child(2)  { animation-delay: 0.08s; }
+.home-page > section:nth-child(3)  { animation-delay: 0.12s; }
+.home-page > section:nth-child(4)  { animation-delay: 0.16s; }
+.home-page > section:nth-child(5)  { animation-delay: 0.2s; }
+.home-page > section:nth-child(6)  { animation-delay: 0.24s; }
+.home-page > section:nth-child(7)  { animation-delay: 0.28s; }
+.home-page > section:nth-child(8)  { animation-delay: 0.32s; }
+.home-page > section:nth-child(9)  { animation-delay: 0.36s; }
+.home-page > section:nth-child(10) { animation-delay: 0.4s; }
+
+@keyframes sectionReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .home-page > section {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

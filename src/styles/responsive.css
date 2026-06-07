@@ -1,0 +1,84 @@
+/* Breakpoints */
+/* sm: 640px */
+/* md: 768px */
+/* lg: 1024px */
+/* xl: 1280px */
+/* 2xl: 1536px */
+
+/* Mobile First - Base styles are for mobile */
+
+/* Tablet */
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+  
+  .container {
+    max-width: var(--container-md);
+  }
+  
+  .section {
+    padding: var(--spacing-20) 0;
+  }
+  
+  h1 { font-size: var(--text-6xl); }
+  h2 { font-size: var(--text-5xl); }
+  h3 { font-size: var(--text-3xl); }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-lg);
+  }
+  
+  .section {
+    padding: var(--spacing-24) 0;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-xl);
+  }
+}
+
+/* Mobile Specific Adjustments */
+@media (max-width: 767px) {
+  .section-title {
+    font-size: var(--text-3xl);
+  }
+  
+  .section-subtitle {
+    font-size: var(--text-base);
+  }
+  
+  .btn-lg {
+    padding: var(--spacing-3) var(--spacing-6);
+  }
+  
+  .hide-mobile {
+    display: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .footer,
+  .btn,
+  .donation-cta {
+    display: none;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .container {
+    max-width: 100%;
+    padding: 0;
+  }
+}

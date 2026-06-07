@@ -1,0 +1,119 @@
+:root {
+  /* Colors - Brand Colors (Elevated Royal Theme) */
+  --primary: #E68200; /* Richer Amber Gold */
+  --primary-dark: #B55D00;
+  --primary-light: #FFAC40;
+  --primary-bg: rgba(230, 130, 0, 0.08);
+  
+  --secondary: #8B0000; /* Deep Royal Crimson */
+  --secondary-dark: #5A0000;
+  --secondary-light: #B81D24;
+  
+  --cream: #FAF6F0; /* Elegant Ivory Cream - less yellow, more premium silk */
+  --cream-dark: #EDE5D9;
+  --cream-light: #FFFDFB;
+  
+  --red: #D32F2F;
+  --red-dark: #9A0007;
+  
+  /* Royal Background Layer (Deep dark contrast) */
+  --royal-dark: #120721;
+  --royal-indigo: #1C0A35;
+  --gold-glow: rgba(230, 130, 0, 0.3);
+  --crimson-glow: rgba(138, 0, 0, 0.25);
+  
+  --white: #FFFFFF;
+  --black: #1E1B18;
+  --gray-dark: #3E3B37;
+  --gray: #6B655F;
+  --gray-light: #E5DDD0;
+  --gray-lighter: #F4EFEB;
+  
+  /* Status Colors */
+  --success: #2E7D32;
+  --warning: #FFA000;
+  --error: #D32F2F;
+  --info: #1976D2;
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;
+  --radius-base: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 2.5rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-premium: 0 20px 40px -10px rgba(18, 7, 33, 0.12);
+  --shadow-gold-glow: 0 10px 30px -5px rgba(230, 130, 0, 0.25);
+  --shadow-crimson-glow: 0 10px 30px -5px rgba(138, 0, 0, 0.2);
+  --shadow-glass: 0 8px 32px 0 rgba(18, 7, 33, 0.06);
+  
+  /* Z-Indices */
+  --z-negative: -1;
+  --z-0: 0;
+  --z-10: 10;
+  --z-20: 20;
+  --z-30: 30;
+  --z-40: 40;
+  --z-50: 50;
+  --z-auto: auto;
+  
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-base: 250ms;
+  --transition-slow: 350ms;
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+}

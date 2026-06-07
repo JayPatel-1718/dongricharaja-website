@@ -1,0 +1,193 @@
+.announcements-section {
+  padding: var(--spacing-20) 0;
+  background: var(--cream-light);
+}
+
+/* ── Header ── */
+.announcements-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.ann-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-dark);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--spacing-2);
+}
+
+.ann-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--black);
+  margin: 0;
+}
+
+.btn-ann-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1.5px solid rgba(139, 0, 0, 0.3);
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-ann-all:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--white);
+}
+
+/* ── Grid ── */
+.announcements-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+}
+
+/* ── Card ── */
+.announcement-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  padding: var(--spacing-5);
+  background: var(--white);
+  border-radius: var(--radius-2xl);
+  border: 1.5px solid transparent;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Coloured top border per type */
+.ann-type-important { border-top: 4px solid #8B0000; }
+.ann-type-opportunity { border-top: 4px solid #E68200; }
+.ann-type-service { border-top: 4px solid #2E7D32; }
+.ann-type-donate { border-top: 4px solid #D84315; }
+
+.announcement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+/* ── Icon box ── */
+.ann-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ann-icon-box i {
+  font-size: 1.25rem;
+  color: var(--white);
+}
+
+.ann-icon-important { background: linear-gradient(135deg, #8B0000, #5A0000); }
+.ann-icon-opportunity { background: linear-gradient(135deg, #E68200, #B55D00); }
+.ann-icon-service { background: linear-gradient(135deg, #2E7D32, #1B5E20); }
+.ann-icon-donate { background: linear-gradient(135deg, #D84315, #BF360C); }
+
+/* ── Body ── */
+.ann-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ── Tag ── */
+.ann-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--spacing-2);
+  text-transform: uppercase;
+}
+
+.ann-tag-important { background: rgba(139,0,0,0.1); color: #8B0000; }
+.ann-tag-opportunity { background: rgba(230,130,0,0.12); color: #B55D00; }
+.ann-tag-service { background: rgba(46,125,50,0.1); color: #2E7D32; }
+.ann-tag-donate { background: rgba(216,67,21,0.1); color: #D84315; }
+
+/* ── Title / desc ── */
+.ann-card-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: var(--spacing-2);
+  line-height: 1.35;
+}
+
+.ann-desc {
+  font-size: var(--text-sm);
+  color: var(--gray);
+  line-height: 1.65;
+  margin-bottom: var(--spacing-3);
+  flex: 1;
+}
+
+/* ── Meta ── */
+.ann-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--text-xs);
+  color: var(--gray);
+  margin-top: auto;
+  padding-top: var(--spacing-3);
+  border-top: 1px solid var(--cream-dark);
+}
+
+.ann-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ann-meta i {
+  color: var(--primary);
+  width: 12px;
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .announcements-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .announcements-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .announcements-grid {
+    grid-template-columns: 1fr;
+  }
+}

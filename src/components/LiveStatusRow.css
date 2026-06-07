@@ -1,0 +1,24 @@
+.live-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(115deg, #FFF3E3, #FFFAF0);
+  border-radius: 28px;
+  padding: 20px 32px;
+  margin: 40px 0;
+}
+
+.status-icon {
+  color: #F67900;
+  font-size: 28px;
+}
+
+.live-title {
+  font-size: 1.2rem;
+  margin-right: 8px;
+}
+
+.watch-btn {
+  padding: 8px 22px;
+}

@@ -1,0 +1,206 @@
+.sponsors-section {
+  padding: var(--spacing-20) 0;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.sponsors-header {
+  text-align: center;
+  margin-bottom: var(--spacing-10);
+}
+
+.sponsors-header .section-eyebrow-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  color: var(--primary-dark);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: var(--spacing-2);
+  justify-content: center;
+}
+
+.sponsors-header .section-title-dark {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: var(--spacing-3);
+}
+
+.sponsors-subtitle {
+  color: var(--gray);
+  font-size: var(--text-base);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Ticker */
+.sponsors-ticker-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--spacing-10);
+  padding: var(--spacing-4) 0;
+}
+
+.sponsors-ticker-wrapper::before,
+.sponsors-ticker-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sponsors-ticker-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--cream), transparent);
+}
+
+.sponsors-ticker-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--cream), transparent);
+}
+
+.sponsors-ticker {
+  display: flex;
+  gap: var(--spacing-5);
+  animation: ticker 30s linear infinite;
+  width: max-content;
+}
+
+.sponsors-ticker:hover {
+  animation-play-state: paused;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.sponsor-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-6);
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  cursor: default;
+  min-width: 200px;
+}
+
+.sponsor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(230, 130, 0, 0.25);
+}
+
+.sponsor-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(230,130,0,0.08), rgba(230,130,0,0.04));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sponsor-icon i {
+  color: var(--sponsor-color, var(--primary));
+  font-size: var(--text-lg);
+}
+
+.sponsor-name {
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--black);
+  margin-bottom: 2px;
+}
+
+.sponsor-type {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  font-weight: 500;
+}
+
+/* CTA Box */
+.sponsor-cta-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-6);
+  padding: var(--spacing-8);
+  background: linear-gradient(135deg, var(--royal-indigo), var(--royal-dark));
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(230, 130, 0, 0.2);
+}
+
+.sponsor-cta-text {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-5);
+  flex: 1;
+}
+
+.sponsor-cta-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.sponsor-cta-text h3 {
+  font-size: var(--text-xl);
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: var(--spacing-2);
+}
+
+.sponsor-cta-text p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--text-sm);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.btn-become-sponsor {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  font-weight: 700;
+  font-size: var(--text-base);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(230, 130, 0, 0.4);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-become-sponsor:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(230, 130, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  .sponsor-cta-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .sponsor-cta-text {
+    flex-direction: column;
+    text-align: center;
+  }
+}
