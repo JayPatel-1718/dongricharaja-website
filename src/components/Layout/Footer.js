@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import './Footer.css';
 
 const Footer = () => {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState('');
   const [toastMsg, setToastMsg] = useState('');
@@ -19,36 +21,36 @@ const Footer = () => {
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (!email.trim()) {
-      showToastNotification('Please enter your email address.', 'error');
+      showToastNotification(t('footer.toastEmailReq'), 'error');
       return;
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
-      showToastNotification('Please enter a valid email address.', 'error');
+      showToastNotification(t('footer.toastEmailValid'), 'error');
       return;
     }
-    showToastNotification('🙏 Subscribed! Ganpati Bappa Morya!', 'success');
+    showToastNotification(t('footer.toastSuccess'), 'success');
     setEmail('');
   };
 
   const quickLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about-us' },
-    { name: 'Committee', path: '/committee' },
-    { name: 'Ganeshotsav', path: '/ganeshotsav' },
-    { name: 'Events', path: '/events' },
-    { name: 'Gallery', path: '/gallery' },
-    { name: 'News', path: '/news' },
-    { name: 'Contact Us', path: '/contact-us' }
+    { name: t('navbar.home'), path: '/' },
+    { name: t('navbar.aboutUs'), path: '/about-us' },
+    { name: t('navbar.committee'), path: '/committee' },
+    { name: t('navbar.ganeshotsav'), path: '/ganeshotsav' },
+    { name: t('navbar.events'), path: '/events' },
+    { name: t('navbar.gallery'), path: '/gallery' },
+    { name: t('navbar.news'), path: '/news' },
+    { name: t('navbar.contact'), path: '/contact-us' }
   ];
 
   const services = [
-    { name: 'Volunteer Registration', path: '/devotee-services/volunteer' },
-    { name: 'Seva Registration', path: '/devotee-services/seva' },
-    { name: 'Donate Online', path: '/donations' },
-    { name: 'Competition Entry', path: '/devotee-services/competition' },
-    { name: 'Feedback', path: '/devotee-services/feedback' },
-    { name: 'Social Activities', path: '/social-activities' }
+    { name: t('navbar.volunteerRegistration'), path: '/devotee-services/volunteer' },
+    { name: t('navbar.sevaRegistration'), path: '/devotee-services/seva' },
+    { name: t('navbar.donateOnline'), path: '/donations' },
+    { name: t('navbar.competitionEntry'), path: '/devotee-services/competition' },
+    { name: t('navbar.feedback'), path: '/devotee-services/feedback' },
+    { name: t('navbar.socialActivities'), path: '/social-activities' }
   ];
 
   const socialLinks = [
@@ -88,12 +90,12 @@ const Footer = () => {
                     <i className="fas fa-om"></i>
                   </div>
                   <div>
-                    <h3>Dongri Cha Raja</h3>
-                    <p>Sarvajani Ganesh Utsav Mandal</p>
+                    <h3>{t('logo.title')}</h3>
+                    <p>{t('logo.subtitle')}</p>
                   </div>
                 </div>
                 <p className="footer-description">
-                  Serving devotees since 1974. Join us in celebrating the spirit of Ganeshotsav with devotion, culture, and unwavering community service.
+                  {t('footer.desc')}
                 </p>
                 <div className="social-links">
                   {socialLinks.map((social, index) => (
@@ -114,7 +116,7 @@ const Footer = () => {
 
               {/* Quick Links */}
               <div className="footer-section">
-                <h4>Quick Links</h4>
+                <h4>{t('footer.quickLinks')}</h4>
                 <ul>
                   {quickLinks.map((link, index) => (
                     <li key={index}>
@@ -129,7 +131,7 @@ const Footer = () => {
 
               {/* Services */}
               <div className="footer-section">
-                <h4>Devotee Services</h4>
+                <h4>{t('footer.devoteeServices')}</h4>
                 <ul>
                   {services.map((service, index) => (
                     <li key={index}>
@@ -144,15 +146,22 @@ const Footer = () => {
 
               {/* Contact */}
               <div className="footer-section">
-                <h4>Contact Info</h4>
+                <h4>{t('footer.contactInfo')}</h4>
                 <ul className="contact-info">
                   <li>
                     <div className="contact-icon">
                       <i className="fas fa-map-marker-alt"></i>
                     </div>
                     <div>
-                      <strong>Address</strong>
-                      <span>Dongri, Mumbai - 400009<br />Maharashtra, India</span>
+                      <strong>{t('footer.address')}</strong>
+                      <span>
+                        {t('footer.addressValue').split('\n').map((line, idx) => (
+                          <React.Fragment key={idx}>
+                            {line}
+                            {idx < t('footer.addressValue').split('\n').length - 1 && <br />}
+                          </React.Fragment>
+                        ))}
+                      </span>
                     </div>
                   </li>
                   <li>
@@ -160,7 +169,7 @@ const Footer = () => {
                       <i className="fas fa-phone-alt"></i>
                     </div>
                     <div>
-                      <strong>Phone</strong>
+                      <strong>{t('footer.phone')}</strong>
                       <a href="tel:+912223456789"><span>+91 22 2345 6789</span></a>
                     </div>
                   </li>
@@ -169,7 +178,7 @@ const Footer = () => {
                       <i className="fas fa-envelope"></i>
                     </div>
                     <div>
-                      <strong>Email</strong>
+                      <strong>{t('footer.email')}</strong>
                       <a href="mailto:info@dongricharaja.org"><span>info@dongricharaja.org</span></a>
                     </div>
                   </li>
@@ -178,7 +187,7 @@ const Footer = () => {
                       <i className="fab fa-whatsapp"></i>
                     </div>
                     <div>
-                      <strong>WhatsApp</strong>
+                      <strong>{t('footer.whatsapp')}</strong>
                       <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer"><span>+91 98765 43210</span></a>
                     </div>
                   </li>
@@ -192,8 +201,8 @@ const Footer = () => {
                 <div className="newsletter-text">
                   <i className="fas fa-bell newsletter-icon"></i>
                   <div>
-                    <h4>Stay Connected with Bappa</h4>
-                    <p>Get updates on festivals, events, and community news delivered to your inbox.</p>
+                    <h4>{t('footer.newsletterTitle')}</h4>
+                    <p>{t('footer.newsletterSub')}</p>
                   </div>
                 </div>
                 <form className="newsletter-form" onSubmit={handleSubscribe} noValidate>
@@ -202,14 +211,14 @@ const Footer = () => {
                     <input
                       type="email"
                       id="footer-newsletter-email"
-                      placeholder="Enter your email address"
+                      placeholder={t('footer.emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       aria-label="Email address for newsletter"
                     />
                   </div>
                   <button type="submit" className="btn-subscribe">
-                    Subscribe
+                    {t('footer.subscribe')}
                     <i className="fas fa-paper-plane"></i>
                   </button>
                 </form>
@@ -220,14 +229,14 @@ const Footer = () => {
             <div className="footer-bottom">
               <p>
                 <i className="fas fa-om footer-bottom-om"></i>
-                &copy; {currentYear} Dongri Cha Raja Sarvajani Ganesh Utsav Mandal. All rights reserved.
+                &copy; {currentYear} {t('footer.copyright')}
               </p>
               <div className="footer-bottom-links">
-                <Link to="/legal/privacy-policy">Privacy Policy</Link>
+                <Link to="/legal/privacy-policy">{t('footer.privacy')}</Link>
                 <span>·</span>
-                <Link to="/legal/terms">Terms &amp; Conditions</Link>
+                <Link to="/legal/terms">{t('footer.terms')}</Link>
                 <span>·</span>
-                <Link to="/legal/refund-policy">Refund Policy</Link>
+                <Link to="/legal/refund-policy">{t('footer.refund')}</Link>
               </div>
             </div>
           </div>

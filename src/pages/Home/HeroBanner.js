@@ -1,41 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import './HeroBanner.css';
 
 const HeroBanner = () => {
+  const { t } = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const slides = [
     {
-      title: "Ganeshotsav 2026",
-      subtitle: "Welcome to Dongri Cha Raja",
-      description: "Experience divine blessings at Mumbai's most revered Ganesh Mandal. Join us for 10 days of unparalleled spiritual celebration.",
+      title: t('hero.slide1.title'),
+      subtitle: t('hero.slide1.subtitle'),
+      description: t('hero.slide1.description'),
       image: "/images/dongri_cha_raja_idol.jpg",
       bgFallback: "linear-gradient(135deg, #8B3C1C 0%, #F67900 40%, #1C0A35 100%)",
-      tag: "🪔 Est. 1974 · 50 Glorious Years",
-      btnPrimary: { label: "View Schedule", icon: "fas fa-calendar-alt", to: "/ganeshotsav" },
-      btnSecondary: { label: "Live Darshan", icon: "fas fa-video", to: "/devotee-services" }
+      tag: t('hero.slide1.tag'),
+      btnPrimary: { label: t('hero.slide1.btnPrimary'), icon: "fas fa-calendar-alt", to: "/ganeshotsav" },
+      btnSecondary: { label: t('hero.slide1.btnSecondary'), icon: "fas fa-video", to: "/devotee-services" }
     },
     {
-      title: "Grand Maha Aarti",
-      subtitle: "Witness the Divine",
-      description: "Experience the spectacular evening Maha Aarti with thousands of devotees. A spiritually transcending experience every evening at 7 PM.",
+      title: t('hero.slide2.title'),
+      subtitle: t('hero.slide2.subtitle'),
+      description: t('hero.slide2.description'),
       image: "/images/maha_aarti_gathering.jpg",
       bgFallback: "linear-gradient(135deg, #1C0A35 0%, #DD6A00 100%)",
-      tag: "✨ Daily at 7:00 PM",
-      btnPrimary: { label: "Aarti Schedule", icon: "fas fa-dharmachakra", to: "/ganeshotsav" },
-      btnSecondary: { label: "Join Online", icon: "fas fa-globe", to: "/devotee-services" }
+      tag: t('hero.slide2.tag'),
+      btnPrimary: { label: t('hero.slide2.btnPrimary'), icon: "fas fa-dharmachakra", to: "/ganeshotsav" },
+      btnSecondary: { label: t('hero.slide2.btnSecondary'), icon: "fas fa-globe", to: "/devotee-services" }
     },
     {
-      title: "Community Seva",
-      subtitle: "Seva is Our Mission",
-      description: "Join our transformative social activities including blood donation camps, health checkups, and free educational support programs.",
+      title: t('hero.slide3.title'),
+      subtitle: t('hero.slide3.subtitle'),
+      description: t('hero.slide3.description'),
       image: "/images/community_service_seva.jpg",
       bgFallback: "linear-gradient(135deg, #1C0A35 0%, #8B0000 100%)",
-      tag: "❤️ 10,000+ Lives Touched",
-      btnPrimary: { label: "Our Initiatives", icon: "fas fa-hands-helping", to: "/social-activities" },
-      btnSecondary: { label: "Volunteer Now", icon: "fas fa-user-plus", to: "/devotee-services" }
+      tag: t('hero.slide3.tag'),
+      btnPrimary: { label: t('hero.slide3.btnPrimary'), icon: "fas fa-hands-helping", to: "/social-activities" },
+      btnSecondary: { label: t('hero.slide3.btnSecondary'), icon: "fas fa-user-plus", to: "/devotee-services" }
     }
   ];
 
@@ -105,7 +107,7 @@ const HeroBanner = () => {
               <div className="stat-icon"><i className="fas fa-history"></i></div>
               <div className="stat-info">
                 <span className="stat-number">50+</span>
-                <span className="stat-label">Years of Legacy</span>
+                <span className="stat-label">{t('hero.yearsLegacy')}</span>
               </div>
             </div>
             <div className="stat-divider" />
@@ -113,7 +115,7 @@ const HeroBanner = () => {
               <div className="stat-icon"><i className="fas fa-users"></i></div>
               <div className="stat-info">
                 <span className="stat-number">2.5M+</span>
-                <span className="stat-label">Devotees Yearly</span>
+                <span className="stat-label">{t('hero.devoteesYearly')}</span>
               </div>
             </div>
             <div className="stat-divider" />
@@ -121,7 +123,7 @@ const HeroBanner = () => {
               <div className="stat-icon"><i className="fas fa-eye"></i></div>
               <div className="stat-info">
                 <span className="stat-number">24/7</span>
-                <span className="stat-label">Live Darshan</span>
+                <span className="stat-label">{t('hero.liveDarshan')}</span>
               </div>
             </div>
             <div className="stat-divider" />
@@ -129,7 +131,7 @@ const HeroBanner = () => {
               <div className="stat-icon"><i className="fas fa-heart"></i></div>
               <div className="stat-info">
                 <span className="stat-number">100+</span>
-                <span className="stat-label">Seva Programs</span>
+                <span className="stat-label">{t('hero.sevaPrograms')}</span>
               </div>
             </div>
           </div>

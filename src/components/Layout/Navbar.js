@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [langOpen, setLangOpen] = useState(false);
   const location = useLocation();
   const dropdownRef = useRef(null);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -18,12 +21,14 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
+    setLangOpen(false);
   }, [location]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setActiveDropdown(null);
+        setLangOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -38,33 +43,33 @@ const Navbar = () => {
 
   const navGroups = [
     {
-      label: 'About',
+      label: t('navbar.about'),
       icon: 'fas fa-info-circle',
       children: [
-        { path: '/about-us', label: 'About Us', icon: 'fas fa-om', desc: 'Our history & mission' },
-        { path: '/committee', label: 'Committee', icon: 'fas fa-users', desc: 'Meet our leadership' },
+        { path: '/about-us', label: t('navbar.aboutUs'), icon: 'fas fa-om', desc: t('navbar.aboutUsDesc') },
+        { path: '/committee', label: t('navbar.committee'), icon: 'fas fa-users', desc: t('navbar.committeeDesc') },
       ]
     },
     {
-      label: 'Festival',
+      label: t('navbar.festival'),
       icon: 'fas fa-gopuram',
       children: [
-        { path: '/ganeshotsav', label: 'Ganeshotsav', icon: 'fas fa-dharmachakra', desc: 'Festival schedule & rituals' },
-        { path: '/events', label: 'Events', icon: 'fas fa-calendar-alt', desc: 'Upcoming celebrations' },
-        { path: '/gallery', label: 'Gallery', icon: 'fas fa-images', desc: 'Photos & videos' },
+        { path: '/ganeshotsav', label: t('navbar.ganeshotsav'), icon: 'fas fa-dharmachakra', desc: t('navbar.ganeshotsavDesc') },
+        { path: '/events', label: t('navbar.events'), icon: 'fas fa-calendar-alt', desc: t('navbar.eventsDesc') },
+        { path: '/gallery', label: t('navbar.gallery'), icon: 'fas fa-images', desc: t('navbar.galleryDesc') },
       ]
     },
     {
-      label: 'Community',
+      label: t('navbar.community'),
       icon: 'fas fa-hands-helping',
       children: [
-        { path: '/social-activities', label: 'Social Activities', icon: 'fas fa-heart', desc: 'Our seva initiatives' },
-        { path: '/news', label: 'News', icon: 'fas fa-newspaper', desc: 'Latest updates' },
-        { path: '/devotee-services', label: 'Devotee Services', icon: 'fas fa-hand-holding-heart', desc: 'Volunteer & seva' },
+        { path: '/social-activities', label: t('navbar.socialActivities'), icon: 'fas fa-heart', desc: t('navbar.socialActivitiesDesc') },
+        { path: '/news', label: t('navbar.news'), icon: 'fas fa-newspaper', desc: t('navbar.newsDesc') },
+        { path: '/devotee-services', label: t('navbar.devoteeServices'), icon: 'fas fa-hand-holding-heart', desc: t('navbar.devoteeServicesDesc') },
       ]
     },
-    { path: '/donations', label: 'Donate', icon: 'fas fa-donate', single: true },
-    { path: '/contact-us', label: 'Contact', icon: 'fas fa-envelope', single: true },
+    { path: '/donations', label: t('navbar.donate'), icon: 'fas fa-donate', single: true },
+    { path: '/contact-us', label: t('navbar.contact'), icon: 'fas fa-envelope', single: true },
   ];
 
   const isGroupActive = (group) => {
@@ -82,13 +87,13 @@ const Navbar = () => {
       >
         <div className="navbar-container container">
           {/* Logo */}
-          <Link to="/" className="logo" aria-label="Dongri Cha Raja - Home">
+          <Link to="/" className="logo" aria-label={`${t('logo.title')} - Home`}>
             <div className="logo-icon">
               <i className="fas fa-om" aria-hidden="true"></i>
             </div>
             <div className="logo-text">
-              <span className="logo-title">Dongri Cha Raja</span>
-              <span className="logo-sub">Sarvajani Ganesh Utsav Mandal</span>
+              <span className="logo-title">{t('logo.title')}</span>
+              <span className="logo-sub">{t('logo.subtitle')}</span>
             </div>
           </Link>
 
@@ -147,9 +152,50 @@ const Navbar = () => {
                 </div>
               )
             )}
+
+            {/* Premium Language Dropdown Selector */}
+            <div className="lang-switcher-container">
+              <button
+                className={`lang-switcher-btn ${langOpen ? 'active' : ''}`}
+                onClick={() => setLangOpen(!langOpen)}
+                aria-expanded={langOpen}
+                aria-haspopup="true"
+                aria-label="Select Language"
+              >
+                <i className="fas fa-globe" aria-hidden="true"></i>
+                <span>{language === 'en' ? 'EN' : language === 'hi' ? 'हिं' : 'मरा'}</span>
+                <i className={`fas fa-chevron-down lang-chevron ${langOpen ? 'open' : ''}`} aria-hidden="true"></i>
+              </button>
+              {langOpen && (
+                <div className="lang-dropdown animate-fade-in" role="menu">
+                  <button
+                    role="menuitem"
+                    className={`lang-option ${language === 'en' ? 'selected' : ''}`}
+                    onClick={() => { setLanguage('en'); setLangOpen(false); }}
+                  >
+                    <span className="lang-flag">EN</span> English
+                  </button>
+                  <button
+                    role="menuitem"
+                    className={`lang-option ${language === 'hi' ? 'selected' : ''}`}
+                    onClick={() => { setLanguage('hi'); setLangOpen(false); }}
+                  >
+                    <span className="lang-flag">हिं</span> हिंदी (Hindi)
+                  </button>
+                  <button
+                    role="menuitem"
+                    className={`lang-option ${language === 'mr' ? 'selected' : ''}`}
+                    onClick={() => { setLanguage('mr'); setLangOpen(false); }}
+                  >
+                    <span className="lang-flag">मरा</span> मराठी (Marathi)
+                  </button>
+                </div>
+              )}
+            </div>
+
             <Link to="/devotee-services" className="btn-seva">
               <i className="fas fa-hand-holding-heart" aria-hidden="true"></i>
-              Seva
+              {t('navbar.seva')}
             </Link>
           </div>
 
@@ -207,8 +253,35 @@ const Navbar = () => {
             )}
             <Link to="/devotee-services" className="mobile-seva-btn">
               <i className="fas fa-hand-holding-heart"></i>
-              Devotee Services & Seva
+              {t('navbar.devoteeServicesShort')}
             </Link>
+
+            {/* Mobile Language Selector */}
+            <div className="mobile-lang-selector">
+              <span className="mobile-lang-title">
+                <i className="fas fa-globe"></i> Language / भाषा
+              </span>
+              <div className="mobile-lang-buttons">
+                <button
+                  className={`mobile-lang-btn ${language === 'en' ? 'active' : ''}`}
+                  onClick={() => setLanguage('en')}
+                >
+                  English
+                </button>
+                <button
+                  className={`mobile-lang-btn ${language === 'hi' ? 'active' : ''}`}
+                  onClick={() => setLanguage('hi')}
+                >
+                  हिंदी
+                </button>
+                <button
+                  className={`mobile-lang-btn ${language === 'mr' ? 'active' : ''}`}
+                  onClick={() => setLanguage('mr')}
+                >
+                  मराठी
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
