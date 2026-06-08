@@ -10,9 +10,7 @@ import {
   PieChart, 
   Pie, 
   Cell, 
-  Legend,
-  BarChart,
-  Bar
+  Legend
 } from 'recharts';
 import './SocialActivities.css';
 
