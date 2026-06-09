@@ -213,7 +213,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - WITH INLINE STYLES TO PREVENT BLUR */}
         <div
           id="mobile-menu"
           className={`mobile-menu ${isOpen ? 'active' : ''}`}
@@ -222,6 +222,13 @@ const Navbar = () => {
           aria-label="Mobile navigation"
         >
           <div className="mobile-menu-inner">
+            <Link
+              to="/"
+              className={`mobile-link ${location.pathname === '/' ? 'active' : ''} mobile-home-link`}
+            >
+              <i className="fas fa-home" aria-hidden="true"></i>
+              {t('navbar.home')}
+            </Link>
             {navGroups.map((group, i) =>
               group.single ? (
                 <Link
