@@ -212,86 +212,86 @@ const Navbar = () => {
             <span></span>
           </button>
         </div>
+      </nav>
 
-        {/* Mobile Menu - WITH INLINE STYLES TO PREVENT BLUR */}
-        <div
-          id="mobile-menu"
-          className={`mobile-menu ${isOpen ? 'active' : ''}`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation"
-        >
-          <div className="mobile-menu-inner">
-            <Link
-              to="/"
-              className={`mobile-link ${location.pathname === '/' ? 'active' : ''} mobile-home-link`}
-            >
-              <i className="fas fa-home" aria-hidden="true"></i>
-              {t('navbar.home')}
-            </Link>
-            {navGroups.map((group, i) =>
-              group.single ? (
-                <Link
-                  key={group.path}
-                  to={group.path}
-                  className={`mobile-link ${location.pathname === group.path ? 'active' : ''} ${group.path === '/donations' ? 'mobile-donate' : ''}`}
-                >
+      {/* Mobile Menu - WITH INLINE STYLES TO PREVENT BLUR */}
+      <div
+        id="mobile-menu"
+        className={`mobile-menu ${isOpen ? 'active' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
+      >
+        <div className="mobile-menu-inner">
+          <Link
+            to="/"
+            className={`mobile-link ${location.pathname === '/' ? 'active' : ''} mobile-home-link`}
+          >
+            <i className="fas fa-home" aria-hidden="true"></i>
+            {t('navbar.home')}
+          </Link>
+          {navGroups.map((group, i) =>
+            group.single ? (
+              <Link
+                key={group.path}
+                to={group.path}
+                className={`mobile-link ${location.pathname === group.path ? 'active' : ''} ${group.path === '/donations' ? 'mobile-donate' : ''}`}
+              >
+                <i className={group.icon} aria-hidden="true"></i>
+                {group.label}
+              </Link>
+            ) : (
+              <div key={i} className="mobile-group">
+                <div className="mobile-group-label">
                   <i className={group.icon} aria-hidden="true"></i>
                   {group.label}
-                </Link>
-              ) : (
-                <div key={i} className="mobile-group">
-                  <div className="mobile-group-label">
-                    <i className={group.icon} aria-hidden="true"></i>
-                    {group.label}
-                  </div>
-                  {group.children.map(child => (
-                    <Link
-                      key={child.path}
-                      to={child.path}
-                      className={`mobile-link mobile-child ${location.pathname === child.path ? 'active' : ''}`}
-                    >
-                      <i className={child.icon} aria-hidden="true"></i>
-                      {child.label}
-                    </Link>
-                  ))}
                 </div>
-              )
-            )}
-            <Link to="/devotee-services" className="mobile-seva-btn">
-              <i className="fas fa-hand-holding-heart"></i>
-              {t('navbar.devoteeServicesShort')}
-            </Link>
-
-            {/* Mobile Language Selector */}
-            <div className="mobile-lang-selector">
-              <span className="mobile-lang-title">
-                <i className="fas fa-globe"></i> Language / भाषा
-              </span>
-              <div className="mobile-lang-buttons">
-                <button
-                  className={`mobile-lang-btn ${language === 'en' ? 'active' : ''}`}
-                  onClick={() => setLanguage('en')}
-                >
-                  English
-                </button>
-                <button
-                  className={`mobile-lang-btn ${language === 'hi' ? 'active' : ''}`}
-                  onClick={() => setLanguage('hi')}
-                >
-                  हिंदी
-                </button>
-                <button
-                  className={`mobile-lang-btn ${language === 'mr' ? 'active' : ''}`}
-                  onClick={() => setLanguage('mr')}
-                >
-                  मराठी
-                </button>
+                {group.children.map(child => (
+                  <Link
+                    key={child.path}
+                    to={child.path}
+                    className={`mobile-link mobile-child ${location.pathname === child.path ? 'active' : ''}`}
+                  >
+                    <i className={child.icon} aria-hidden="true"></i>
+                    {child.label}
+                  </Link>
+                ))}
               </div>
+            )
+          )}
+          <Link to="/devotee-services" className="mobile-seva-btn">
+            <i className="fas fa-hand-holding-heart"></i>
+            {t('navbar.devoteeServicesShort')}
+          </Link>
+
+          {/* Mobile Language Selector */}
+          <div className="mobile-lang-selector">
+            <span className="mobile-lang-title">
+              <i className="fas fa-globe"></i> Language / भाषा
+            </span>
+            <div className="mobile-lang-buttons">
+              <button
+                className={`mobile-lang-btn ${language === 'en' ? 'active' : ''}`}
+                onClick={() => setLanguage('en')}
+              >
+                English
+              </button>
+              <button
+                className={`mobile-lang-btn ${language === 'hi' ? 'active' : ''}`}
+                onClick={() => setLanguage('hi')}
+              >
+                हिंदी
+              </button>
+              <button
+                className={`mobile-lang-btn ${language === 'mr' ? 'active' : ''}`}
+                onClick={() => setLanguage('mr')}
+              >
+                मराठी
+              </button>
             </div>
           </div>
         </div>
-      </nav>
+      </div>
 
       {/* Mobile Backdrop */}
       {isOpen && (
