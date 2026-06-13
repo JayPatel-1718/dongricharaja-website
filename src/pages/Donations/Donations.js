@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
+import { useData } from '../../context/DataContext';
 import './Donations.css';
 
 const Donations = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const { addDonation } = useData();
 
   const [donorInfo, setDonorInfo] = useState({
     name: "",
@@ -83,6 +86,8 @@ const Donations = () => {
       
       setTxDetails(generatedTx);
       setShowReceipt(true);
+      // Track this donation in admin panel
+      addDonation(generatedTx);
       toast.success("Payment Successful! Your 80G receipt has been generated.", { id: "payment" });
     }, 2000);
   };

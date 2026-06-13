@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useData } from '../../context/DataContext';
 import './Gallery.css';
 
 const Gallery = () => {
@@ -7,17 +8,9 @@ const Gallery = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { galleryPhotos: photos } = useData();
   const [activeFilter, setActiveFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState(null);
-
-  const photos = [
-    { id: 1, title: "Dongri Cha Raja Idol 2025", category: "festival", src: "/assets/gallery_festival_1.jpg", caption: "The breathtaking 12-foot clay idol of Lord Ganesha on his royal golden throne." },
-    { id: 2, title: "Blood Donation Drive", category: "seva", src: "/assets/gallery_seva_1.jpg", caption: "Local community members donating blood at the municipal partner camp." },
-    { id: 3, title: "Royal Durbar Pandal Deco", category: "deco", src: "/assets/gallery_deco_1.jpg", caption: "The 2025 pandal theme replicating the majestic glass-carved Rajasthani fort architecture." },
-    { id: 4, title: "Chief Minister Visit", category: "vip", src: "/assets/gallery_vip_1.jpg", caption: "Honorable Chief Minister of Maharashtra offering prayers to Dongri Cha Raja." },
-    { id: 5, title: "Maha Aarti Sea of Devotees", category: "festival", src: "/assets/gallery_festival_2.jpg", caption: "An aerial view of thousands of devotees lifting oil lamps during evening prayers." },
-    { id: 6, title: "Distribution of Textbooks", category: "seva", src: "/assets/gallery_seva_2.jpg", caption: "Mandal advisory trustees distributing study materials to local school students." }
-  ];
 
   const filteredPhotos = activeFilter === "all" 
     ? photos 

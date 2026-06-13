@@ -8,15 +8,21 @@ import './index.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// Suppress known harmless Firebase abort errors during navigation/hot-reload
+window.addEventListener('unhandledrejection', event => {
+  if (event.reason && event.reason.message && event.reason.message.includes('The user aborted a request')) {
+    event.preventDefault();
+  }
+});
+
 root.render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <LanguageProvider>
-        <BrowserRouter>
-          <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
-          <App />
-        </BrowserRouter>
-      </LanguageProvider>
-    </HelmetProvider>
-  </React.StrictMode>
+  <HelmetProvider>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+        <App />
+      </BrowserRouter>
+    </LanguageProvider>
+  </HelmetProvider>
 );

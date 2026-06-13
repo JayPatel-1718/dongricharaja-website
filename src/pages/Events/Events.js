@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
+import { useData } from '../../context/DataContext';
 import './Events.css';
 
 const Events = () => {
@@ -11,16 +12,8 @@ const Events = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
 
-  const eventsList = [
-    { id: 1, title: "Grand Maha Aarti", category: "spiritual", date: "Sept 19, 2026", time: "7:00 PM", location: "Main Pandal", desc: "Witness the magnificent evening group aarti with traditional musical accompaniments." },
-    { id: 2, title: "Prana Pratishtha Puja", category: "spiritual", date: "Sept 19, 2026", time: "8:00 AM", location: "Main Pandal", desc: "Invoking the divine soul inside the clay Ganesha idol, marking the official opening." },
-    { id: 3, title: "Bhajan Sandhya Concert", category: "cultural", date: "Sept 21, 2026", time: "8:00 PM", location: "Cultural Hall", desc: "A night of serene traditional bhajan recitals by national vocal performers." },
-    { id: 4, title: "Inter-School Drawing Contest", category: "cultural", date: "Sept 22, 2026", time: "10:00 AM", location: "Community Hall", desc: "Art competition for young students on themes of nature and mythology." },
-    { id: 5, title: "Blood Donation Camp", category: "community", date: "Sept 23, 2026", time: "9:00 AM - 5:00 PM", location: "Medical Seva Wing", desc: "Our annual community health collection campaign in partnership with KEM Hospital." },
-    { id: 6, title: "Youth Leadership Seminar", category: "community", date: "Sept 24, 2026", time: "4:00 PM", location: "Seminar Auditorium", desc: "Interactive session on career guidelines, social responsibility, and civic duty." },
-    { id: 7, title: "Chhappan Bhog Seva", category: "spiritual", date: "Sept 25, 2026", time: "12:00 PM", location: "Main Pandal", desc: "A sacred offering of 56 visual items to Lord Ganesha, followed by public lunch." },
-    { id: 8, title: "Dhol Tasha Pathak Performance", category: "cultural", date: "Sept 27, 2026", time: "6:00 PM", location: "Pandal Gateway Plaza", desc: "Energizing traditional drumming performance by the mandal's local youth group." }
-  ];
+  const { events: eventsList } = useData();
+
 
   const handleReminder = (title) => {
     toast.success(`Reminder set for "${title}"! We will notify you 30m before the event.`);

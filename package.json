@@ -5,6 +5,7 @@
   "dependencies": {
     "@react-google-maps/api": "^2.19.0",
     "axios": "^1.6.0",
+    "firebase": "^12.14.0",
     "formik": "^2.4.0",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",

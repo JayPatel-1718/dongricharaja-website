@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    // Suppress noisy, harmless Firebase abort errors in development once and for all
+    window.addEventListener('unhandledrejection', function(event) {
+      if (event.reason && event.reason.message && event.reason.message.includes('The user aborted a request')) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+      }
+    });
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Official website of Dongri Cha Raja Sarvajani Ganesh Utsav Mandal - Mumbai's most revered Ganesh Mandal">

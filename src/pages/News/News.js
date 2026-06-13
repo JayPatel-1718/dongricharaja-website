@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useData } from '../../context/DataContext';
 import './News.css';
 
 const News = () => {
@@ -7,40 +8,8 @@ const News = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const newsList = [
-    {
-      id: 1,
-      tag: "Announcement",
-      title: "Volunteer Registrations Open for Ganeshotsav 2026",
-      date: "August 15, 2026",
-      desc: "Join our dedicated service team. Applications are now open online for devotees wishing to volunteer across crowd management, medical camps, and social services.",
-      icon: "fa-bullhorn"
-    },
-    {
-      id: 2,
-      tag: "Press Release",
-      title: "Mandal Donates ₹5 Lakhs for Advanced Pediatric Ward Equipment",
-      date: "July 24, 2026",
-      desc: "In line with our community service mission, the trust executive board has approved a financial grant to install crucial ICU monitors at the local public pediatric clinic.",
-      icon: "fa-newspaper"
-    },
-    {
-      id: 3,
-      tag: "Media Coverage",
-      title: "Dongri Cha Raja Golden Jubilee Album Released Digitally",
-      date: "June 10, 2026",
-      desc: "A collection of 50 years of memorable photos, stories, and archives is now available for download on our portal, summarizing our journey since foundation in 1974.",
-      icon: "fa-photo-film"
-    },
-    {
-      id: 4,
-      tag: "General News",
-      title: "Eco-Friendly Clay Idol Crafting Nearing Completion",
-      date: "June 02, 2026",
-      desc: "Our resident sculptors confirm that the 2026 clay Ganesha idol is in its final touch-up phase. Organic marigold and turmeric pigments will be used for decoration.",
-      icon: "fa-paintbrush"
-    }
-  ];
+  const { news: newsList } = useData();
+
 
   return (
     <>
