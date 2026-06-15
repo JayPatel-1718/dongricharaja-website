@@ -66,7 +66,7 @@ const HeroBanner = () => {
         <div
           key={index}
           className={`hero-slide ${index === currentSlide ? 'active' : ''} ${isTransitioning ? 'transitioning' : ''}`}
-          style={{ backgroundImage: `url(${slide.image}), ${slide.bgFallback}` }}
+          style={{ background: slide.bgFallback }}
           aria-hidden={index !== currentSlide}
         >
           <div className="hero-overlay" />
@@ -94,6 +94,9 @@ const HeroBanner = () => {
                   {slide.btnSecondary.label}
                 </Link>
               </div>
+            </div>
+            <div className="hero-image-container">
+              <img src="/images/hero-ganesha.png" alt="Dongricha Raja Idol" className="hero-ganesha-img" />
             </div>
           </div>
         </div>
