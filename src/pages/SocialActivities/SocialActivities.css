@@ -1,38 +1,172 @@
+/* ============================================================
+   SocialActivities.css — Social Activities & Seva Page
+   Dongricha Raja Sarvajanik Ganeshotsav Mandal
+   Banner styled to match Committee page design language
+   ============================================================ */
+
+/* ── Banner — matches committee-banner exactly ── */
 .social-banner {
   position: relative;
-  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--primary-dark) 100%);
-  padding: 100px 0;
+  background: linear-gradient(
+    160deg,
+    var(--secondary-dark) 0%,
+    #6B0000 30%,
+    var(--secondary) 65%,
+    var(--primary-dark) 100%
+  );
+  padding: 110px 0 90px;
   text-align: center;
   color: var(--white);
   overflow: hidden;
+  isolation: isolate;
 }
 
+/* Radial spotlight */
 .social-banner::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(230, 130, 0, 0.15) 0%, transparent 70%);
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    rgba(230, 130, 0, 0.18) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle texture overlay */
+.social-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.social-banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Mandala rings reused from committee-banner via shared class names */
+.social-banner .committee-banner__mandala {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
   pointer-events: none;
 }
 
-.social-banner h1 {
-  font-size: var(--text-5xl);
-  color: var(--white);
+/* Corner ornaments */
+.social-banner .committee-banner__ornament {
+  position: absolute;
+  font-size: 2.2rem;
+  color: rgba(230, 130, 0, 0.28);
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.social-banner .committee-banner__ornament.top-left  { top: 28px; left: 36px; }
+.social-banner .committee-banner__ornament.top-right { top: 28px; right: 36px; }
+
+/* Banner text styles */
+.social-banner__eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.35em;
+  color: var(--primary-light);
+  text-transform: uppercase;
   margin-bottom: var(--spacing-3);
+  opacity: 0.85;
+}
+
+.social-banner h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
   font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
-.social-banner p {
-  font-size: var(--text-lg);
-  color: var(--cream-dark);
-  opacity: 0.9;
+.social-banner__marathi {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  color: var(--primary-light);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--spacing-6);
+  opacity: 0.92;
 }
 
+.social-banner__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.social-banner__divider .divider-line {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 130, 0, 0.6), transparent);
+}
+
+.social-banner__divider .divider-gem {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.social-banner p.social-banner__subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+/* ── Intro Section ── */
 .section-intro {
   background-color: var(--cream-light);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+/* Intro ornament reuses committee styles */
+.social-intro-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.social-intro-ornament .intro-ornament-line {
+  display: block;
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.social-intro-ornament .intro-ornament-lotus {
+  color: var(--primary);
+  font-size: 1.3rem;
 }
 
 .intro-text {
@@ -84,7 +218,7 @@
   margin-right: 6px;
 }
 
-/* Metrics Section */
+/* ── Metrics Section ── */
 .section-metrics {
   background-color: var(--cream);
 }
@@ -131,7 +265,7 @@
   margin-bottom: 0;
 }
 
-/* Charts Section */
+/* ── Charts Section ── */
 .section-charts {
   background-color: var(--cream-light);
 }
@@ -163,6 +297,7 @@
   height: 300px;
 }
 
+/* ── Responsive ── */
 @media (max-width: 1024px) {
   .charts-grid {
     grid-template-columns: 1fr;
@@ -170,11 +305,31 @@
 }
 
 @media (max-width: 900px) {
+  .social-banner {
+    padding: 80px 0 68px;
+  }
+  .social-banner .committee-banner__ornament {
+    font-size: 1.5rem;
+  }
+  .social-banner .committee-banner__ornament.top-left  { top: 20px; left: 20px; }
+  .social-banner .committee-banner__ornament.top-right { top: 20px; right: 20px; }
   .section-intro .grid-cols-2 {
     grid-template-columns: 1fr;
     gap: var(--spacing-8);
   }
   .intro-text {
     padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-banner {
+    padding: 64px 0 56px;
+  }
+  .social-banner .committee-banner__ornament {
+    display: none;
+  }
+  .social-banner__divider .divider-line {
+    width: 50px;
   }
 }

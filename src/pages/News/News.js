@@ -19,12 +19,27 @@ const News = () => {
       </Helmet>
 
       <main className="news-page fade-in">
-        {/* Banner */}
-        <section className="news-banner">
-          <div className="banner-overlay"></div>
+        {/* Banner — Committee style */}
+        <section className="news-banner" aria-label="News and Announcements Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>News & Announcements</h1>
-            <p>Stay updated with our latest activities and press coverage</p>
+            <p className="news-banner__eyebrow">बातम्या · News · Media</p>
+            <h1 className="news-banner__title">News & Announcements</h1>
+            <p className="news-banner__marathi-title" lang="mr">बातम्या आणि घोषणा</p>
+            <div className="news-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="news-banner__subtitle">
+              Stay updated with our latest activities and press coverage
+            </p>
           </div>
         </section>
 

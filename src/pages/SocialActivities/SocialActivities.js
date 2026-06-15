@@ -51,12 +51,27 @@ const SocialActivities = () => {
       </Helmet>
 
       <main className="social-page fade-in">
-        {/* Banner */}
-        <section className="social-banner">
-          <div className="banner-overlay"></div>
+        {/* Banner — Committee style */}
+        <section className="social-banner" aria-label="Social Activities Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
+            <p className="social-banner__eyebrow">सेवा · Seva · Community</p>
             <h1>Social Activities</h1>
-            <p>Giving back to the community, one step at a time</p>
+            <p className="social-banner__marathi" lang="mr">सामाजिक उपक्रम</p>
+            <div className="social-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="social-banner__subtitle">
+              Giving back to the community, one step at a time
+            </p>
           </div>
         </section>
 
