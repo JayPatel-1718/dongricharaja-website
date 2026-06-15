@@ -174,43 +174,7 @@
   font-size: var(--text-sm);
 }
 
-/* Amount Grid */
-.amount-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-3);
-  margin-bottom: var(--spacing-5);
-}
 
-.amount-btn {
-  padding: 12px 8px;
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 700;
-  font-size: var(--text-sm);
-  cursor: pointer;
-  transition: all 0.25s ease;
-  text-align: center;
-}
-
-.amount-btn:hover {
-  background: rgba(230, 130, 0, 0.15);
-  border-color: rgba(230, 130, 0, 0.5);
-  color: var(--primary-light);
-}
-
-.amount-btn.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  border-color: var(--primary);
-  color: var(--white);
-  box-shadow: 0 4px 16px rgba(230, 130, 0, 0.4);
-}
-
-.amount-btn-custom {
-  grid-column: span 3;
-}
 
 /* Custom Input */
 .custom-input-wrapper {
@@ -344,11 +308,5 @@
     gap: var(--spacing-5);
   }
 
-  .amount-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 
-  .amount-btn-custom {
-    grid-column: span 2;
-  }
 }

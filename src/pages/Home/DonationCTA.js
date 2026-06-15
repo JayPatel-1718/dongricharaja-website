@@ -3,26 +3,10 @@ import { Link } from 'react-router-dom';
 import './DonationCTA.css';
 
 const DonationCTA = () => {
-  const [selectedAmount, setSelectedAmount] = useState(1001);
   const [customAmount, setCustomAmount] = useState('');
-  const [isCustom, setIsCustom] = useState(false);
-
-  const amounts = [501, 1001, 2101, 5001, 11000];
-
-  const handleAmountSelect = (amt) => {
-    setSelectedAmount(amt);
-    setIsCustom(false);
-    setCustomAmount('');
-  };
-
-  const handleCustom = () => {
-    setIsCustom(true);
-    setSelectedAmount(null);
-  };
 
   const getDisplayAmount = () => {
-    if (isCustom && customAmount) return parseInt(customAmount);
-    return selectedAmount;
+    return customAmount ? parseInt(customAmount) : 0;
   };
 
   return (
@@ -97,45 +81,23 @@ const DonationCTA = () => {
               <i className="fas fa-om"></i>
               <div>
                 <h3>Make a Donation</h3>
-                <p>Choose your contribution amount</p>
+                <p>Enter your contribution amount</p>
               </div>
             </div>
 
-            <div className="amount-grid">
-              {amounts.map((amt) => (
-                <button
-                  key={amt}
-                  className={`amount-btn ${selectedAmount === amt && !isCustom ? 'active' : ''}`}
-                  onClick={() => handleAmountSelect(amt)}
-                  aria-label={`Donate ₹${amt.toLocaleString('en-IN')}`}
-                >
-                  ₹{amt.toLocaleString('en-IN')}
-                </button>
-              ))}
-              <button
-                className={`amount-btn amount-btn-custom ${isCustom ? 'active' : ''}`}
-                onClick={handleCustom}
-              >
-                Custom ✏️
-              </button>
+            <div className="custom-input-wrapper" style={{ animation: 'none' }}>
+              <span className="custom-rupee">₹</span>
+              <input
+                type="number"
+                min="1"
+                placeholder="Enter amount"
+                value={customAmount}
+                onChange={(e) => setCustomAmount(e.target.value)}
+                className="custom-input"
+                id="custom-donation-amount"
+                aria-label="Custom donation amount"
+              />
             </div>
-
-            {isCustom && (
-              <div className="custom-input-wrapper">
-                <span className="custom-rupee">₹</span>
-                <input
-                  type="number"
-                  min="1"
-                  placeholder="Enter amount"
-                  value={customAmount}
-                  onChange={(e) => setCustomAmount(e.target.value)}
-                  className="custom-input"
-                  id="custom-donation-amount"
-                  aria-label="Custom donation amount"
-                  autoFocus
-                />
-              </div>
-            )}
 
             <div className="donation-summary">
               <div className="summary-row">

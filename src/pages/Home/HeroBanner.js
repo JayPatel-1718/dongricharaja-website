@@ -78,7 +78,12 @@ const HeroBanner = () => {
           <div className="container hero-content">
             <div className="hero-text">
               <div className="hero-tag">{slide.tag}</div>
-              <div className="hero-badge">
+              <img 
+                 src="/images/hero-text-logo.png" 
+                 alt="Dongricha Raja Typography" 
+                 className="hero-text-logo-img" 
+              />
+              <div className="hero-badge" style={{display: 'none'}}>
                 <i className="fas fa-dharmachakra spin-slow"></i>
                 <span>{slide.title}</span>
               </div>

@@ -74,11 +74,11 @@ const RecentGallery = () => {
           </Link>
         </div>
 
-        <div className="gallery-masonry-grid">
+        <div className="gallery-simple-grid">
           {photos.map((photo, index) => (
             <div
               key={photo.id}
-              className={`gallery-card ${index === 0 ? 'gallery-card-wide' : ''}`}
+              className="gallery-card"
               onClick={() => openLightbox(photo)}
               role="button"
               tabIndex={0}
