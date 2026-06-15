@@ -86,8 +86,12 @@ const Footer = () => {
               {/* Brand Column */}
               <div className="footer-section footer-brand">
                 <div className="footer-logo">
-                  <div className="footer-logo-icon">
-                    <i className="fas fa-om"></i>
+                  <div className="footer-logo-img-wrap">
+                    <img
+                      src="/images/logo.png"
+                      alt="Dongricha Raja Sarvajanik Ganeshotsav Mandal Logo"
+                      className="footer-logo-img"
+                    />
                   </div>
                   <div>
                     <h3>{t('logo.title')}</h3>

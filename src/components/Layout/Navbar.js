@@ -88,8 +88,12 @@ const Navbar = () => {
         <div className="navbar-container container">
           {/* Logo */}
           <Link to="/" className="logo" aria-label={`${t('logo.title')} - Home`}>
-            <div className="logo-icon">
-              <i className="fas fa-om" aria-hidden="true"></i>
+            <div className="logo-img-wrap">
+              <img
+                src="/images/logo.png"
+                alt="Dongricha Raja Sarvajanik Ganeshotsav Mandal Logo"
+                className="logo-img"
+              />
             </div>
             <div className="logo-text">
               <span className="logo-title">{t('logo.title')}</span>

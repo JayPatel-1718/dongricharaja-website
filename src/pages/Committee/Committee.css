@@ -1,178 +1,700 @@
+/* ============================================================
+   Committee.css — Executive Committee 2025–26
+   Dongricha Raja Sarvajanik Ganeshotsav Mandal
+   Traditional Maharashtrian Premium Design
+   ============================================================ */
+
+/* ── Banner ── */
 .committee-banner {
   position: relative;
-  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--primary-dark) 100%);
-  padding: 100px 0;
+  background: linear-gradient(
+    160deg,
+    var(--secondary-dark) 0%,
+    #6B0000 30%,
+    var(--secondary) 65%,
+    var(--primary-dark) 100%
+  );
+  padding: 110px 0 90px;
   text-align: center;
   color: var(--white);
   overflow: hidden;
+  isolation: isolate;
 }
 
+/* Radial spotlight */
 .committee-banner::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(230, 130, 0, 0.15) 0%, transparent 70%);
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    rgba(230, 130, 0, 0.18) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle texture overlay */
+.committee-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mandala rings */
+.committee-banner__mandala {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
   pointer-events: none;
 }
 
-.committee-banner h1 {
-  font-size: var(--text-5xl);
-  color: var(--white);
-  margin-bottom: var(--spacing-3);
-  font-weight: 800;
+.mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 130, 0, 0.12);
+  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
 }
 
-.committee-banner p {
-  font-size: var(--text-lg);
-  color: var(--cream-dark);
-  opacity: 0.9;
+.mandala-ring--outer {
+  width: 580px;
+  height: 580px;
+  border-width: 1px;
+  animation: mandala-rotate 60s linear infinite;
 }
 
-.section-leaders {
-  background-color: var(--cream-light);
+.mandala-ring--mid {
+  width: 400px;
+  height: 400px;
+  border-color: rgba(230, 130, 0, 0.08);
+  animation: mandala-rotate 45s linear infinite reverse;
 }
 
-.leader-card {
-  padding: var(--spacing-8) var(--spacing-6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
+.mandala-ring--inner {
+  width: 240px;
+  height: 240px;
+  border-color: rgba(230, 130, 0, 0.06);
+  animation: mandala-rotate 30s linear infinite;
 }
 
-.leader-portrait {
-  width: 140px;
-  height: 140px;
+@keyframes mandala-rotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Corner ornaments */
+.committee-banner__ornament {
+  position: absolute;
+  font-size: 2.2rem;
+  color: rgba(230, 130, 0, 0.28);
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.committee-banner__ornament.top-left  { top: 28px; left: 36px; }
+.committee-banner__ornament.top-right { top: 28px; right: 36px; }
+
+/* Banner text */
+.committee-banner .container {
   position: relative;
+  z-index: 2;
+}
+
+.committee-banner__marathi-year {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.35em;
+  color: var(--primary-light);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-3);
+  opacity: 0.85;
+}
+
+.committee-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.committee-banner__marathi-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.9rem);
+  color: var(--primary-light);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--spacing-6);
+  opacity: 0.92;
+}
+
+.committee-banner__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.committee-banner__divider .divider-line {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 130, 0, 0.6), transparent);
+}
+
+.committee-banner__divider .divider-gem {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.committee-banner__subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+/* ── Section Intro ── */
+.committee-intro-section {
+  background-color: var(--cream-light);
+  padding: var(--spacing-12) 0 var(--spacing-10);
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.committee-intro-container {
+  max-width: 780px !important;
+  text-align: center;
+}
+
+.committee-intro-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
   margin-bottom: var(--spacing-6);
 }
 
-.portrait-frame {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--cream-dark) 0%, var(--white) 100%);
-  border: 4px solid var(--white);
-  box-shadow: var(--shadow-premium), 0 0 0 3px var(--primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition: transform 0.3s ease;
+.intro-ornament-line {
+  display: block;
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
 }
 
-.leader-card:hover .portrait-frame {
-  transform: rotate(5deg) scale(1.05);
-}
-
-.default-avatar {
-  font-size: 3.5rem;
-  color: var(--secondary-light);
-}
-
-.portrait-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.role-tag {
-  display: inline-block;
-  background: var(--primary-bg);
-  border: 1px solid rgba(230, 130, 0, 0.25);
-  color: var(--primary-dark);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  letter-spacing: 0.5px;
-  margin-top: var(--spacing-2);
-}
-
-.leader-info h3 {
-  font-size: var(--text-2xl);
-  color: var(--secondary-dark);
-  margin-bottom: var(--spacing-1);
-}
-
-.leader-info p {
-  font-size: var(--text-sm);
-  color: var(--gray-dark);
-  line-height: 1.5;
-}
-
-.section-executives {
-  background-color: var(--cream);
-}
-
-.exec-card {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-5);
-  gap: var(--spacing-4);
-  height: 100%;
-}
-
-.exec-avatar-side {
-  width: 50px;
-  height: 50px;
-  border-radius: var(--radius-base);
-  background: var(--cream-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(230, 130, 0, 0.15);
-}
-
-.exec-avatar-icon {
-  font-size: 1.3rem;
+.intro-ornament-lotus {
   color: var(--primary);
+  font-size: 1.3rem;
 }
 
-.exec-info-side h4 {
-  font-size: var(--text-base);
-  color: var(--secondary-dark);
-  margin-bottom: 2px;
+.committee-intro-text {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  line-height: 1.85;
+  color: var(--gray-dark);
+  font-weight: 400;
+  margin-bottom: 0;
+  font-style: italic;
 }
 
-.exec-role {
-  font-size: var(--text-xs);
-  color: var(--gray);
-  font-weight: 500;
+/* ── Body Section ── */
+.committee-body-section {
+  background-color: var(--cream);
+  padding: var(--spacing-16) 0 var(--spacing-20);
 }
 
-.section-join-mandal {
-  background: linear-gradient(135deg, var(--royal-dark) 0%, var(--royal-indigo) 100%);
-  padding: var(--spacing-16) 0;
+/* ── Committee Group ── */
+.committee-group {
+  margin-bottom: var(--spacing-8);
 }
 
-.join-cta-card {
-  padding: var(--spacing-12);
-  border-radius: var(--radius-2xl);
-  max-width: 800px;
-  margin: 0 auto;
+/* Group Header */
+.committee-group__header {
+  margin-bottom: var(--spacing-8);
+  text-align: center;
 }
 
-.join-cta-card h2 {
-  font-size: var(--text-3xl);
-  color: var(--white);
+.committee-group__header-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-5);
   margin-bottom: var(--spacing-4);
 }
 
-.join-cta-card p {
-  color: var(--cream-dark);
-  opacity: 0.9;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
+.committee-group__icon {
+  color: var(--primary);
+  font-size: 1.1rem;
+  opacity: 0.7;
 }
 
-.buttons-row {
+.committee-group__titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.committee-group__title-en {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--secondary-dark);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--secondary-dark) 30%, var(--secondary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.committee-group__title-mr {
+  font-family: var(--font-display);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: var(--primary-dark);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* Header rule */
+.committee-group__header-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+}
+
+.rule-line {
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 29, 36, 0.4), transparent);
+}
+
+.rule-gem {
+  color: var(--primary);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+}
+
+/* ── Apex tier (President) — single centered card ── */
+.committee-group--apex .committee-group__grid--single {
   display: flex;
   justify-content: center;
+}
+
+/* ── Grid Layouts ── */
+.committee-group__grid {
+  display: grid;
+  gap: var(--spacing-5);
+}
+
+.committee-group__grid--single {
+  grid-template-columns: repeat(1, minmax(0, 400px));
+  justify-content: center;
+}
+
+.committee-group__grid--double {
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.committee-group__grid--multi {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .committee-group__grid--multi {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .committee-group__grid--double {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
+  .committee-group__grid--multi {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .committee-group__grid--double,
+  .committee-group__grid--multi {
+    grid-template-columns: 1fr;
+  }
+  .committee-group__grid--single {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Member Card ── */
+.member-card {
+  position: relative;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(229, 221, 208, 0.55);
+  box-shadow: 0 2px 12px rgba(18, 7, 33, 0.07), 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.26s ease, box-shadow 0.26s ease, border-color 0.26s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(18, 7, 33, 0.12), 0 4px 10px rgba(230, 130, 0, 0.12);
+  border-color: rgba(230, 130, 0, 0.32);
+}
+
+/* Apex tier card — more prominent */
+.member-card--apex {
+  border-color: rgba(230, 130, 0, 0.25);
+  box-shadow: 0 4px 24px rgba(18, 7, 33, 0.1), 0 0 0 1px rgba(230, 130, 0, 0.12);
+}
+
+.member-card--apex:hover {
+  box-shadow: 0 14px 36px rgba(18, 7, 33, 0.15), 0 6px 16px rgba(230, 130, 0, 0.18);
+}
+
+/* Senior tier card */
+.member-card--senior {
+  border-color: rgba(229, 221, 208, 0.6);
+}
+
+.member-card__inner {
+  display: flex;
+  align-items: center;
   gap: var(--spacing-4);
+  padding: var(--spacing-5) var(--spacing-5);
+}
+
+/* Shared avatar container */
+.member-card__avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1.5px solid rgba(230, 130, 0, 0.22);
+  transition: border-color 0.26s ease;
+}
+
+.member-card:hover .member-card__avatar {
+  border-color: rgba(230, 130, 0, 0.45);
+}
+
+/* Monogram variant */
+.member-card__avatar--monogram {
+  background: linear-gradient(135deg, var(--cream-dark) 0%, rgba(229, 221, 208, 0.6) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--secondary-dark);
+}
+
+.member-card:hover .member-card__avatar--monogram {
+  background: linear-gradient(135deg, rgba(230, 130, 0, 0.1) 0%, rgba(230, 130, 0, 0.04) 100%);
+}
+
+/* Photo variant */
+.member-card__avatar--photo {
+  background: var(--cream-dark);
+}
+
+.member-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* Apex tier — larger avatar */
+.member-card__avatar--apex {
+  width: 64px;
+  height: 64px;
+  border-width: 2px;
+  border-color: rgba(230, 130, 0, 0.35);
+}
+
+.member-card__avatar--apex.member-card__avatar--monogram {
+  font-size: 1.7rem;
+  background: linear-gradient(135deg, var(--cream-dark) 0%, #f5e8d0 100%);
+}
+
+.member-card__content {
+  min-width: 0;
+  flex: 1;
+}
+
+.member-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--secondary-dark);
+  line-height: 1.3;
+  margin-bottom: 4px;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+/* Apex tier name — larger */
+.member-card--apex .member-card__name {
+  font-size: var(--text-xl);
+}
+
+.member-card__designation {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary-dark);
+  line-height: 1.3;
+}
+
+.member-card__designation-mr {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--gray);
+  letter-spacing: 0.02em;
+  margin-top: 2px;
+  opacity: 0.75;
+}
+
+/* Accent bar at bottom */
+.member-card__accent-bar {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--secondary-dark), var(--primary), var(--secondary-dark));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.member-card:hover .member-card__accent-bar {
+  transform: scaleX(1);
+}
+
+/* ── Group Divider ── */
+.committee-group__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-5);
+  margin: var(--spacing-10) 0 var(--spacing-2);
+}
+
+.group-divider-line {
+  display: block;
+  flex: 1;
+  max-width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gray-light), transparent);
+}
+
+.group-divider-motif {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--primary);
+  opacity: 0.55;
+  letter-spacing: 0.15em;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* ── CTA Section ── */
+.committee-cta-section {
+  background: linear-gradient(160deg, var(--secondary-dark) 0%, #5A0000 40%, var(--royal-dark) 100%);
+  padding: var(--spacing-20) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.committee-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(230, 130, 0, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.committee-cta-card {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 var(--spacing-6);
+}
+
+.committee-cta-card__ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-7);
+}
+
+.cta-line {
+  display: block;
+  flex: 1;
+  max-width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 130, 0, 0.5), transparent);
+}
+
+.cta-lotus {
+  color: var(--primary-light);
+  font-size: 1.3rem;
+  opacity: 0.8;
+}
+
+.committee-cta-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: var(--spacing-5);
+  line-height: 1.2;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+}
+
+.committee-cta-card__text {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  color: rgba(250, 246, 240, 0.82);
+  line-height: 1.75;
+  max-width: 640px;
+  margin: 0 auto var(--spacing-8);
+}
+
+.committee-cta-card__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+/* ── Mobile / Tablet Responsive ── */
+@media (max-width: 768px) {
+  .committee-banner {
+    padding: 80px 0 68px;
+  }
+
+  .committee-banner__ornament {
+    font-size: 1.5rem;
+  }
+
+  .committee-banner__ornament.top-left  { top: 20px; left: 20px; }
+  .committee-banner__ornament.top-right { top: 20px; right: 20px; }
+
+  .committee-intro-section {
+    padding: var(--spacing-8) 0;
+  }
+
+  .committee-intro-text {
+    font-size: var(--text-base);
+  }
+
+  .committee-body-section {
+    padding: var(--spacing-10) 0 var(--spacing-16);
+  }
+
+  .committee-group__title-en {
+    font-size: 1.5rem;
+  }
+
+  .committee-group__header-rule .rule-line {
+    width: 60px;
+  }
+
+  .member-card--apex .member-card__monogram {
+    width: 52px;
+    height: 52px;
+    font-size: 1.4rem;
+  }
+
+  .member-card--apex .member-card__name {
+    font-size: var(--text-lg);
+  }
+
+  .committee-cta-card__actions {
+    flex-direction: column;
+    gap: var(--spacing-3);
+  }
+
+  .committee-cta-card__actions .btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .committee-banner {
+    padding: 64px 0 56px;
+  }
+
+  .committee-banner__ornament {
+    display: none;
+  }
+
+  .committee-banner__divider .divider-line {
+    width: 50px;
+  }
+
+  .member-card__inner {
+    padding: var(--spacing-4);
+    gap: var(--spacing-3);
+  }
+
+  .member-card__monogram {
+    width: 40px;
+    height: 40px;
+    font-size: 1.05rem;
+  }
+
+  .committee-cta-section {
+    padding: var(--spacing-12) 0;
+  }
+
+  .group-divider-line {
+    max-width: 80px;
+  }
 }
