@@ -3,61 +3,6 @@ import { Link } from 'react-router-dom';
 import { useData } from '../../context/DataContext';
 import './UpcomingEvents.css';
 
-const DEFAULT_EVENTS = [
-  {
-    id: 1,
-    title: "Grand Maha Aarti",
-    dayNum: "19",
-    month: "Sept",
-    year: "2026",
-    time: "7:00 PM",
-    location: "Main Pandal, Dongri",
-    category: "Spiritual",
-    icon: "fas fa-fire",
-    colorClass: "ec-orange",
-    spots: "Open to All"
-  },
-  {
-    id: 2,
-    title: "Bhajan Sandhya – Cultural Night",
-    dayNum: "21",
-    month: "Sept",
-    year: "2026",
-    time: "8:00 PM",
-    location: "Cultural Hall",
-    category: "Cultural",
-    icon: "fas fa-music",
-    colorClass: "ec-crimson",
-    spots: "Limited Seating"
-  },
-  {
-    id: 3,
-    title: "Youth Talent Competition",
-    dayNum: "23",
-    month: "Sept",
-    year: "2026",
-    time: "4:00 PM",
-    location: "Community Center",
-    category: "Competition",
-    icon: "fas fa-trophy",
-    colorClass: "ec-blue",
-    spots: "Register Now"
-  },
-  {
-    id: 4,
-    title: "Visarjan Procession",
-    dayNum: "28",
-    month: "Sept",
-    year: "2026",
-    time: "10:00 AM",
-    location: "Dongri to Chowpatty",
-    category: "Procession",
-    icon: "fas fa-water",
-    colorClass: "ec-green",
-    spots: "All Welcome"
-  }
-];
-
 const getCategoryStyles = (category) => {
   const cat = (category || '').toLowerCase();
   if (cat.includes('spiritual')) return { icon: 'fas fa-fire', colorClass: 'ec-orange' };
@@ -113,10 +58,7 @@ const formatFirebaseEvent = (ev) => {
 const UpcomingEvents = () => {
   const { events: dbEvents } = useData();
 
-  // Use database events if they exist, otherwise fallback to default hardcoded ones
-  const displayEvents = dbEvents && dbEvents.length > 0 
-    ? dbEvents.map(formatFirebaseEvent)
-    : DEFAULT_EVENTS;
+  const displayEvents = dbEvents ? dbEvents.map(formatFirebaseEvent) : [];
 
   return (
     <section className="upcoming-events-section" id="upcoming-events">
@@ -135,7 +77,7 @@ const UpcomingEvents = () => {
         </div>
 
         <div className="events-cards-grid">
-          {displayEvents.map((event) => (
+          {displayEvents.length > 0 ? displayEvents.map((event) => (
             <div key={event.id} className={`event-premium-card epc-${event.colorClass}`}>
               {/* Date + Icon Column */}
               <div className={`event-date-col edc-${event.colorClass}`}>
@@ -176,7 +118,13 @@ const UpcomingEvents = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div style={{ gridColumn: "1 / -1", textAlign: "center", padding: "4rem 2rem", background: "rgba(255,255,255,0.02)", borderRadius: "20px", border: "1px dashed rgba(255,255,255,0.1)" }}>
+               <i className="fas fa-calendar-star" style={{fontSize: "3rem", marginBottom: "1rem", color: "var(--brand-primary)", opacity: 0.5}}></i>
+               <h3 style={{fontSize: "1.5rem", marginBottom: "0.5rem", color: "white"}}>Exciting Events Coming Soon!</h3>
+               <p style={{color: "rgba(255,255,255,0.6)"}}>Stay tuned as we finalize the schedule for our upcoming programs.</p>
+            </div>
+          )}
         </div>
       </div>
     </section>
