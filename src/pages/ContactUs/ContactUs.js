@@ -54,14 +54,36 @@ const ContactUs = () => {
       </Helmet>
 
       <main className="contact-page fade-in">
-        {/* Banner */}
-        <section className="contact-banner">
-          <div className="banner-overlay"></div>
-          <div className="container">
+        {/* Premium Map Hero */}
+        <section className="page-hero contact-page-hero">
+          <div className="contact-hero-grid" />
+          <div className="contact-hero-pins">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="map-pin-float">
+                <i className="fas fa-map-marker-alt" />
+              </div>
+            ))}
+          </div>
+          <div className="contact-hero-glow" />
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-headset" /> We're Here For You
+            </div>
             <h1>Contact Us</h1>
-            <p>We are here to answer your queries and assist with devotee services</p>
+            <p>Get in touch with the committee office for puja bookings, seva registration, VIP passes, and general queries.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Contact Us</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,30 Q360,60 720,20 Q1080,-10 1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
+
 
         {/* Contact Info & Form */}
         <section className="section section-contact-portal">

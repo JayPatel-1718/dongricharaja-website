@@ -166,27 +166,32 @@ const Committee = () => {
 
       <main className="committee-page fade-in">
 
-        {/* ── Banner ── */}
-        <section className="committee-banner" aria-label="Committee Banner">
-          <div className="committee-banner__mandala" aria-hidden="true">
-            <span className="mandala-ring mandala-ring--outer" />
-            <span className="mandala-ring mandala-ring--mid" />
-            <span className="mandala-ring mandala-ring--inner" />
+        {/* Premium Leadership Hero */}
+        <section className="page-hero committee-page-hero" aria-label="Committee Banner">
+          <div className="committee-hero-mesh" />
+          <div className="committee-hero-accents">
+            <div className="committee-accent-line" />
+            <div className="committee-accent-line" />
           </div>
-          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
-          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
-          <div className="container">
-            <p className="committee-banner__marathi-year" lang="mr">२०२५ – २६</p>
-            <h1 className="committee-banner__title">Executive Committee</h1>
-            <p className="committee-banner__marathi-title" lang="mr">कार्यकारी मंडळ</p>
-            <div className="committee-banner__divider" aria-hidden="true">
-              <span className="divider-line" />
-              <span className="divider-gem">✦</span>
-              <span className="divider-line" />
+          <div className="committee-hero-crown">
+            <i className="fas fa-crown" />
+          </div>
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-users" /> २०२५ – २६
             </div>
-            <p className="committee-banner__subtitle">
-              Dongricha Raja Sarvajanik Ganeshotsav Mandal
-            </p>
+            <h1>Executive Committee</h1>
+            <p lang="mr" style={{ fontFamily: 'serif', fontSize: '1.1rem' }}>कार्यकारी मंडळ — Dongricha Raja Sarvajanik Ganeshotsav Mandal</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Committee</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,40 L360,20 L720,50 L1080,10 L1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
 

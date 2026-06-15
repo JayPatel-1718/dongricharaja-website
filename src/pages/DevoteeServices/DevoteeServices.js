@@ -105,27 +105,12 @@ const DevoteeServices = () => {
       </Helmet>
 
       <main className="services-page fade-in">
-        {/* Banner — Committee style */}
-        <section className="services-banner" aria-label="Devotee Services Banner">
-          <div className="committee-banner__mandala" aria-hidden="true">
-            <span className="mandala-ring mandala-ring--outer" />
-            <span className="mandala-ring mandala-ring--mid" />
-            <span className="mandala-ring mandala-ring--inner" />
-          </div>
-          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
-          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
+        {/* Banner */}
+        <section className="services-banner">
+          <div className="banner-overlay"></div>
           <div className="container">
-            <p className="services-banner__eyebrow">भक्त सेवा · Seva · Devotee Services</p>
-            <h1 className="services-banner__title">Devotee Services</h1>
-            <p className="services-banner__marathi-title" lang="mr">भक्त सेवा आणि सुविधा</p>
-            <div className="services-banner__divider" aria-hidden="true">
-              <span className="divider-line" />
-              <span className="divider-gem">✦</span>
-              <span className="divider-line" />
-            </div>
-            <p className="services-banner__subtitle">
-              Access virtual bookings, volunteer lists, and real-time Pandal feeds
-            </p>
+            <h1>Devotee Services</h1>
+            <p>Access virtual bookings, volunteer lists, and real-time Pandal feeds</p>
           </div>
         </section>
 

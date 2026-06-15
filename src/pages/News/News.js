@@ -19,29 +19,33 @@ const News = () => {
       </Helmet>
 
       <main className="news-page fade-in">
-        {/* Banner — Committee style */}
-        <section className="news-banner" aria-label="News and Announcements Banner">
-          <div className="committee-banner__mandala" aria-hidden="true">
-            <span className="mandala-ring mandala-ring--outer" />
-            <span className="mandala-ring mandala-ring--mid" />
-            <span className="mandala-ring mandala-ring--inner" />
+        {/* Premium Newspaper Hero */}
+        <section className="page-hero news-page-hero">
+          <div className="news-hero-highlight" />
+          <div className="news-hero-texture" />
+          <div className="news-hero-columns">
+            {[...Array(5)].map((_, i) => <div key={i} className="news-col-divider" />)}
           </div>
-          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
-          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
-          <div className="container">
-            <p className="news-banner__eyebrow">बातम्या · News · Media</p>
-            <h1 className="news-banner__title">News & Announcements</h1>
-            <p className="news-banner__marathi-title" lang="mr">बातम्या आणि घोषणा</p>
-            <div className="news-banner__divider" aria-hidden="true">
-              <span className="divider-line" />
-              <span className="divider-gem">✦</span>
-              <span className="divider-line" />
+          <div className="news-hero-glow" />
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-newspaper" /> Latest Updates
             </div>
-            <p className="news-banner__subtitle">
-              Stay updated with our latest activities and press coverage
-            </p>
+            <h1>News &amp; Bulletins</h1>
+            <p>Official press statements, media coverage, and community updates from Dongri Cha Raja Mandal.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>News</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,0 L1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
+
 
         {/* News Grid */}
         <section className="section section-news-list">

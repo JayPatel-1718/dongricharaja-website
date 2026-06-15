@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
+import './styles/PageHeroes.css';
 import { DataProvider } from './context/DataContext';
 import { AuthProvider } from './context/AuthContext';
 

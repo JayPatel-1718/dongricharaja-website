@@ -30,14 +30,33 @@ const Ganeshotsav = () => {
       </Helmet>
       
       <main className="ganeshotsav-page fade-in">
-        {/* Banner */}
-        <section className="ganeshotsav-banner">
-          <div className="banner-overlay"></div>
-          <div className="container">
+        {/* Premium Mandala Hero */}
+        <section className="page-hero ganeshotsav-page-hero">
+          <div className="mandala-hero-decor">
+            <div className="mandala-ring-outer" />
+            <div className="mandala-ring-mid" />
+            <div className="mandala-ring-inner" />
+            <div className="mandala-center-glow" />
+          </div>
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-dharmachakra" /> Sept 19–28, 2026
+            </div>
             <h1>Ganeshotsav 2026</h1>
-            <p>Celebrate the Divine Festival of faith, heritage, and devotion</p>
+            <p>Celebrate ten divine days of faith, heritage, devotion, and the grand tradition of Dongri Cha Raja.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Ganeshotsav</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,60 C720,0 1440,60 1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
+
 
         {/* Introduction */}
         <section className="section section-intro">

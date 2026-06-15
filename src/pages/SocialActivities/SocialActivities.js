@@ -51,29 +51,35 @@ const SocialActivities = () => {
       </Helmet>
 
       <main className="social-page fade-in">
-        {/* Banner — Committee style */}
-        <section className="social-banner" aria-label="Social Activities Banner">
-          <div className="committee-banner__mandala" aria-hidden="true">
-            <span className="mandala-ring mandala-ring--outer" />
-            <span className="mandala-ring mandala-ring--mid" />
-            <span className="mandala-ring mandala-ring--inner" />
+        {/* Premium Community Hero */}
+        <section className="page-hero social-page-hero">
+          <div className="social-hero-glow" />
+          <div className="social-hero-hearts">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="heart-float">
+                <i className="fas fa-heart" />
+              </div>
+            ))}
           </div>
-          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
-          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
-          <div className="container">
-            <p className="social-banner__eyebrow">सेवा · Seva · Community</p>
-            <h1>Social Activities</h1>
-            <p className="social-banner__marathi" lang="mr">सामाजिक उपक्रम</p>
-            <div className="social-banner__divider" aria-hidden="true">
-              <span className="divider-line" />
-              <span className="divider-gem">✦</span>
-              <span className="divider-line" />
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-hands-holding-heart" /> Seva &amp; Welfare
             </div>
-            <p className="social-banner__subtitle">
-              Giving back to the community, one step at a time
-            </p>
+            <h1>Social Activities</h1>
+            <p>Giving back to the community — blood drives, free health camps, scholarships, and eco drives, year-round.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Social Activities</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,50 Q720,0 1440,50 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
+
 
         {/* Introduction */}
         <section className="section section-intro">

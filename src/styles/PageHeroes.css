@@ -1,0 +1,646 @@
+/* ═══════════════════════════════════════════════
+   PAGE HEROES — SHARED + UNIQUE STYLES
+   Dongri Cha Raja Website
+   ═══════════════════════════════════════════════ */
+
+/* ── Shared Page Hero Foundation ── */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+
+.page-hero-content {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 80px 20px 60px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.page-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(230, 130, 0, 0.12);
+  border: 1px solid rgba(230, 130, 0, 0.3);
+  color: #FFAC40;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+
+.page-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+}
+
+.page-hero p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── Breadcrumb ── */
+.page-hero-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+
+.page-hero-breadcrumb a {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.page-hero-breadcrumb a:hover { color: #FFAC40; }
+.page-hero-breadcrumb i { font-size: 10px; }
+
+/* ════════════════════════════════════════
+   1. ABOUT US — Diagonal Gold Split
+   ════════════════════════════════════════ */
+.about-page-hero {
+  background: linear-gradient(135deg, #0D0520 0%, #1C0A35 50%, #2D1040 100%);
+  min-height: 420px;
+}
+
+.about-hero-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.about-hero-diagonal {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+}
+
+.about-hero-rings {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 400px;
+  height: 400px;
+  opacity: 0.15;
+}
+
+.about-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid #FFAC40;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: expandRing 4s ease-in-out infinite;
+}
+
+.about-ring:nth-child(1) { width: 120px; height: 120px; animation-delay: 0s; }
+.about-ring:nth-child(2) { width: 200px; height: 200px; animation-delay: 0.5s; }
+.about-ring:nth-child(3) { width: 290px; height: 290px; animation-delay: 1s; }
+.about-ring:nth-child(4) { width: 380px; height: 380px; animation-delay: 1.5s; }
+
+@keyframes expandRing {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.about-hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,130,0,0.12) 0%, transparent 70%);
+}
+
+.about-hero-timeline-preview {
+  display: none;
+}
+
+/* ════════════════════════════════════════
+   2. GALLERY — Cinematic Film Strip
+   ════════════════════════════════════════ */
+.gallery-page-hero {
+  background: linear-gradient(160deg, #080818 0%, #0D1220 50%, #1A0A30 100%);
+  min-height: 400px;
+}
+
+.gallery-hero-film-strip {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  opacity: 0.12;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.film-strip-col {
+  flex: 1;
+  height: 100%;
+  background: rgba(255,255,255,0.04);
+  border-right: 2px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.film-hole {
+  width: 14px;
+  height: 10px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.gallery-hero-scan {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(230,130,0,0.06), transparent);
+  animation: heroScan 4s linear infinite;
+}
+
+@keyframes heroScan {
+  to { left: 150%; }
+}
+
+.gallery-hero-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%, rgba(230,130,0,0.08) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   3. EVENTS — Calendar Glow
+   ════════════════════════════════════════ */
+.events-page-hero {
+  background: linear-gradient(135deg, #0A0A20 0%, #1C0A35 60%, #2A1015 100%);
+  min-height: 420px;
+}
+
+.events-hero-calendar {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.cal-cell {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.4);
+}
+
+.cal-cell.highlight {
+  background: rgba(230,130,0,0.9);
+  opacity: 1;
+}
+
+.events-hero-glow {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,28,28,0.15) 0%, transparent 70%);
+}
+
+.events-hero-date-pills {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.date-pill {
+  background: rgba(230,130,0,0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 11px;
+  color: #FFAC40;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════
+   4. GANESHOTSAV — Mandala Radial
+   ════════════════════════════════════════ */
+.ganeshotsav-page-hero {
+  background: radial-gradient(ellipse at center, #2D1808 0%, #1A0A00 40%, #0D0520 100%);
+  min-height: 440px;
+}
+
+.mandala-hero-decor {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.mandala-ring-outer {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(230,130,0,0.1);
+  animation: mandalaRotate 40s linear infinite;
+}
+
+.mandala-ring-mid {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  border: 1px solid rgba(230,130,0,0.15);
+  border-style: dashed;
+  animation: mandalaRotate 25s linear infinite reverse;
+}
+
+.mandala-ring-inner {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  border: 2px solid rgba(230,130,0,0.2);
+  animation: mandalaRotate 15s linear infinite;
+}
+
+.mandala-center-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,130,0,0.25), transparent 70%);
+  animation: mandalaPulse 3s ease-in-out infinite;
+}
+
+@keyframes mandalaRotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mandalaPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.mandala-petals {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  opacity: 0.08;
+}
+
+/* ════════════════════════════════════════
+   5. CONTACT US — Map Pin Scatter
+   ════════════════════════════════════════ */
+.contact-page-hero {
+  background: linear-gradient(135deg, #041020 0%, #0A1830 50%, #1C0A35 100%);
+  min-height: 400px;
+}
+
+.contact-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.contact-hero-pins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.map-pin-float {
+  position: absolute;
+  animation: pinFloat 6s ease-in-out infinite;
+}
+
+.map-pin-float i {
+  font-size: 20px;
+  color: rgba(230,130,0,0.5);
+}
+
+.map-pin-float:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s; }
+.map-pin-float:nth-child(2) { top: 60%; left: 25%; animation-delay: 1s; }
+.map-pin-float:nth-child(3) { top: 30%; right: 20%; animation-delay: 0.5s; }
+.map-pin-float:nth-child(4) { top: 70%; right: 15%; animation-delay: 1.5s; }
+.map-pin-float:nth-child(5) { top: 10%; right: 35%; animation-delay: 2s; }
+
+@keyframes pinFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.contact-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 70% at 50% 50%, rgba(59,130,246,0.08) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   6. COMMITTEE — Leadership Mesh
+   ════════════════════════════════════════ */
+.committee-page-hero {
+  background: linear-gradient(160deg, #080814 0%, #101828 50%, #1C0A35 100%);
+  min-height: 400px;
+}
+
+.committee-hero-mesh {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(230,130,0,0.8) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.committee-hero-accents {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.committee-accent-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230,130,0,0.2), transparent);
+  width: 80%;
+  left: 10%;
+}
+
+.committee-accent-line:nth-child(1) { top: 25%; }
+.committee-accent-line:nth-child(2) { top: 75%; }
+
+.committee-hero-crown {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 200px;
+  color: rgba(230,130,0,0.04);
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════
+   7. DEVOTEE SERVICES — Flowing Seva
+   ════════════════════════════════════════ */
+.devotee-page-hero {
+  background: linear-gradient(135deg, #1A0830 0%, #0D1020 50%, #1A0530 100%);
+  min-height: 420px;
+}
+
+.devotee-hero-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.devotee-float-icon {
+  position: absolute;
+  animation: devoteeFloat 8s ease-in-out infinite;
+  opacity: 0.06;
+  font-size: 28px;
+  color: #FFAC40;
+}
+
+@keyframes devoteeFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.devotee-float-icon:nth-child(1)  { top: 15%; left: 5%;  animation-delay: 0s; }
+.devotee-float-icon:nth-child(2)  { top: 50%; left: 10%; animation-delay: 1s; }
+.devotee-float-icon:nth-child(3)  { top: 80%; left: 5%;  animation-delay: 2s; }
+.devotee-float-icon:nth-child(4)  { top: 20%; right: 5%; animation-delay: 0.5s; }
+.devotee-float-icon:nth-child(5)  { top: 60%; right: 8%; animation-delay: 1.5s; }
+.devotee-float-icon:nth-child(6)  { top: 40%; left: 20%; animation-delay: 3s; }
+
+.devotee-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(168,85,247,0.08) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   8. DONATIONS — Gold Coin Rain
+   ════════════════════════════════════════ */
+.donations-page-hero {
+  background: linear-gradient(160deg, #1A0A00 0%, #2D1200 40%, #1A0530 100%);
+  min-height: 400px;
+}
+
+.donations-hero-coins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.coin-float {
+  position: absolute;
+  border-radius: 50%;
+  animation: coinDrop 8s ease-in-out infinite;
+}
+
+.coin-float i {
+  color: rgba(230,130,0,0.15);
+  font-size: 22px;
+}
+
+.coin-float:nth-child(1)  { left: 8%;  top: -5%; animation-delay: 0s; }
+.coin-float:nth-child(2)  { left: 22%; top: -5%; animation-delay: 1.2s; }
+.coin-float:nth-child(3)  { left: 38%; top: -5%; animation-delay: 2.4s; }
+.coin-float:nth-child(4)  { left: 55%; top: -5%; animation-delay: 0.8s; }
+.coin-float:nth-child(5)  { left: 70%; top: -5%; animation-delay: 1.8s; }
+.coin-float:nth-child(6)  { left: 85%; top: -5%; animation-delay: 3s; }
+
+@keyframes coinDrop {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+
+.donations-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(230,130,0,0.12) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   9. NEWS — Dark Newspaper
+   ════════════════════════════════════════ */
+.news-page-hero {
+  background: linear-gradient(160deg, #060610 0%, #0E0E1A 100%);
+  min-height: 380px;
+}
+
+.news-hero-texture {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 22px,
+    rgba(255,255,255,0.5) 22px,
+    rgba(255,255,255,0.5) 23px
+  );
+  pointer-events: none;
+}
+
+.news-hero-columns {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.news-col-divider {
+  flex: 1;
+  border-right: 1px solid rgba(255,255,255,0.02);
+}
+
+.news-hero-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #8B0000, #E66200, #8B0000);
+}
+
+.news-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 80% at 50% 50%, rgba(139,0,0,0.1) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   10. SOCIAL ACTIVITIES — Community Warmth
+   ════════════════════════════════════════ */
+.social-page-hero {
+  background: linear-gradient(135deg, #0D0520 0%, #1A0830 50%, #200510 100%);
+  min-height: 420px;
+}
+
+.social-hero-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.heart-float {
+  position: absolute;
+  animation: heartRise 10s ease-in-out infinite;
+  opacity: 0;
+}
+
+.heart-float i {
+  color: rgba(230,80,80,0.4);
+}
+
+@keyframes heartRise {
+  0%   { transform: translateY(100%) scale(0.5); opacity: 0; }
+  20%  { opacity: 0.6; }
+  80%  { opacity: 0.2; }
+  100% { transform: translateY(-120%) scale(1.2); opacity: 0; }
+}
+
+.heart-float:nth-child(1) { left: 10%; font-size: 20px; animation-delay: 0s; }
+.heart-float:nth-child(2) { left: 25%; font-size: 14px; animation-delay: 2s; }
+.heart-float:nth-child(3) { left: 45%; font-size: 18px; animation-delay: 4s; }
+.heart-float:nth-child(4) { left: 65%; font-size: 12px; animation-delay: 1s; }
+.heart-float:nth-child(5) { left: 80%; font-size: 22px; animation-delay: 3s; }
+
+.social-hero-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(220,60,60,0.1) 0%, transparent 70%);
+}
+
+/* ════════════════════════════════════════
+   SHARED BOTTOM WAVE / TRANSITION
+   ════════════════════════════════════════ */
+.page-hero-wave {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+  z-index: 2;
+}
+
+.page-hero-wave svg {
+  width: 100%;
+  height: 60px;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: 300px;
+  }
+
+  .page-hero-content {
+    padding: 60px 16px 48px;
+  }
+
+  .events-hero-calendar,
+  .about-hero-rings,
+  .committee-hero-crown {
+    display: none;
+  }
+}
