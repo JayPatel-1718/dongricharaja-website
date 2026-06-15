@@ -20,8 +20,8 @@ const Events = () => {
   };
 
   const filteredEvents = eventsList.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          item.desc.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = (item.title || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          (item.desc || '').toLowerCase().includes(searchQuery.toLowerCase());
     const matchesTab = activeTab === "all" || item.category === activeTab;
     return matchesSearch && matchesTab;
   });
@@ -75,6 +75,18 @@ const Events = () => {
                   onClick={() => setActiveTab("cultural")}
                 >
                   Cultural
+                </button>
+                <button 
+                  className={activeTab === "competition" ? "tab active" : "tab"} 
+                  onClick={() => setActiveTab("competition")}
+                >
+                  Competition
+                </button>
+                <button 
+                  className={activeTab === "procession" ? "tab active" : "tab"} 
+                  onClick={() => setActiveTab("procession")}
+                >
+                  Procession
                 </button>
                 <button 
                   className={activeTab === "community" ? "tab active" : "tab"} 

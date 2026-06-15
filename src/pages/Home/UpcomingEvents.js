@@ -1,62 +1,122 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useData } from '../../context/DataContext';
 import './UpcomingEvents.css';
 
-const UpcomingEvents = () => {
-  const events = [
-    {
-      id: 1,
-      title: "Grand Maha Aarti",
-      dayNum: "19",
-      month: "Sept",
-      year: "2026",
-      time: "7:00 PM",
-      location: "Main Pandal, Dongri",
-      category: "Spiritual",
-      icon: "fas fa-fire",
-      colorClass: "ec-orange",
-      spots: "Open to All"
-    },
-    {
-      id: 2,
-      title: "Bhajan Sandhya – Cultural Night",
-      dayNum: "21",
-      month: "Sept",
-      year: "2026",
-      time: "8:00 PM",
-      location: "Cultural Hall",
-      category: "Cultural",
-      icon: "fas fa-music",
-      colorClass: "ec-crimson",
-      spots: "Limited Seating"
-    },
-    {
-      id: 3,
-      title: "Youth Talent Competition",
-      dayNum: "23",
-      month: "Sept",
-      year: "2026",
-      time: "4:00 PM",
-      location: "Community Center",
-      category: "Competition",
-      icon: "fas fa-trophy",
-      colorClass: "ec-blue",
-      spots: "Register Now"
-    },
-    {
-      id: 4,
-      title: "Visarjan Procession",
-      dayNum: "28",
-      month: "Sept",
-      year: "2026",
-      time: "10:00 AM",
-      location: "Dongri to Chowpatty",
-      category: "Procession",
-      icon: "fas fa-water",
-      colorClass: "ec-green",
-      spots: "All Welcome"
+const DEFAULT_EVENTS = [
+  {
+    id: 1,
+    title: "Grand Maha Aarti",
+    dayNum: "19",
+    month: "Sept",
+    year: "2026",
+    time: "7:00 PM",
+    location: "Main Pandal, Dongri",
+    category: "Spiritual",
+    icon: "fas fa-fire",
+    colorClass: "ec-orange",
+    spots: "Open to All"
+  },
+  {
+    id: 2,
+    title: "Bhajan Sandhya – Cultural Night",
+    dayNum: "21",
+    month: "Sept",
+    year: "2026",
+    time: "8:00 PM",
+    location: "Cultural Hall",
+    category: "Cultural",
+    icon: "fas fa-music",
+    colorClass: "ec-crimson",
+    spots: "Limited Seating"
+  },
+  {
+    id: 3,
+    title: "Youth Talent Competition",
+    dayNum: "23",
+    month: "Sept",
+    year: "2026",
+    time: "4:00 PM",
+    location: "Community Center",
+    category: "Competition",
+    icon: "fas fa-trophy",
+    colorClass: "ec-blue",
+    spots: "Register Now"
+  },
+  {
+    id: 4,
+    title: "Visarjan Procession",
+    dayNum: "28",
+    month: "Sept",
+    year: "2026",
+    time: "10:00 AM",
+    location: "Dongri to Chowpatty",
+    category: "Procession",
+    icon: "fas fa-water",
+    colorClass: "ec-green",
+    spots: "All Welcome"
+  }
+];
+
+const getCategoryStyles = (category) => {
+  const cat = (category || '').toLowerCase();
+  if (cat.includes('spiritual')) return { icon: 'fas fa-fire', colorClass: 'ec-orange' };
+  if (cat.includes('cultural')) return { icon: 'fas fa-music', colorClass: 'ec-crimson' };
+  if (cat.includes('competition')) return { icon: 'fas fa-trophy', colorClass: 'ec-blue' };
+  if (cat.includes('procession')) return { icon: 'fas fa-water', colorClass: 'ec-green' };
+  return { icon: 'fas fa-calendar', colorClass: 'ec-blue' };
+};
+
+const formatFirebaseEvent = (ev) => {
+  // If date is YYYY-MM-DD
+  let dayNum = "??";
+  let month = "???";
+  let year = "????";
+  
+  if (ev.date) {
+    const d = new Date(ev.date);
+    if (!isNaN(d.getTime())) {
+      dayNum = d.getDate().toString();
+      month = d.toLocaleString('default', { month: 'short' });
+      year = d.getFullYear().toString();
+    } else {
+      // Fallback if they typed a string like "19 Sept 2026"
+      const parts = ev.date.split(' ');
+      if (parts.length >= 3) {
+        dayNum = parts[0];
+        month = parts[1];
+        year = parts[2];
+      } else {
+        dayNum = "01";
+        month = ev.date;
+      }
     }
-  ];
+  }
+
+  const styles = getCategoryStyles(ev.category);
+
+  return {
+    id: ev.id,
+    title: ev.title,
+    dayNum,
+    month,
+    year,
+    time: ev.time || "",
+    location: ev.location || "",
+    category: ev.category || "Event",
+    icon: styles.icon,
+    colorClass: styles.colorClass,
+    spots: ev.spots || "Join Us"
+  };
+};
+
+const UpcomingEvents = () => {
+  const { events: dbEvents } = useData();
+
+  // Use database events if they exist, otherwise fallback to default hardcoded ones
+  const displayEvents = dbEvents && dbEvents.length > 0 
+    ? dbEvents.map(formatFirebaseEvent)
+    : DEFAULT_EVENTS;
 
   return (
     <section className="upcoming-events-section" id="upcoming-events">
@@ -75,7 +135,7 @@ const UpcomingEvents = () => {
         </div>
 
         <div className="events-cards-grid">
-          {events.map((event) => (
+          {displayEvents.map((event) => (
             <div key={event.id} className={`event-premium-card epc-${event.colorClass}`}>
               {/* Date + Icon Column */}
               <div className={`event-date-col edc-${event.colorClass}`}>

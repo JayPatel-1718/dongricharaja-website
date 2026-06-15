@@ -3,12 +3,14 @@ import { useData } from '../../context/DataContext';
 import './Admin.css';
 
 const BLANK = {
-  title: '', category: 'spiritual', date: '', time: '', location: '', desc: ''
+  title: '', category: 'spiritual', date: '', time: '', location: '', desc: '', spots: ''
 };
 
 const CATEGORIES = [
   { value: 'spiritual', label: 'Spiritual', badge: 'admin-badge-orange' },
   { value: 'cultural', label: 'Cultural', badge: 'admin-badge-purple' },
+  { value: 'competition', label: 'Competition', badge: 'admin-badge-blue' },
+  { value: 'procession', label: 'Procession', badge: 'admin-badge-green' },
   { value: 'community', label: 'Community', badge: 'admin-badge-blue' },
 ];
 
@@ -23,7 +25,7 @@ const ManageEvents = () => {
   const [catFilter, setCatFilter] = useState('all');
 
   const openAdd = () => { setEditingId(null); setForm(BLANK); setShowModal(true); setSaved(false); };
-  const openEdit = (item) => { setEditingId(item.id); setForm({ ...item }); setShowModal(true); setSaved(false); };
+  const openEdit = (item) => { setEditingId(item.id); setForm({ ...BLANK, ...item }); setShowModal(true); setSaved(false); };
   const closeModal = () => { setShowModal(false); setEditingId(null); setForm(BLANK); };
   const handleChange = (e) => { const { name, value } = e.target; setForm(prev => ({ ...prev, [name]: value })); };
 
@@ -38,7 +40,7 @@ const ManageEvents = () => {
 
   const filtered = events.filter(ev => {
     const matchSearch = ev.title.toLowerCase().includes(search.toLowerCase()) ||
-      ev.location.toLowerCase().includes(search.toLowerCase());
+      (ev.location && ev.location.toLowerCase().includes(search.toLowerCase()));
     const matchCat = catFilter === 'all' || ev.category === catFilter;
     return matchSearch && matchCat;
   });
@@ -159,7 +161,7 @@ const ManageEvents = () => {
                 </div>
                 <div className="admin-form-group">
                   <label>Description</label>
-                  <textarea name="desc" value={form.desc} onChange={handleChange} placeholder="Describe the event..." rows={3} />
+                  <textarea name="desc" value={form.desc || ''} onChange={handleChange} placeholder="Describe the event..." rows={3} />
                 </div>
                 <div className="admin-form-row">
                   <div className="admin-form-group">
@@ -170,18 +172,22 @@ const ManageEvents = () => {
                   </div>
                   <div className="admin-form-group">
                     <label>Location</label>
-                    <input name="location" value={form.location} onChange={handleChange} placeholder="Main Pandal" />
+                    <input name="location" value={form.location || ''} onChange={handleChange} placeholder="Main Pandal" />
                   </div>
                 </div>
                 <div className="admin-form-row">
                   <div className="admin-form-group">
                     <label>Date</label>
-                    <input name="date" value={form.date} onChange={handleChange} placeholder="Sept 19, 2026" />
+                    <input type="date" name="date" value={form.date} onChange={handleChange} required />
                   </div>
                   <div className="admin-form-group">
                     <label>Time</label>
-                    <input name="time" value={form.time} onChange={handleChange} placeholder="7:00 PM" />
+                    <input name="time" value={form.time || ''} onChange={handleChange} placeholder="7:00 PM" />
                   </div>
+                </div>
+                <div className="admin-form-group">
+                  <label>Spots / Registration Status</label>
+                  <input name="spots" value={form.spots || ''} onChange={handleChange} placeholder="e.g. Open to All, Register Now, Limited Seating" />
                 </div>
               </div>
               <div className="admin-modal-footer">
