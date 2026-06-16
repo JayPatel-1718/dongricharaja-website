@@ -1,34 +1,137 @@
+/* ── Donations Hero Banner (Elevated Royal Theme) ── */
 .donations-banner {
   position: relative;
-  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--primary-dark) 100%);
-  padding: 100px 0;
+  background: linear-gradient(
+    160deg,
+    var(--secondary-dark) 0%,
+    #6B0000 30%,
+    var(--secondary) 65%,
+    var(--primary-dark) 100%
+  );
+  padding: 110px 0 90px;
   text-align: center;
   color: var(--white);
   overflow: hidden;
+  isolation: isolate;
 }
 
+/* Radial spotlight */
 .donations-banner::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at center, rgba(230, 130, 0, 0.15) 0%, transparent 70%);
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    rgba(230, 130, 0, 0.18) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle texture overlay */
+.donations-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mandala rings positioning for Donations */
+.donations-banner__mandala {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
   pointer-events: none;
 }
 
-.donations-banner h1 {
-  font-size: var(--text-5xl);
-  color: var(--white);
-  margin-bottom: var(--spacing-3);
-  font-weight: 800;
+.donations-banner .mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 130, 0, 0.12);
+  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
 }
 
-.donations-banner p {
-  font-size: var(--text-lg);
-  color: var(--cream-dark);
-  opacity: 0.9;
+.donations-banner .mandala-ring--outer {
+  width: 580px;
+  height: 580px;
+  border-width: 1px;
+  animation: donations-mandala-rotate 60s linear infinite;
+}
+
+.donations-banner .mandala-ring--mid {
+  width: 400px;
+  height: 400px;
+  border-color: rgba(230, 130, 0, 0.08);
+  animation: donations-mandala-rotate 45s linear infinite reverse;
+}
+
+.donations-banner .mandala-ring--inner {
+  width: 240px;
+  height: 240px;
+  border-color: rgba(230, 130, 0, 0.06);
+  animation: donations-mandala-rotate 30s linear infinite;
+}
+
+@keyframes donations-mandala-rotate {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.donations-banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+.donations-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.donations-banner__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.donations-banner__divider .divider-line {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 130, 0, 0.6), transparent);
+}
+
+.donations-banner__divider .divider-gem {
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.donations-banner__subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .section-donation-form {
@@ -452,7 +555,264 @@ select.form-control {
     align-items: center;
     gap: var(--spacing-6);
   }
-  .sig-block {
-    text-align: center !important;
-  }
+}
+
+/* Centered Single-Column Cards Layout */
+.donations-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding-bottom: var(--spacing-16);
+}
+
+.donations-centered-card {
+  max-width: 680px;
+  width: 100%;
+  padding: var(--spacing-8) !important;
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-light);
+}
+
+.donations-card-title {
+  color: var(--secondary-dark);
+  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  margin-bottom: 2px;
+}
+
+/* Gold Flower Divider Motif */
+.flower-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  margin: var(--spacing-2) auto var(--spacing-4) auto;
+  width: 100%;
+}
+
+.flower-divider .line {
+  flex-grow: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--primary), transparent);
+}
+
+.flower-divider .line:first-child {
+  background: linear-gradient(to left, var(--primary), transparent);
+}
+
+.flower-divider .line:last-child {
+  background: linear-gradient(to right, var(--primary), transparent);
+}
+
+.flower-divider .flower {
+  color: var(--primary);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+/* Field labels and Asterisks */
+.form-field-label {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--gray-dark);
+  margin-bottom: 6px;
+}
+
+.required-asterisk {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* Input Fields with Nested Icons */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--gray);
+  font-size: var(--text-sm);
+  pointer-events: none;
+}
+
+.input-with-icon .rupee-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--gray);
+  font-size: 1.05rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.input-with-icon .form-control {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border-radius: var(--radius-base);
+  border: 1px solid var(--gray-light);
+  background-color: var(--white);
+  outline: none;
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  transition: all 0.2s ease;
+}
+
+.input-with-icon .form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(230, 130, 0, 0.1);
+  background-color: var(--white);
+}
+
+.input-with-icon .form-control::placeholder {
+  color: var(--gray);
+  opacity: 0.5;
+}
+
+/* Donate Button & Notice */
+.donate-submit-btn {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-base);
+  border: none;
+  background-color: var(--primary);
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.donate-submit-btn:hover {
+  background-color: var(--primary-dark);
+  box-shadow: var(--shadow-gold-glow);
+  transform: translateY(-1px);
+}
+
+.donate-submit-btn:active {
+  transform: translateY(0);
+}
+
+.donate-submit-btn:disabled {
+  background-color: var(--gray-light);
+  color: var(--gray);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.security-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--gray);
+  margin-top: var(--spacing-4);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.security-notice i {
+  font-size: 0.75rem;
+}
+
+/* Payment Information Details */
+.payment-subtitle {
+  color: var(--gray);
+  font-size: var(--text-sm);
+  margin-bottom: var(--spacing-6);
+  opacity: 0.9;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-method-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--gray-lighter);
+}
+
+.payment-method-row:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.payment-badge-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--cream);
+  border: 1px solid var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.upi-text {
+  color: #c97100; /* Rich warm gold/orange for UPI label */
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.gpay-text {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.g-blue {
+  color: #4285F4;
+}
+
+.p-green {
+  color: var(--gray-dark);
+}
+
+.payment-method-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payment-label {
+  font-size: var(--text-xs);
+  color: var(--gray);
+  font-weight: 500;
+}
+
+.payment-value {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--black);
+  letter-spacing: 0.5px;
+}
+
+.payment-footer-note {
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--gray);
+  line-height: 1.6;
+  margin-top: var(--spacing-6);
+  padding: 0 var(--spacing-2);
+  opacity: 0.85;
 }
