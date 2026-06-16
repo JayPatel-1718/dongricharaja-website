@@ -105,12 +105,33 @@ const DevoteeServices = () => {
       </Helmet>
 
       <main className="services-page fade-in">
-        {/* Banner */}
-        <section className="services-banner">
-          <div className="banner-overlay"></div>
-          <div className="container">
+        {/* Premium Seva Hero */}
+        <section className="page-hero devotee-page-hero">
+          <div className="devotee-hero-glow" />
+          <div className="devotee-hero-icons">
+            <i className="fas fa-om devotee-float-icon" />
+            <i className="fas fa-hands-praying devotee-float-icon" />
+            <i className="fas fa-gopuram devotee-float-icon" />
+            <i className="fas fa-dharmachakra devotee-float-icon" />
+            <i className="fas fa-spa devotee-float-icon" />
+            <i className="fas fa-seedling devotee-float-icon" />
+          </div>
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-hands-helping" /> Digital Portal
+            </div>
             <h1>Devotee Services</h1>
-            <p>Access virtual bookings, volunteer lists, and real-time Pandal feeds</p>
+            <p>Access virtual puja bookings, volunteer registration, VIP passes, and real-time pandal crowd trackers.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Devotee Services</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,10 L360,50 L720,20 L1080,60 L1440,30 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
 

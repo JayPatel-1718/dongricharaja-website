@@ -113,12 +113,32 @@ const Donations = () => {
       </Helmet>
 
       <main className="donations-page fade-in">
-        {/* Banner */}
-        <section className="donations-banner">
-          <div className="banner-overlay"></div>
-          <div className="container">
+        {/* Premium Gold Coin Hero */}
+        <section className="page-hero donations-page-hero">
+          <div className="donations-hero-glow" />
+          <div className="donations-hero-coins">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="coin-float">
+                <i className="fas fa-coins" />
+              </div>
+            ))}
+          </div>
+          <div className="page-hero-content">
+            <div className="page-hero-eyebrow">
+              <i className="fas fa-hand-holding-heart" /> Support the Trust
+            </div>
             <h1>Online Donations</h1>
-            <p>Your contributions fuel our spiritual and social impact initiatives</p>
+            <p>Your contributions fuel our grand Ganeshotsav celebrations and year-round community welfare initiatives.</p>
+            <div className="page-hero-breadcrumb">
+              <a href="/">Home</a>
+              <i className="fas fa-chevron-right" />
+              <span>Donations</span>
+            </div>
+          </div>
+          <div className="page-hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,30 Q360,60 720,20 Q1080,-10 1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
+            </svg>
           </div>
         </section>
 

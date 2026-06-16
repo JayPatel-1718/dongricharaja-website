@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../firebase';
 import { useData } from '../../context/DataContext';
 import './Admin.css';
 
-const BLANK = { tag: 'Announcement', title: '', date: '', desc: '', icon: 'fa-bullhorn' };
+const BLANK = { tag: 'Announcement', title: '', date: '', desc: '', icon: 'fa-bullhorn', imageUrl: '' };
 
 const TAGS = ['Announcement', 'Press Release', 'Media Coverage', 'General News'];
 
@@ -26,6 +28,34 @@ const ManageNews = () => {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [saved, setSaved] = useState(false);
   const [search, setSearch] = useState('');
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (file) => {
+    if (!file || !file.type.startsWith('image/')) return;
+    setUploading(true);
+    setUploadProgress(0);
+    const storageRef = ref(storage, `news/${Date.now()}_${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        setUploadProgress(pct);
+      },
+      (error) => {
+        console.error("Upload error", error);
+        setUploading(false);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setForm(prev => ({ ...prev, imageUrl: downloadURL }));
+          setUploading(false);
+          setUploadProgress(0);
+        });
+      }
+    );
+  };
 
   const openAdd = () => { setEditingId(null); setForm(BLANK); setShowModal(true); setSaved(false); };
   const openEdit = (item) => { setEditingId(item.id); setForm({ ...item }); setShowModal(true); setSaved(false); };
@@ -169,6 +199,49 @@ const ManageNews = () => {
                   <select name="icon" value={form.icon} onChange={handleChange}>
                     {ICONS.map(ic => <option key={ic} value={ic}>{ic}</option>)}
                   </select>
+                </div>
+                
+                <div className="admin-form-group" style={{ marginTop: '16px' }}>
+                  <label>Attachment Image (Optional)</label>
+                  <div 
+                    className="admin-file-drop" 
+                    style={{ position: 'relative', overflow: 'hidden' }}
+                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                  >
+                    <input 
+                      type="file" 
+                      ref={fileInputRef} 
+                      style={{ display: 'none' }} 
+                      accept="image/*"
+                      onChange={e => handleFileUpload(e.target.files[0])}
+                    />
+                    
+                    {uploading ? (
+                      <div className="admin-upload-progress">
+                        <div className="admin-upload-spinner"><i className="fas fa-spinner fa-spin" /></div>
+                        <div className="admin-upload-text">Uploading {uploadProgress}%...</div>
+                        <div className="admin-upload-bar-bg">
+                          <div className="admin-upload-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
+                        </div>
+                      </div>
+                    ) : form.imageUrl ? (
+                      <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '8px', overflow: 'hidden' }}>
+                        <img src={form.imageUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <button 
+                          type="button" 
+                          onClick={(e) => { e.stopPropagation(); setForm(p => ({...p, imageUrl: ''})) }}
+                          style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(0,0,0,0.7)', color: 'white', border: 'none', borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer' }}
+                        >
+                          <i className="fas fa-times" />
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="admin-file-icon"><i className="fas fa-cloud-arrow-up" /></div>
+                        <div className="admin-file-text">Click to upload an image</div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="admin-modal-footer">

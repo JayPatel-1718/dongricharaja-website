@@ -1,49 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useData } from '../../context/DataContext';
 import './RecentGallery.css';
 
 const RecentGallery = () => {
+  const { galleryPhotos } = useData();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activePhoto, setActivePhoto] = useState(null);
 
-  const photos = [
-    {
-      id: 1,
-      title: "Grand Aarti 2025",
-      category: "Aarti",
-      image: "/images/maha_aarti_gathering.jpg",
-      bgColor: "linear-gradient(135deg, #F67900, #8B0000)",
-      icon: "fas fa-fire",
-      date: "Sept 2025"
-    },
-    {
-      id: 2,
-      title: "Dhol-Tasha Pathak",
-      category: "Music",
-      image: "/images/gallery_dhol_tasha.jpg",
-      bgColor: "linear-gradient(135deg, #E53935, #880E4F)",
-      icon: "fas fa-drum",
-      date: "Sept 2025"
-    },
-    {
-      id: 3,
-      title: "Devotee Gathering",
-      category: "Festival",
-      image: "/images/community_service_seva.jpg",
-      bgColor: "linear-gradient(135deg, #1C0A35, #4A148C)",
-      icon: "fas fa-users",
-      date: "Sept 2025"
-    },
-    {
-      id: 4,
-      title: "Idol Decoration",
-      category: "Decor",
-      image: "/images/dongri_cha_raja_idol.jpg",
-      bgColor: "linear-gradient(135deg, #E68200, #1C0A35)",
-      icon: "fas fa-star",
-      date: "Sept 2025"
-    }
-  ];
+  const photos = galleryPhotos.slice(0, 4);
 
   const openLightbox = (photo) => {
     setActivePhoto(photo);
@@ -75,7 +40,7 @@ const RecentGallery = () => {
         </div>
 
         <div className="gallery-simple-grid">
-          {photos.map((photo, index) => (
+          {photos.length > 0 ? photos.map((photo, index) => (
             <div
               key={photo.id}
               className="gallery-card"
@@ -88,13 +53,16 @@ const RecentGallery = () => {
               <div
                 className="gallery-card-bg"
                 style={{
-                  backgroundImage: `url(${photo.image}), ${photo.bgColor}`,
+                  backgroundImage: `url(${photo.src || photo.image})`,
+                  backgroundColor: 'var(--royal-dark)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
                 }}
               />
               <div className="gallery-card-overlay" />
               <div className="gallery-card-content">
                 <div className="gallery-category-badge">
-                  <i className={photo.icon}></i>
+                  <i className={photo.icon || "fas fa-camera"}></i>
                   {photo.category}
                 </div>
               </div>
@@ -104,11 +72,16 @@ const RecentGallery = () => {
                 </div>
                 <div className="gallery-card-info">
                   <h3>{photo.title}</h3>
-                  <p>{photo.date}</p>
+                  <p>{photo.date || 'Recent'}</p>
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '40px', color: 'var(--royal-light)' }}>
+              <i className="fas fa-camera" style={{ fontSize: '32px', opacity: 0.5, marginBottom: '16px' }} />
+              <p>New gallery photos will appear here soon.</p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -121,14 +94,20 @@ const RecentGallery = () => {
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <div
               className="lightbox-image"
-              style={{ backgroundImage: `url(${activePhoto.image}), ${activePhoto.bgColor}` }}
+              style={{ 
+                backgroundImage: `url(${activePhoto.src || activePhoto.image})`,
+                backgroundColor: 'var(--royal-dark)',
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center'
+              }}
             />
             <div className="lightbox-info">
               <div className="lightbox-category">
-                <i className={activePhoto.icon}></i> {activePhoto.category}
+                <i className={activePhoto.icon || "fas fa-camera"}></i> {activePhoto.category}
               </div>
               <h3>{activePhoto.title}</h3>
-              <p>{activePhoto.date}</p>
+              <p>{activePhoto.date || 'Recent'}</p>
             </div>
           </div>
         </div>

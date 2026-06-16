@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useData } from '../../context/DataContext';
 import './Admin.css';
 
@@ -11,6 +11,28 @@ const ManageSettings = () => {
   const [resetDone, setResetDone] = useState(false);
   const [heroStats, setHeroStats] = useState({ ...settings.heroStats });
   const [statsSaved, setStatsSaved] = useState(false);
+
+  const [siteInfo, setSiteInfo] = useState(settings.siteInfo || {
+    siteName: 'Dongri Cha Raja',
+    contactPhone: '+91 22 2345 6789',
+    contactEmail: 'info@dongricharaja.org',
+    address: 'Dongri, Mumbai - 400009, Maharashtra, India'
+  });
+  const [socialLinks, setSocialLinks] = useState(settings.socialLinks || {
+    facebook: 'https://facebook.com/dongricharaja',
+    instagram: 'https://instagram.com/dongricharaja',
+    youtube: 'https://youtube.com/c/dongricharaja',
+    whatsapp: 'https://wa.me/919876543210'
+  });
+  
+  const [siteInfoSaved, setSiteInfoSaved] = useState(false);
+  const [socialLinksSaved, setSocialLinksSaved] = useState(false);
+
+  useEffect(() => {
+    if (settings.siteInfo) setSiteInfo(settings.siteInfo);
+    if (settings.socialLinks) setSocialLinks(settings.socialLinks);
+    if (settings.heroStats) setHeroStats(settings.heroStats);
+  }, [settings]);
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
@@ -40,6 +62,20 @@ const ManageSettings = () => {
     setTimeout(() => setStatsSaved(false), 2000);
   };
 
+  const handleSiteInfoSave = (e) => {
+    e.preventDefault();
+    updateSettings({ siteInfo });
+    setSiteInfoSaved(true);
+    setTimeout(() => setSiteInfoSaved(false), 2000);
+  };
+
+  const handleSocialLinksSave = (e) => {
+    e.preventDefault();
+    updateSettings({ socialLinks });
+    setSocialLinksSaved(true);
+    setTimeout(() => setSocialLinksSaved(false), 2000);
+  };
+
   const handleReset = () => {
     resetAllToDefaults();
     setResetConfirm(false);
@@ -52,11 +88,113 @@ const ManageSettings = () => {
       <div className="admin-page-header">
         <div className="admin-page-header-left">
           <h2><i className="fas fa-gear" /> Settings</h2>
-          <p>Configure admin password, hero stats, and site-wide settings.</p>
+          <p>Configure admin password, site info, social links, and hero stats.</p>
         </div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          {/* Site Info */}
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3><i className="fas fa-circle-info" /> Site Info</h3>
+            </div>
+            <form onSubmit={handleSiteInfoSave}>
+              <div className="admin-card-body">
+                <div className="admin-form-group">
+                  <label>Site Name</label>
+                  <input
+                    value={siteInfo.siteName}
+                    onChange={e => setSiteInfo(p => ({ ...p, siteName: e.target.value }))}
+                    placeholder="Dongri Cha Raja"
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label>Contact Phone</label>
+                  <input
+                    value={siteInfo.contactPhone}
+                    onChange={e => setSiteInfo(p => ({ ...p, contactPhone: e.target.value }))}
+                    placeholder="+91 22 2345 6789"
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label>Contact Email</label>
+                  <input
+                    value={siteInfo.contactEmail}
+                    onChange={e => setSiteInfo(p => ({ ...p, contactEmail: e.target.value }))}
+                    placeholder="info@dongricharaja.org"
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label>Address</label>
+                  <textarea
+                    value={siteInfo.address}
+                    onChange={e => setSiteInfo(p => ({ ...p, address: e.target.value }))}
+                    placeholder="Dongri, Mumbai - 400009"
+                    rows="3"
+                  />
+                </div>
+                
+                <div style={{ marginTop: '20px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <button type="submit" className={`admin-btn ${siteInfoSaved ? 'admin-btn-success' : 'admin-btn-primary'}`}>
+                    {siteInfoSaved ? <><i className="fas fa-check" /> Saved!</> : <><i className="fas fa-save" /> Save Info</>}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          {/* Social Links */}
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3><i className="fas fa-share-nodes" /> Social Media Links</h3>
+            </div>
+            <form onSubmit={handleSocialLinksSave}>
+              <div className="admin-card-body">
+                <div className="admin-form-group">
+                  <label><i className="fab fa-facebook" style={{color: '#1877F2'}}/> Facebook URL</label>
+                  <input
+                    value={socialLinks.facebook}
+                    onChange={e => setSocialLinks(p => ({ ...p, facebook: e.target.value }))}
+                    placeholder="https://facebook.com/..."
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label><i className="fab fa-instagram" style={{color: '#E4405F'}}/> Instagram URL</label>
+                  <input
+                    value={socialLinks.instagram}
+                    onChange={e => setSocialLinks(p => ({ ...p, instagram: e.target.value }))}
+                    placeholder="https://instagram.com/..."
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label><i className="fab fa-youtube" style={{color: '#FF0000'}}/> YouTube Channel URL</label>
+                  <input
+                    value={socialLinks.youtube}
+                    onChange={e => setSocialLinks(p => ({ ...p, youtube: e.target.value }))}
+                    placeholder="https://youtube.com/c/..."
+                  />
+                </div>
+                <div className="admin-form-group" style={{ marginTop: '14px' }}>
+                  <label><i className="fab fa-whatsapp" style={{color: '#25D366'}}/> WhatsApp URL</label>
+                  <input
+                    value={socialLinks.whatsapp}
+                    onChange={e => setSocialLinks(p => ({ ...p, whatsapp: e.target.value }))}
+                    placeholder="https://wa.me/..."
+                  />
+                </div>
+
+                <div style={{ marginTop: '20px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <button type="submit" className={`admin-btn ${socialLinksSaved ? 'admin-btn-success' : 'admin-btn-primary'}`}>
+                    {socialLinksSaved ? <><i className="fas fa-check" /> Saved!</> : <><i className="fas fa-save" /> Save Links</>}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
         {/* Hero Stats */}
         <div className="admin-card">
           <div className="admin-card-header">
