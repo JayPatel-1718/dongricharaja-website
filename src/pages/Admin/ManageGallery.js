@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import { storage } from '../../firebase';
+import { uploadToImgBB } from '../../utils/uploadImage';
 import { useData } from '../../context/DataContext';
 import './Admin.css';
 
@@ -47,27 +46,20 @@ const ManageGallery = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = async (file) => {
     if (!file || !file.type.startsWith('image/')) return;
     setUploading(true);
-    setUploadProgress(0);
-    const storageRef = ref(storage, `gallery/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setUploadProgress(pct);
-      },
-      (err) => {
-        console.error('Upload error:', err);
-        setUploading(false);
-      },
-      async () => {
-        const url = await getDownloadURL(uploadTask.snapshot.ref);
-        setForm(prev => ({ ...prev, src: url }));
-        setUploading(false);
-      }
-    );
+    setUploadProgress(10); // Initial progress state
+    
+    try {
+      const url = await uploadToImgBB(file);
+      setUploadProgress(100);
+      setForm(prev => ({ ...prev, src: url }));
+    } catch (err) {
+      console.error('Upload error:', err);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleDrop = (e) => {
@@ -90,13 +82,6 @@ const ManageGallery = () => {
   };
 
   const handleDelete = async (photo) => {
-    // Try to delete from Storage too
-    if (photo.src && photo.src.includes('firebasestorage')) {
-      try {
-        const fileRef = ref(storage, photo.src);
-        await deleteObject(fileRef);
-      } catch (e) { /* ignore if already gone */ }
-    }
     await deleteGalleryPhoto(photo.id);
     setDeleteConfirm(null);
   };

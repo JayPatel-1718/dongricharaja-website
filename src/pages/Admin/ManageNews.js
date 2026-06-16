@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
+import { uploadToImgBB } from '../../utils/uploadImage';
 import { useData } from '../../context/DataContext';
 import './Admin.css';
 
@@ -32,29 +31,21 @@ const ManageNews = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef(null);
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = async (file) => {
     if (!file || !file.type.startsWith('image/')) return;
     setUploading(true);
-    setUploadProgress(0);
-    const storageRef = ref(storage, `news/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setUploadProgress(pct);
-      },
-      (error) => {
-        console.error("Upload error", error);
-        setUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setForm(prev => ({ ...prev, imageUrl: downloadURL }));
-          setUploading(false);
-          setUploadProgress(0);
-        });
-      }
-    );
+    setUploadProgress(10);
+    
+    try {
+      const url = await uploadToImgBB(file);
+      setUploadProgress(100);
+      setForm(prev => ({ ...prev, imageUrl: url }));
+    } catch (err) {
+      console.error("Upload error", err);
+    } finally {
+      setUploading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
+    }
   };
 
   const openAdd = () => { setEditingId(null); setForm(BLANK); setShowModal(true); setSaved(false); };

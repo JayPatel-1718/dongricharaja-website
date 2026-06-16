@@ -392,8 +392,8 @@ const Donations = () => {
 
                 <div className="receipt-signatures">
                   <div className="sig-block">
-                    <span className="signature-line">Rajesh Patil</span>
-                    <span className="role">Trust Chairman</span>
+                    <span className="signature-line">Madhusudan Sharda Mahadev Amre</span>
+                    <span className="role">Trust President</span>
                   </div>
                   <div className="sig-block text-right">
                     <div className="mock-seal">TRUST SEAL APPROVED</div>

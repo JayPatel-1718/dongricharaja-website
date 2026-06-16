@@ -1,6 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../firebase';
+import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import './Admin.css';
 
@@ -29,34 +27,7 @@ const ManageAnnouncements = () => {
   const [form, setForm] = useState(BLANK);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const fileInputRef = useRef(null);
 
-  const handleFileUpload = (file) => {
-    if (!file || !file.type.startsWith('image/')) return;
-    setUploading(true);
-    setUploadProgress(0);
-    const storageRef = ref(storage, `announcements/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setUploadProgress(pct);
-      },
-      (error) => {
-        console.error("Upload error", error);
-        setUploading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setForm(prev => ({ ...prev, imageUrl: downloadURL }));
-          setUploading(false);
-          setUploadProgress(0);
-        });
-      }
-    );
-  };
 
   const openAdd = () => {
     setEditingId(null);
@@ -207,11 +178,11 @@ const ManageAnnouncements = () => {
                 <div className="admin-form-row">
                   <div className="admin-form-group">
                     <label>Date</label>
-                    <input name="date" value={form.date} onChange={handleChange} placeholder="e.g. September 19, 2026" />
+                    <input type="date" name="date" value={form.date} onChange={handleChange} />
                   </div>
                   <div className="admin-form-group">
                     <label>Time</label>
-                    <input name="time" value={form.time} onChange={handleChange} placeholder="e.g. 7:00 PM" />
+                    <input type="time" name="time" value={form.time} onChange={handleChange} />
                   </div>
                 </div>
                 <div className="admin-form-row">
@@ -227,52 +198,26 @@ const ManageAnnouncements = () => {
                   </div>
                 </div>
                 <div className="admin-form-group">
-                  <label>Icon (FontAwesome class)</label>
-                  <select name="icon" value={form.icon} onChange={handleChange}>
-                    {ICON_OPTIONS.map(ic => <option key={ic} value={ic}>{ic}</option>)}
-                  </select>
-                </div>
-                
-                <div className="admin-form-group" style={{ marginTop: '16px' }}>
-                  <label>Attachment Image (Optional)</label>
-                  <div 
-                    className="admin-file-drop" 
-                    style={{ position: 'relative', overflow: 'hidden' }}
-                    onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                  >
-                    <input 
-                      type="file" 
-                      ref={fileInputRef} 
-                      style={{ display: 'none' }} 
-                      accept="image/*"
-                      onChange={e => handleFileUpload(e.target.files[0])}
-                    />
-                    
-                    {uploading ? (
-                      <div className="admin-upload-progress">
-                        <div className="admin-upload-spinner"><i className="fas fa-spinner fa-spin" /></div>
-                        <div className="admin-upload-text">Uploading {uploadProgress}%...</div>
-                        <div className="admin-upload-bar-bg">
-                          <div className="admin-upload-bar-fill" style={{ width: `${uploadProgress}%` }}></div>
-                        </div>
-                      </div>
-                    ) : form.imageUrl ? (
-                      <div style={{ position: 'relative', width: '100%', height: '120px', borderRadius: '8px', overflow: 'hidden' }}>
-                        <img src={form.imageUrl} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        <button 
-                          type="button" 
-                          onClick={(e) => { e.stopPropagation(); setForm(p => ({...p, imageUrl: ''})) }}
-                          style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(0,0,0,0.7)', color: 'white', border: 'none', borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer' }}
-                        >
-                          <i className="fas fa-times" />
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="admin-file-icon"><i className="fas fa-cloud-arrow-up" /></div>
-                        <div className="admin-file-text">Click to upload an image</div>
-                      </>
-                    )}
+                  <label>Icon</label>
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '4px' }}>
+                    {ICON_OPTIONS.map(ic => (
+                      <button
+                        key={ic}
+                        type="button"
+                        onClick={() => setForm(prev => ({ ...prev, icon: ic }))}
+                        style={{
+                          width: '42px', height: '42px', borderRadius: '8px',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          cursor: 'pointer', transition: 'all 0.2s',
+                          background: form.icon === ic ? 'var(--admin-accent)' : 'var(--admin-bg-light)',
+                          color: form.icon === ic ? '#fff' : 'var(--admin-text)',
+                          border: form.icon === ic ? '2px solid var(--admin-accent)' : '1px solid var(--admin-border)',
+                          outline: 'none'
+                        }}
+                      >
+                        <i className={ic} style={{ fontSize: '18px' }} />
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>

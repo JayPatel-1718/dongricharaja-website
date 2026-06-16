@@ -18,7 +18,7 @@ const ChairmanMessage = () => {
               <div className="portrait-frame-inner">
                 <img
                   src="/images/chairman_portrait.jpg"
-                  alt="Shri. Rajesh Patil, Chairman"
+                  alt="Shri. Madhusudan Sharda Mahadev Amre, President"
                   className="chairman-photo"
                   onError={(e) => {
                     e.target.style.display = 'none';
@@ -33,8 +33,8 @@ const ChairmanMessage = () => {
             </div>
             <div className="chairman-identity">
               <div className="chairman-om">ॐ</div>
-              <h3 className="chairman-name">Shri. Rajesh Patil</h3>
-              <p className="chairman-title">Chairman, Dongri Cha Raja</p>
+              <h3 className="chairman-name">Shri. Madhusudan Sharda Mahadev Amre</h3>
+              <p className="chairman-title">President, Dongri Cha Raja</p>
               <p className="chairman-subtitle">Sarvajani Ganesh Utsav Mandal</p>
               <div className="chairman-tenure">
                 <i className="fas fa-award"></i>
@@ -48,7 +48,7 @@ const ChairmanMessage = () => {
             <div className="message-accent-bar" />
             <div className="message-label">
               <i className="fas fa-scroll"></i>
-              <span>Chairman's Message</span>
+              <span>President's Message</span>
             </div>
             <h2 className="message-heading">A Message of Devotion & Unity</h2>
 
@@ -90,8 +90,8 @@ const ChairmanMessage = () => {
 
             <div className="chairman-signature">
               <div className="sig-line" />
-              <p className="sig-name">Shri. Rajesh Patil</p>
-              <p className="sig-role">Chairman</p>
+              <p className="sig-name">Shri. Madhusudan Sharda Mahadev Amre</p>
+              <p className="sig-role">President</p>
             </div>
           </div>
         </div>
