@@ -7,18 +7,18 @@
 
 /* ─── CSS Variables ─── */
 :root {
-  --admin-bg: #0b1120;
-  --admin-surface: #111827;
-  --admin-surface-2: #1a2540;
-  --admin-surface-3: #1f2d4a;
-  --admin-border: rgba(255, 255, 255, 0.08);
-  --admin-border-hover: rgba(255, 107, 0, 0.3);
+  --admin-bg: #f3f4f6;
+  --admin-surface: #ffffff;
+  --admin-surface-2: #f9fafb;
+  --admin-surface-3: #f3f4f6;
+  --admin-border: #e5e7eb;
+  --admin-border-hover: rgba(255, 107, 0, 0.4);
   --admin-accent: #ff6b00;
   --admin-accent-light: #ff8533;
-  --admin-accent-glow: rgba(255, 107, 0, 0.15);
-  --admin-text: #e8eaf0;
-  --admin-text-muted: #7a8599;
-  --admin-text-dim: #4a5568;
+  --admin-accent-glow: rgba(255, 107, 0, 0.1);
+  --admin-text: #111827;
+  --admin-text-muted: #6b7280;
+  --admin-text-dim: #9ca3af;
   --admin-success: #22c55e;
   --admin-danger: #ef4444;
   --admin-warning: #f59e0b;
@@ -27,7 +27,7 @@
   --admin-topbar-h: 64px;
   --admin-radius: 12px;
   --admin-radius-sm: 8px;
-  --admin-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --admin-shadow: 0 4px 12px rgba(0,0,0,0.05);
   --admin-transition: 0.2s ease;
 }
 
@@ -64,9 +64,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(255,107,0,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 90% 80%, rgba(28,10,53,0.8) 0%, transparent 60%),
-    linear-gradient(135deg, #0b1120 0%, #111827 100%);
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(255,107,0,0.05) 0%, transparent 60%),
+    linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
 }
 
 .admin-login-particles {
@@ -102,7 +101,7 @@
   padding: 48px 40px;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,107,0,0.05);
+  box-shadow: var(--admin-shadow);
   backdrop-filter: blur(20px);
   animation: adminCardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -135,7 +134,7 @@
 .admin-brand-text h1 {
   font-size: 18px;
   font-weight: 700;
-  color: #fff;
+  color: var(--admin-text);
   line-height: 1.2;
 }
 
@@ -156,7 +155,7 @@
 .admin-login-title {
   font-size: 26px;
   font-weight: 700;
-  color: #fff;
+  color: var(--admin-text);
   margin-bottom: 6px;
 }
 
@@ -364,7 +363,7 @@
 .admin-sidebar-brand-name {
   font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  color: var(--admin-text);
   line-height: 1.2;
 }
 
@@ -538,7 +537,7 @@
 .admin-page-header-left h2 {
   font-size: 22px;
   font-weight: 700;
-  color: #fff;
+  color: var(--admin-text);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -600,7 +599,7 @@
 .admin-stat-info .admin-stat-value {
   font-size: 26px;
   font-weight: 800;
-  color: #fff;
+  color: var(--admin-text);
   line-height: 1;
 }
 
@@ -632,7 +631,7 @@
 .admin-card-header h3 {
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
+  color: var(--admin-text);
   display: flex;
   align-items: center;
   gap: 8px;
