@@ -20,6 +20,15 @@ const ICON_OPTIONS = [
   'fas fa-gift', 'fas fa-music', 'fas fa-book', 'fas fa-heart',
 ];
 
+const TIME_OPTIONS = Array.from({ length: 48 }).map((_, i) => {
+  const h = Math.floor(i / 2);
+  const m = i % 2 === 0 ? '00' : '30';
+  const ampm = h < 12 ? 'AM' : 'PM';
+  const hour = h % 12 || 12;
+  return `${hour.toString().padStart(2, '0')}:${m} ${ampm}`;
+});
+
+
 const ManageAnnouncements = () => {
   const { announcements, addAnnouncement, editAnnouncement, deleteAnnouncement } = useData();
   const [showModal, setShowModal] = useState(false);
@@ -182,7 +191,10 @@ const ManageAnnouncements = () => {
                   </div>
                   <div className="admin-form-group">
                     <label>Time</label>
-                    <input type="time" name="time" value={form.time} onChange={handleChange} />
+                    <select name="time" value={form.time || ''} onChange={handleChange}>
+                      <option value="">Select Time...</option>
+                      {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
                   </div>
                 </div>
                 <div className="admin-form-row">
