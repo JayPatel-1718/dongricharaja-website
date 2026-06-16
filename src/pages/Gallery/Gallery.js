@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useData } from '../../context/DataContext';
+import '../Committee/Committee.css';
 import './Gallery.css';
 
 const Gallery = () => {
@@ -39,33 +40,12 @@ const Gallery = () => {
       </Helmet>
 
       <main className="gallery-page fade-in">
-        {/* Premium Hero */}
-        <section className="page-hero gallery-page-hero">
-          <div className="gallery-hero-film-strip">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="film-strip-col">
-                {[...Array(6)].map((_, j) => <div key={j} className="film-hole" />)}
-              </div>
-            ))}
-          </div>
-          <div className="gallery-hero-scan" />
-          <div className="gallery-hero-glow" />
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-camera" /> Visual Archive
-            </div>
+        {/* Banner */}
+        <section className="gallery-banner">
+          <div className="banner-overlay"></div>
+          <div className="container">
             <h1>Photo Gallery</h1>
-            <p>Capturing divine moments of faith, festivity, and community service through the years.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>Gallery</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,0 C480,60 960,60 1440,0 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p>Capturing the divine moments of faith, festivity, and charity</p>
           </div>
         </section>
 

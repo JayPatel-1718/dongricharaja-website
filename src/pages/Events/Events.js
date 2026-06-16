@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
 import { useData } from '../../context/DataContext';
+import '../Committee/Committee.css';
 import './Events.css';
 
 const Events = () => {
@@ -34,35 +35,12 @@ const Events = () => {
       </Helmet>
 
       <main className="events-page fade-in">
-        {/* Premium Calendar Hero */}
-        <section className="page-hero events-page-hero">
-          <div className="events-hero-glow" />
-          <div className="events-hero-calendar">
-            {[...Array(35)].map((_, i) => (
-              <div key={i} className={`cal-cell ${[6,13,18,24].includes(i) ? 'highlight' : ''}`} />
-            ))}
-          </div>
-          <div className="events-hero-date-pills">
-            <div className="date-pill">Sept 19 — Grand Maha Aarti</div>
-            <div className="date-pill">Sept 21 — Bhajan Sandhya</div>
-            <div className="date-pill">Sept 28 — Visarjan</div>
-          </div>
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-calendar-star" /> Ganeshotsav 2026
-            </div>
+        {/* Banner */}
+        <section className="events-banner">
+          <div className="banner-overlay"></div>
+          <div className="container">
             <h1>Events Calendar</h1>
-            <p>Browse and register for religious, cultural, and social programs throughout the festival.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>Events</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,20 L480,50 L960,10 L1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p>Participate in our religious, social, and cultural programs</p>
           </div>
         </section>
 

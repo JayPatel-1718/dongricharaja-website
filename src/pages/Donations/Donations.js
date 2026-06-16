@@ -4,6 +4,12 @@ import { toast } from 'react-hot-toast';
 import { useData } from '../../context/DataContext';
 import './Donations.css';
 
+// Payment Information - Mandal committee can easily update these details
+const PAYMENT_INFO = {
+  upiId: "dongricharaja@upi",
+  gpayNumber: "9876543210"
+};
+
 const Donations = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -13,37 +19,23 @@ const Donations = () => {
 
   const [donorInfo, setDonorInfo] = useState({
     name: "",
-    email: "",
-    phone: "",
-    pan: "",
-    address: ""
+    phone: ""
   });
-  const [amount, setAmount] = useState(1001);
-  const [customAmount, setCustomAmount] = useState("");
-  const [selectedFund, setSelectedFund] = useState("General Trust Fund");
+  const [amount, setAmount] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [txDetails, setTxDetails] = useState(null);
-
-  const quickAmounts = [501, 1001, 5001, 10001];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setDonorInfo(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleQuickAmount = (val) => {
-    setAmount(val);
-    setCustomAmount("");
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
   };
 
-  const handleCustomAmountChange = (e) => {
-    const val = e.target.value;
-    setCustomAmount(val);
-    setAmount(val ? parseInt(val, 10) : 0);
-  };
-
-  const handleDonate = (e) => {
+  const handleDonate = async (e) => {
     e.preventDefault();
 
     // Validation
@@ -51,45 +43,133 @@ const Donations = () => {
       toast.error("Please enter your name.");
       return;
     }
-    if (!donorInfo.email.trim()) {
-      toast.error("Please enter your email.");
+    
+    // Indian mobile number validation
+    const phoneTrimmed = donorInfo.phone.trim();
+    const mobileRegex = /^[6-9]\d{9}$/;
+    if (!mobileRegex.test(phoneTrimmed)) {
+      toast.error("Please enter a valid 10-digit Indian mobile number.");
       return;
     }
-    if (!donorInfo.pan.trim()) {
-      toast.error("PAN Card is required for 80G tax receipt.");
-      return;
-    }
-    if (amount <= 0) {
+
+    const numericAmount = parseFloat(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
       toast.error("Please enter a valid donation amount.");
       return;
     }
 
-    // Process Donation
-    setIsProcessing(true);
-    toast.loading("Redirecting to secure gateway...", { id: "payment" });
+    // Load configurations from environment variables
+    const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+    const razorpayKeyId = process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_placeholder';
 
-    setTimeout(() => {
-      // Simulate successful payment
-      setIsProcessing(false);
-      const generatedTx = {
-        txId: "DCR-" + Math.floor(100000 + Math.random() * 900000),
-        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
-        receiptNo: "REC-" + Math.floor(50000 + Math.random() * 50000),
-        donorName: donorInfo.name,
-        donorEmail: donorInfo.email,
-        donorPhone: donorInfo.phone,
-        donorPan: donorInfo.pan.toUpperCase(),
-        donorAddress: donorInfo.address || "N/A",
-        amountPaid: amount,
-        fundName: selectedFund
+    // Verify window.Razorpay SDK is loaded from index.html script tag
+    if (!window.Razorpay) {
+      toast.error("Razorpay SDK failed to load. Please refresh the page and try again.");
+      return;
+    }
+
+    // Set processing state and display loading toast
+    setIsProcessing(true);
+    const toastId = toast.loading("Initializing secure payment...");
+
+    try {
+      // 1. Create order ID via backend endpoint
+      const response = await fetch(`${backendUrl}/api/create-razorpay-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: numericAmount })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create order from backend server.");
+      }
+
+      const orderData = await response.json();
+
+      // 2. Open Razorpay checkout options
+      const options = {
+        key: razorpayKeyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "Dongri Cha Raja",
+        description: "Donation for Ganeshotsav",
+        order_id: orderData.orderId,
+        prefill: {
+          name: donorInfo.name,
+          contact: phoneTrimmed
+        },
+        theme: {
+          color: "#8B0000" // Premium royal red/crimson theme matching website variables
+        },
+        handler: async function (razorpayResponse) {
+          toast.loading("Verifying payment signature...", { id: toastId });
+          
+          try {
+            // 3. Cryptographically verify signature on the backend
+            const verificationResponse = await fetch(`${backendUrl}/api/verify-payment`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: razorpayResponse.razorpay_order_id,
+                razorpay_payment_id: razorpayResponse.razorpay_payment_id,
+                razorpay_signature: razorpayResponse.razorpay_signature
+              })
+            });
+
+            if (!verificationResponse.ok) {
+              throw new Error("Payment signature verification failed.");
+            }
+
+            // 4. Generate transaction receipt upon success
+            const generatedTx = {
+              txId: razorpayResponse.razorpay_payment_id,
+              date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+              receiptNo: "REC-" + Math.floor(50000 + Math.random() * 50000),
+              donorName: donorInfo.name,
+              donorPhone: phoneTrimmed,
+              amountPaid: numericAmount,
+              fundName: "General Donation"
+            };
+
+            setTxDetails(generatedTx);
+            setShowReceipt(true);
+            
+            // Track in firebase context
+            addDonation(generatedTx);
+            toast.success("Payment Successful! Thank you for your support.", { id: toastId });
+          } catch (verifyError) {
+            console.error("Signature verification error:", verifyError);
+            toast.error("Payment verification failed. Please contact trust committee.", { id: toastId });
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setIsProcessing(false);
+            toast.dismiss(toastId);
+            toast.info("Payment cancelled.");
+          }
+        }
       };
+
+      const rzp = new window.Razorpay(options);
       
-      setTxDetails(generatedTx);
-      setShowReceipt(true);
-      // Track this donation in admin panel
-      addDonation(generatedTx);
-      toast.success("Payment Successful! Your 80G receipt has been generated.", { id: "payment" });
-    }, 2000);
+      rzp.on('payment.failed', function (paymentFailedResponse) {
+        setIsProcessing(false);
+        toast.dismiss(toastId);
+        toast.error(`Payment failed: ${paymentFailedResponse.error.description || 'Reason unknown'}`);
+      });
+
+      rzp.open();
+      // Dismiss the initializing loader once popup mounts
+      toast.dismiss(toastId);
+    } catch (error) {
+      console.error("Razorpay initiation error:", error);
+      setIsProcessing(false);
+      toast.dismiss(toastId);
+      toast.error("Payment initialization failed. Ensure backend server is running.");
+    }
   };
 
   const handlePrint = () => {
@@ -97,10 +177,8 @@ const Donations = () => {
   };
 
   const resetForm = () => {
-    setDonorInfo({ name: "", email: "", phone: "", pan: "", address: "" });
-    setAmount(1001);
-    setCustomAmount("");
-    setSelectedFund("General Trust Fund");
+    setDonorInfo({ name: "", phone: "" });
+    setAmount("");
     setShowReceipt(false);
     setTxDetails(null);
   };
@@ -113,92 +191,34 @@ const Donations = () => {
       </Helmet>
 
       <main className="donations-page fade-in">
-        {/* Premium Gold Coin Hero */}
-        <section className="page-hero donations-page-hero">
-          <div className="donations-hero-glow" />
-          <div className="donations-hero-coins">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="coin-float">
-                <i className="fas fa-coins" />
-              </div>
-            ))}
-          </div>
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-hand-holding-heart" /> Support the Trust
-            </div>
+        {/* Banner */}
+        <section className="donations-banner">
+          <div className="banner-overlay"></div>
+          <div className="container">
             <h1>Online Donations</h1>
-            <p>Your contributions fuel our grand Ganeshotsav celebrations and year-round community welfare initiatives.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>Donations</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,30 Q360,60 720,20 Q1080,-10 1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p>Your contributions fuel our spiritual and social impact initiatives</p>
           </div>
         </section>
 
         {/* Portal section */}
         <section className="section section-donation-form">
-          <div className="container">
-            <div className="donation-form-wrapper grid grid-cols-2">
-              {/* Form Side */}
-              <div className="form-card card">
-                <h2 className="section-title">Support Our Seva</h2>
-                <p>Fill out the form to proceed. All donations are 100% secure.</p>
+          <div className="container donations-container">
+            
+            {/* Card 1: Make a Contribution */}
+            <div className="form-card card donations-centered-card">
+              <h2 className="section-title text-center donations-card-title">Make a Contribution</h2>
+              <div className="flower-divider">
+                <span className="line"></span>
+                <span className="flower">✿</span>
+                <span className="line"></span>
+              </div>
 
-                <form onSubmit={handleDonate} className="mt-6">
-                  {/* Select Fund */}
-                  <div className="form-group">
-                    <label>Choose Seva Fund</label>
-                    <select 
-                      value={selectedFund} 
-                      onChange={(e) => setSelectedFund(e.target.value)}
-                      className="form-control"
-                    >
-                      <option value="General Trust Fund">General Trust Fund (Pandal & festival cost)</option>
-                      <option value="Annadanam Seva">Annadanam Seva (Free festival food drives)</option>
-                      <option value="Medical Assistance Fund">Medical Assistance Fund (Free clinics & equipment)</option>
-                      <option value="Education Support Fund">Education Support Fund (Scholarships & school kits)</option>
-                    </select>
-                  </div>
-
-                  {/* Amounts selection */}
-                  <div className="form-group mt-4">
-                    <label>Select Amount (₹)</label>
-                    <div className="amounts-grid-selector">
-                      {quickAmounts.map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          className={amount === amt && !customAmount ? "amt-btn active" : "amt-btn"}
-                          onClick={() => handleQuickAmount(amt)}
-                        >
-                          ₹{amt}
-                        </button>
-                      ))}
-                    </div>
-                    
-                    <div className="custom-amount-input mt-3">
-                      <span className="rupee-icon">₹</span>
-                      <input 
-                        type="number" 
-                        placeholder="Enter custom amount..." 
-                        value={customAmount}
-                        onChange={handleCustomAmountChange}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Donor personal details */}
-                  <h3 className="form-subtitle mt-6">Donor Information</h3>
-
-                  <div className="form-group mt-3">
-                    <label>Full Name *</label>
+              <form onSubmit={handleDonate} className="mt-6">
+                {/* Full Name */}
+                <div className="form-group">
+                  <label className="form-field-label">Full Name <span className="required-asterisk">*</span></label>
+                  <div className="input-with-icon">
+                    <i className="far fa-user input-icon"></i>
                     <input 
                       type="text" 
                       name="name"
@@ -209,105 +229,107 @@ const Donations = () => {
                       required
                     />
                   </div>
+                </div>
 
-                  <div className="grid grid-cols-2 mt-3" style={{ gap: '16px' }}>
-                    <div className="form-group">
-                      <label>Email Address *</label>
-                      <input 
-                        type="email" 
-                        name="email"
-                        placeholder="yourname@gmail.com" 
-                        value={donorInfo.email}
-                        onChange={handleInputChange}
-                        className="form-control"
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label>Phone Number</label>
-                      <input 
-                        type="tel" 
-                        name="phone"
-                        placeholder="10-digit number" 
-                        value={donorInfo.phone}
-                        onChange={handleInputChange}
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group mt-3">
-                    <label>PAN Card Number (Required for 80G tax exemption) *</label>
+                {/* Mobile Number */}
+                <div className="form-group mt-4">
+                  <label className="form-field-label">Mobile Number <span className="required-asterisk">*</span></label>
+                  <div className="input-with-icon">
+                    <i className="fas fa-phone-alt input-icon"></i>
                     <input 
-                      type="text" 
-                      name="pan"
-                      placeholder="ABCDE1234F" 
-                      value={donorInfo.pan}
+                      type="tel" 
+                      name="phone"
+                      placeholder="Enter your mobile number" 
+                      value={donorInfo.phone}
                       onChange={handleInputChange}
                       className="form-control"
                       required
                     />
                   </div>
-
-                  <div className="form-group mt-3">
-                    <label>Postal Address</label>
-                    <textarea 
-                      name="address"
-                      placeholder="Enter billing address for tax invoice" 
-                      value={donorInfo.address}
-                      onChange={handleInputChange}
-                      className="form-control"
-                      rows="3"
-                    ></textarea>
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    className="btn btn-primary btn-lg mt-6" 
-                    style={{ width: '100%' }}
-                    disabled={isProcessing}
-                  >
-                    {isProcessing ? (
-                      <span><i className="fas fa-spinner fa-spin"></i> Processing Securely...</span>
-                    ) : (
-                      <span><i className="fas fa-heart"></i> Proceed to Donate ₹{amount}</span>
-                    )}
-                  </button>
-                </form>
-              </div>
-
-              {/* Perks Side */}
-              <div className="info-card-side">
-                <div className="info-panel dark-glass-card">
-                  <h2>Donation Perks & Exemptions</h2>
-                  <p className="mt-3">Your faith and generosity help us bring harmony and relief to thousands. Here is what we guarantee:</p>
-                  
-                  <ul className="perks-list mt-6">
-                    <li>
-                      <i className="fas fa-shield-halved perk-icon"></i>
-                      <div>
-                        <strong>80G Tax Deduction</strong>
-                        <span>Dongri Cha Raja trust is registered under Section 80G of the Income Tax Act. Save up to 50% on taxable income for this contribution.</span>
-                      </div>
-                    </li>
-                    <li>
-                      <i className="fas fa-receipt perk-icon"></i>
-                      <div>
-                        <strong>Instant Receipt</strong>
-                        <span>Upon transaction clearance, download your official authenticated tax receipt instantly directly from the browser window.</span>
-                      </div>
-                    </li>
-                    <li>
-                      <i className="fas fa-square-check perk-icon"></i>
-                      <div>
-                        <strong>Complete Transparency</strong>
-                        <span>All funds are strictly audited by certified chartered accountants and published annually in our reports dashboard.</span>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
+
+                {/* Custom Donation Amount */}
+                <div className="form-group mt-4">
+                  <label className="form-field-label">Donation Amount (₹) <span className="required-asterisk">*</span></label>
+                  <div className="input-with-icon">
+                    <span className="rupee-icon">₹</span>
+                    <input 
+                      type="number" 
+                      placeholder="Enter custom amount" 
+                      value={amount}
+                      onChange={handleAmountChange}
+                      className="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  className="btn btn-primary btn-lg mt-6 donate-submit-btn" 
+                  disabled={isProcessing}
+                >
+                  {isProcessing ? (
+                    <>
+                      <i className="fas fa-spinner fa-spin"></i> Processing Securely...
+                    </>
+                  ) : (
+                    <>
+                      <i className="fas fa-hand-holding-heart"></i> Donate Now
+                    </>
+                  )}
+                </button>
+              </form>
+
+              <div className="security-notice">
+                <i className="fas fa-lock"></i> Your contribution is secure and trusted
               </div>
             </div>
+
+            {/* Card 2: Payment Information */}
+            <div className="form-card card donations-centered-card mt-6">
+              <h2 className="section-title text-center donations-card-title">Payment Information</h2>
+              <div className="flower-divider">
+                <span className="line"></span>
+                <span className="flower">✿</span>
+                <span className="line"></span>
+              </div>
+              <p className="text-center payment-subtitle">
+                You can support us through direct transfer using the details below.
+              </p>
+
+              <div className="payment-methods mt-6">
+                {/* UPI ID Row */}
+                <div className="payment-method-row">
+                  <div className="payment-badge-circle">
+                    <span className="upi-text">UPI</span>
+                  </div>
+                  <div className="payment-method-details">
+                    <span className="payment-label">UPI ID</span>
+                    <span className="payment-value">{PAYMENT_INFO.upiId}</span>
+                  </div>
+                </div>
+
+                {/* GPay Number Row */}
+                <div className="payment-method-row mt-4">
+                  <div className="payment-badge-circle">
+                    <span className="gpay-text">
+                      <span className="g-blue">G</span>
+                      <span className="p-green"> Pay</span>
+                    </span>
+                  </div>
+                  <div className="payment-method-details">
+                    <span className="payment-label">GPay Number</span>
+                    <span className="payment-value">{PAYMENT_INFO.gpayNumber}</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="payment-footer-note">
+                After making the payment, kindly share the screenshot on our official WhatsApp number for confirmation and receipt.
+              </p>
+            </div>
+
           </div>
         </section>
 
@@ -363,16 +385,8 @@ const Donations = () => {
                       <td className="val font-semibold">{txDetails.donorName}</td>
                     </tr>
                     <tr>
-                      <td className="lbl">Donor PAN Number:</td>
-                      <td className="val font-semibold">{txDetails.donorPan}</td>
-                    </tr>
-                    <tr>
-                      <td className="lbl">Phone / Email:</td>
-                      <td className="val">{txDetails.donorPhone || "N/A"} / {txDetails.donorEmail}</td>
-                    </tr>
-                    <tr>
-                      <td className="lbl">Postal Address:</td>
-                      <td className="val">{txDetails.donorAddress}</td>
+                      <td className="lbl">Mobile Number:</td>
+                      <td className="val">{txDetails.donorPhone}</td>
                     </tr>
                     <tr>
                       <td className="lbl">Purpose / Fund:</td>
