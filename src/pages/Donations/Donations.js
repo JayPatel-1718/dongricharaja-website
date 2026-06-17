@@ -191,12 +191,27 @@ const Donations = () => {
       </Helmet>
 
       <main className="donations-page fade-in">
-        {/* Banner */}
-        <section className="donations-banner">
-          <div className="banner-overlay"></div>
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Donations Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>Online Donations</h1>
-            <p>Your contributions fuel our spiritual and social impact initiatives</p>
+            <p className="committee-banner__marathi-year" lang="mr">सहकार्य</p>
+            <h1 className="committee-banner__title">Online Donations</h1>
+            <p className="committee-banner__marathi-title" lang="mr">ऑनलाईन देणगी</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="committee-banner__subtitle">
+              Your contributions fuel our grand Ganeshotsav celebrations and year-round community welfare initiatives.
+            </p>
           </div>
         </section>
 

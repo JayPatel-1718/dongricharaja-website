@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
 import { useData } from '../../context/DataContext';
-import '../Committee/Committee.css';
 import './Events.css';
 
 const Events = () => {
@@ -35,12 +34,27 @@ const Events = () => {
       </Helmet>
 
       <main className="events-page fade-in">
-        {/* Banner */}
-        <section className="events-banner">
-          <div className="banner-overlay"></div>
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Events Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>Events Calendar</h1>
-            <p>Participate in our religious, social, and cultural programs</p>
+            <p className="committee-banner__marathi-year" lang="mr">नियोजित कार्यक्रम</p>
+            <h1 className="committee-banner__title">Events Calendar</h1>
+            <p className="committee-banner__marathi-title" lang="mr">उत्सव कार्यक्रम</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="committee-banner__subtitle">
+              Browse and register for religious, cultural, and social programs throughout the festival.
+            </p>
           </div>
         </section>
 

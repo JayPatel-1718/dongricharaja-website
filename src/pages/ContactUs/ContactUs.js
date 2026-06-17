@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
-import '../Committee/Committee.css';
 import './ContactUs.css';
 
 const ContactUs = () => {
@@ -55,12 +54,27 @@ const ContactUs = () => {
       </Helmet>
 
       <main className="contact-page fade-in">
-        {/* Banner */}
-        <section className="contact-banner">
-          <div className="banner-overlay"></div>
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Contact Us Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>Contact Us</h1>
-            <p>We are here to answer your queries and assist with devotee services</p>
+            <p className="committee-banner__marathi-year" lang="mr">मदत केंद्र</p>
+            <h1 className="committee-banner__title">Contact Us</h1>
+            <p className="committee-banner__marathi-title" lang="mr">संपर्क साधा</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="committee-banner__subtitle">
+              Get in touch with the committee office for puja bookings, seva registration, VIP passes, and general queries.
+            </p>
           </div>
         </section>
 

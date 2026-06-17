@@ -19,30 +19,27 @@ const News = () => {
       </Helmet>
 
       <main className="news-page fade-in">
-        {/* Premium Newspaper Hero */}
-        <section className="page-hero news-page-hero">
-          <div className="news-hero-highlight" />
-          <div className="news-hero-texture" />
-          <div className="news-hero-columns">
-            {[...Array(5)].map((_, i) => <div key={i} className="news-col-divider" />)}
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="News Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
           </div>
-          <div className="news-hero-glow" />
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-newspaper" /> Latest Updates
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
+          <div className="container">
+            <p className="committee-banner__marathi-year" lang="mr">प्रेस रिलीज</p>
+            <h1 className="committee-banner__title">News &amp; Bulletins</h1>
+            <p className="committee-banner__marathi-title" lang="mr">बातम्या आणि घडामोडी</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
             </div>
-            <h1>News &amp; Bulletins</h1>
-            <p>Official press statements, media coverage, and community updates from Dongri Cha Raja Mandal.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>News</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,0 L1440,40 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p className="committee-banner__subtitle">
+              Official press statements, media coverage, and community updates from Dongri Cha Raja Mandal.
+            </p>
           </div>
         </section>
 

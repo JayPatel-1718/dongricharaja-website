@@ -51,32 +51,27 @@ const SocialActivities = () => {
       </Helmet>
 
       <main className="social-page fade-in">
-        {/* Premium Community Hero */}
-        <section className="page-hero social-page-hero">
-          <div className="social-hero-glow" />
-          <div className="social-hero-hearts">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="heart-float">
-                <i className="fas fa-heart" />
-              </div>
-            ))}
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Social Activities Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
           </div>
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-hands-holding-heart" /> Seva &amp; Welfare
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
+          <div className="container">
+            <p className="committee-banner__marathi-year" lang="mr">सामाजिक कार्य</p>
+            <h1 className="committee-banner__title">Social Activities</h1>
+            <p className="committee-banner__marathi-title" lang="mr">सामाजिक उपक्रम</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
             </div>
-            <h1>Social Activities</h1>
-            <p>Giving back to the community — blood drives, free health camps, scholarships, and eco drives, year-round.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>Social Activities</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,50 Q720,0 1440,50 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p className="committee-banner__subtitle">
+              Giving back to the community — blood drives, free health camps, scholarships, and eco drives, year-round.
+            </p>
           </div>
         </section>
 

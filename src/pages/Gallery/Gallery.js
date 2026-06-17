@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useData } from '../../context/DataContext';
-import '../Committee/Committee.css';
 import './Gallery.css';
 
 const Gallery = () => {
@@ -40,12 +39,27 @@ const Gallery = () => {
       </Helmet>
 
       <main className="gallery-page fade-in">
-        {/* Banner */}
-        <section className="gallery-banner">
-          <div className="banner-overlay"></div>
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Gallery Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>Photo Gallery</h1>
-            <p>Capturing the divine moments of faith, festivity, and charity</p>
+            <p className="committee-banner__marathi-year" lang="mr">छायाचित्र दालन</p>
+            <h1 className="committee-banner__title">Photo Gallery</h1>
+            <p className="committee-banner__marathi-title" lang="mr">छायाचित्रे</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="committee-banner__subtitle">
+              Capturing divine moments of faith, festivity, and community service through the years.
+            </p>
           </div>
         </section>
 

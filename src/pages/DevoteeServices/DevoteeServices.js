@@ -105,33 +105,27 @@ const DevoteeServices = () => {
       </Helmet>
 
       <main className="services-page fade-in">
-        {/* Premium Seva Hero */}
-        <section className="page-hero devotee-page-hero">
-          <div className="devotee-hero-glow" />
-          <div className="devotee-hero-icons">
-            <i className="fas fa-om devotee-float-icon" />
-            <i className="fas fa-hands-praying devotee-float-icon" />
-            <i className="fas fa-gopuram devotee-float-icon" />
-            <i className="fas fa-dharmachakra devotee-float-icon" />
-            <i className="fas fa-spa devotee-float-icon" />
-            <i className="fas fa-seedling devotee-float-icon" />
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Devotee Services Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
           </div>
-          <div className="page-hero-content">
-            <div className="page-hero-eyebrow">
-              <i className="fas fa-hands-helping" /> Digital Portal
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
+          <div className="container">
+            <p className="committee-banner__marathi-year" lang="mr">सुविधा</p>
+            <h1 className="committee-banner__title">Devotee Services</h1>
+            <p className="committee-banner__marathi-title" lang="mr">भक्त सेवा पोर्टल</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
             </div>
-            <h1>Devotee Services</h1>
-            <p>Access virtual puja bookings, volunteer registration, VIP passes, and real-time pandal crowd trackers.</p>
-            <div className="page-hero-breadcrumb">
-              <a href="/">Home</a>
-              <i className="fas fa-chevron-right" />
-              <span>Devotee Services</span>
-            </div>
-          </div>
-          <div className="page-hero-wave">
-            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,10 L360,50 L720,20 L1080,60 L1440,30 L1440,60 L0,60 Z" fill="var(--royal-dark, #0D0520)" />
-            </svg>
+            <p className="committee-banner__subtitle">
+              Access virtual puja bookings, volunteer registration, VIP passes, and real-time pandal crowd trackers.
+            </p>
           </div>
         </section>
 

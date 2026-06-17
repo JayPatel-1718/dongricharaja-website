@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import '../Committee/Committee.css';
 import './Ganeshotsav.css';
 
 const Ganeshotsav = () => {
@@ -31,15 +30,30 @@ const Ganeshotsav = () => {
       </Helmet>
       
       <main className="ganeshotsav-page fade-in">
-        {/* Banner */}
-        <section className="ganeshotsav-banner">
-          <div className="banner-overlay"></div>
+
+        {/* ── Banner ── */}
+        <section className="committee-banner" aria-label="Ganeshotsav Banner">
+          <div className="committee-banner__mandala" aria-hidden="true">
+            <span className="mandala-ring mandala-ring--outer" />
+            <span className="mandala-ring mandala-ring--mid" />
+            <span className="mandala-ring mandala-ring--inner" />
+          </div>
+          <div className="committee-banner__ornament top-left" aria-hidden="true">❋</div>
+          <div className="committee-banner__ornament top-right" aria-hidden="true">❋</div>
           <div className="container">
-            <h1>Ganeshotsav 2026</h1>
-            <p>Celebrate the Divine Festival of faith, heritage, and devotion</p>
+            <p className="committee-banner__marathi-year" lang="mr">उत्सव २०२६</p>
+            <h1 className="committee-banner__title">Ganeshotsav 2026</h1>
+            <p className="committee-banner__marathi-title" lang="mr">भव्य गणेशोत्सव २०२६</p>
+            <div className="committee-banner__divider" aria-hidden="true">
+              <span className="divider-line" />
+              <span className="divider-gem">✦</span>
+              <span className="divider-line" />
+            </div>
+            <p className="committee-banner__subtitle">
+              Celebrate ten divine days of faith, heritage, devotion, and the grand tradition of Dongri Cha Raja.
+            </p>
           </div>
         </section>
-
 
         {/* Introduction */}
         <section className="section section-intro">

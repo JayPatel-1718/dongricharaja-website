@@ -644,3 +644,203 @@
     display: none;
   }
 }
+
+/* ════════════════════════════════════════
+   COMMITTEE BANNER THEME (SHARED)
+   ════════════════════════════════════════ */
+.committee-banner {
+  position: relative;
+  background: linear-gradient(
+    160deg,
+    var(--secondary-dark) 0%,
+    #6B0000 30%,
+    var(--secondary) 65%,
+    var(--primary-dark) 100%
+  );
+  padding: 110px 0 90px;
+  text-align: center;
+  color: var(--white);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Radial spotlight */
+.committee-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    rgba(230, 130, 0, 0.18) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle texture overlay */
+.committee-banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.015) 2px,
+    rgba(255, 255, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mandala rings */
+.committee-banner__mandala {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.committee-banner .mandala-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(230, 130, 0, 0.12);
+  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+}
+
+.committee-banner .mandala-ring--outer {
+  width: 580px;
+  height: 580px;
+  border-width: 1px;
+  animation: mandala-rotate 60s linear infinite;
+}
+
+.committee-banner .mandala-ring--mid {
+  width: 400px;
+  height: 400px;
+  border-color: rgba(230, 130, 0, 0.08);
+  animation: mandala-rotate 45s linear infinite reverse;
+}
+
+.committee-banner .mandala-ring--inner {
+  width: 240px;
+  height: 240px;
+  border-color: rgba(230, 130, 0, 0.06);
+  animation: mandala-rotate 30s linear infinite;
+}
+
+/* Corner ornaments */
+.committee-banner__ornament {
+  position: absolute;
+  font-size: 2.2rem;
+  color: rgba(230, 130, 0, 0.28);
+  z-index: 1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.committee-banner__ornament.top-left  { top: 28px; left: 36px; }
+.committee-banner__ornament.top-right { top: 28px; right: 36px; }
+
+/* Banner text */
+.committee-banner .container {
+  position: relative;
+  z-index: 2;
+}
+
+.committee-banner__marathi-year {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  letter-spacing: 0.35em;
+  color: var(--primary-light);
+  text-transform: uppercase;
+  margin-bottom: var(--spacing-3);
+  opacity: 0.85;
+}
+
+.committee-banner__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-2);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.committee-banner__marathi-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.9rem);
+  color: var(--primary-light);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--spacing-6);
+  opacity: 0.92;
+}
+
+.committee-banner__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.committee-banner__divider .divider-line {
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230, 130, 0, 0.6), transparent);
+}
+
+.committee-banner__divider .divider-gem {
+  color: var(--primary-light);
+  font-size: 1.1rem;
+  opacity: 0.85;
+  line-height: 1;
+}
+
+.committee-banner__subtitle {
+  font-family: var(--font-primary);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: rgba(250, 246, 240, 0.80);
+  line-height: 1.6;
+  max-width: 640px;
+  margin: 0 auto;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 768px) {
+  .committee-banner {
+    padding: 80px 0 68px;
+  }
+
+  .committee-banner__ornament {
+    font-size: 1.5rem;
+  }
+
+  .committee-banner__ornament.top-left  { top: 20px; left: 20px; }
+  .committee-banner__ornament.top-right { top: 20px; right: 20px; }
+}
+
+@media (max-width: 480px) {
+  .committee-banner {
+    padding: 64px 0 56px;
+  }
+
+  .committee-banner__ornament {
+    display: none;
+  }
+
+  .committee-banner__divider .divider-line {
+    width: 50px;
+  }
+}
+
