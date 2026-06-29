@@ -19,8 +19,8 @@ const ManageSettings = () => {
     address: 'Dongri, Mumbai - 400009, Maharashtra, India'
   });
   const [socialLinks, setSocialLinks] = useState(settings.socialLinks || {
-    facebook: 'https://facebook.com/dongricharaja',
-    instagram: 'https://instagram.com/dongricharaja',
+    facebook: 'https://www.facebook.com/share/1SAj1m6dkw/?mibextid=wwXIfr',
+    instagram: 'https://www.instagram.com/dongricharaja?igsh=MThsNjJ4djNzYzhlZg%3D%3D&utm_source=qr',
     youtube: 'https://youtube.com/c/dongricharaja',
     whatsapp: 'https://wa.me/919876543210'
   });

@@ -1,0 +1,1071 @@
+/*
+ * ============================================================
+ *  MOBILE.CSS — Dongri Cha Raja Website
+ *  Scope: ALL rules are inside @media (max-width: 767px).
+ *  Zero desktop styles are changed here.
+ * ============================================================
+ */
+
+@media (max-width: 767px) {
+
+  /* ────────────────────────────────────────────────
+     0. GLOBAL BASELINE
+  ──────────────────────────────────────────────── */
+
+  /* Prevent horizontal scroll site-wide */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* Tighter container padding on mobile */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Section vertical rhythm */
+  .section {
+    padding: 48px 0;
+  }
+
+  /* Tighter section titles */
+  .section-title {
+    font-size: 1.625rem;       /* ~26px */
+    margin-bottom: 28px;
+  }
+
+  .section-subtitle {
+    font-size: 0.9375rem;      /* 15px */
+    margin-bottom: 28px;
+    padding: 0 4px;
+  }
+
+  /* Base heading scale */
+  h1 { font-size: 1.75rem;  }
+  h2 { font-size: 1.5rem;   }
+  h3 { font-size: 1.25rem;  }
+  h4 { font-size: 1.0625rem;}
+
+  /* Global buttons — smaller, better touch target */
+  .btn-lg {
+    padding: 11px 22px;
+    font-size: 0.875rem;
+  }
+
+  /* Cards — reduce hover lift on touch */
+  .card:hover { transform: translateY(-3px); }
+
+
+  /* ────────────────────────────────────────────────
+     1. NAVBAR
+  ──────────────────────────────────────────────── */
+
+  .navbar {
+    height: 58px;      /* down from 68px */
+  }
+
+  /* Keep items vertically centred inside the shorter bar */
+  .navbar-container {
+    height: 58px;
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  /* Logo — proportionally smaller */
+  .logo-img-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .logo-title {
+    font-size: 0.9375rem;   /* 15px */
+  }
+
+  .logo-sub {
+    display: none;           /* already done at 480px, reinforce here */
+  }
+
+  /* Hamburger — align with reduced bar */
+  .hamburger {
+    width: 36px;
+    height: 36px;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  /* Mobile menu padding accounts for the shorter navbar */
+  .mobile-menu {
+    padding-top: 58px;
+  }
+
+  /* Mobile menu link touch targets */
+  .mobile-link {
+    padding: 11px 16px;
+    font-size: 0.9375rem;
+  }
+
+  .mobile-child {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 0.875rem;
+  }
+
+  .mobile-seva-btn {
+    padding: 12px;
+    font-size: 0.9375rem;
+  }
+
+  /* Language grid — 3 equal columns already, just tighten */
+  .mobile-lang-btn {
+    padding: 8px 4px;
+    font-size: 0.8125rem;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     2. HERO BANNER (HeroBanner.js)
+  ──────────────────────────────────────────────── */
+
+  .hero-banner {
+    height: 75vh;
+    min-height: 520px;
+    max-height: 720px;
+  }
+
+  .hero-content {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding-top: 80px;           /* space below 58px navbar + breathing room */
+    padding-bottom: 120px;       /* above the stats bar */
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 0;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  /* Logo image in hero text */
+  .hero-text-logo-img {
+    max-width: 180px;
+    margin-bottom: 8px;
+  }
+
+  /* Tagline pill */
+  .hero-tag {
+    font-size: 0.75rem;
+    padding: 5px 12px;
+    margin-bottom: 10px;
+  }
+
+  .hero-badge {
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+  }
+
+  /* Main headline */
+  .hero-headline {
+    font-size: clamp(1.65rem, 7.5vw, 2.25rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  /* Paragraph — shorter, tighter */
+  .hero-desc {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin-bottom: 20px;
+    max-width: 90%;
+  }
+
+  /* CTA buttons — side by side, not stacked */
+  .hero-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-outline {
+    padding: 11px 20px;
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: 130px;
+    max-width: 200px;
+    justify-content: center;
+  }
+
+  /* Ganpati image — visible but compact */
+  .hero-image-container {
+    flex: none;
+    max-height: 28vh;
+    margin-top: 12px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hero-ganesha-img {
+    max-height: 26vh;
+    width: auto;
+  }
+
+  /* Stats bar — 2×2 grid instead of 1 row */
+  .hero-stats-bar {
+    padding: 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    padding: 10px 8px;
+    gap: 0;
+  }
+
+  .stat-divider { display: none; }
+
+  .stat-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Remove bottom border on last row */
+  .stat-item:nth-child(n+3) {
+    border-bottom: none;
+  }
+
+  /* Right-column stats get a left border */
+  .stat-item:nth-child(even) {
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .stat-icon i { font-size: 0.875rem; }
+
+  .stat-info {
+    text-align: left;
+  }
+
+  .stat-number { font-size: 1.125rem; }
+  .stat-label  { font-size: 0.6875rem; }
+
+  /* Slide controls */
+  .hero-controls {
+    bottom: 112px;
+    right: 12px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     3. PAGE HEROES (PageHeroes.css)
+  ──────────────────────────────────────────────── */
+
+  .page-hero {
+    min-height: 260px;
+  }
+
+  .page-hero-content {
+    padding: 72px 16px 44px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.65rem, 7vw, 2.4rem);
+    line-height: 1.15;
+  }
+
+  .page-hero p {
+    font-size: 0.9375rem;
+    padding: 0 4px;
+  }
+
+  .page-hero-eyebrow {
+    font-size: 11px;
+    padding: 5px 12px;
+    margin-bottom: 14px;
+  }
+
+  .page-hero-breadcrumb {
+    margin-top: 16px;
+    font-size: 12px;
+  }
+
+  /* Committee / Donations banner */
+  .committee-banner,
+  .donations-banner {
+    padding: 74px 0 52px;
+  }
+
+  .committee-banner__title,
+  .donations-banner__title {
+    font-size: clamp(1.65rem, 7vw, 2.4rem);
+  }
+
+  .committee-banner__marathi-title {
+    font-size: 1.0625rem;
+  }
+
+  .committee-banner__ornament {
+    font-size: 1.5rem;
+  }
+
+  .committee-banner__ornament.top-left  { top: 16px; left: 16px; }
+  .committee-banner__ornament.top-right { top: 16px; right: 16px; }
+
+  .donations-banner__subtitle {
+    font-size: 0.9375rem;
+    padding: 0 8px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     4. QUICK NAVIGATION
+  ──────────────────────────────────────────────── */
+
+  .quick-nav-section {
+    padding: 40px 0;
+  }
+
+  .quick-nav-header {
+    margin-bottom: 24px;
+  }
+
+  .quick-nav-title {
+    font-size: 1.5rem;
+  }
+
+  /* 2-column grid on mobile — better than 1-column stacking */
+  .quick-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .qnav-card {
+    padding: 14px 12px;
+    gap: 10px;
+    border-radius: 16px;
+  }
+
+  .qnav-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .qnav-icon i {
+    font-size: 1rem;
+  }
+
+  .qnav-title {
+    font-size: 0.8125rem;
+    white-space: normal;      /* allow wrap on small cards */
+  }
+
+  .qnav-desc {
+    font-size: 0.6875rem;
+  }
+
+  .qnav-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     5. UPCOMING EVENTS
+  ──────────────────────────────────────────────── */
+
+  .upcoming-events-section {
+    padding: 48px 0;
+  }
+
+  .events-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .events-main-title {
+    font-size: 1.5rem;
+  }
+
+  .btn-events-all {
+    align-self: flex-start;
+    padding: 8px 16px;
+    font-size: 0.8125rem;
+  }
+
+  .events-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .event-premium-card {
+    border-radius: 16px;
+  }
+
+  .event-date-col {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+  }
+
+  .event-day-num { font-size: 2rem; }
+
+  .event-info-col { padding: 12px 16px 14px; }
+
+  .event-card-footer {
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     6. LATEST ANNOUNCEMENTS
+  ──────────────────────────────────────────────── */
+
+  .announcements-section {
+    padding: 40px 0;
+  }
+
+  .announcements-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .ann-title { font-size: 1.5rem; }
+
+  .btn-ann-all {
+    align-self: flex-start;
+    padding: 8px 16px;
+    font-size: 0.8125rem;
+  }
+
+  /* 2-column on mobile */
+  .announcements-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .announcement-card {
+    padding: 14px;
+    gap: 10px;
+    border-radius: 14px;
+  }
+
+  .ann-icon-box {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ann-icon-box i { font-size: 1rem; }
+
+  .ann-card-title { font-size: 0.875rem; }
+  .ann-desc       { font-size: 0.8125rem; }
+
+
+  /* ────────────────────────────────────────────────
+     7. RECENT GALLERY (Home section)
+  ──────────────────────────────────────────────── */
+
+  .recent-gallery-section {
+    padding: 48px 0;
+  }
+
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .section-header-row .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-header-row .section-subtitle {
+    font-size: 0.9375rem;
+  }
+
+  .btn-view-all {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 0.8125rem;
+  }
+
+  /* Bento → single column on mobile */
+  .gallery-simple-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 200px;
+    gap: 12px;
+  }
+
+  .gallery-card:nth-child(n) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .gallery-card { border-radius: 16px; }
+
+  /* Lightbox on mobile */
+  .lightbox-image { height: 35vh; min-height: 200px; }
+  .lightbox-info  { padding: 16px; }
+  .lightbox-info h3 { font-size: 1.125rem; }
+
+
+  /* ────────────────────────────────────────────────
+     8. CHAIRMAN MESSAGE
+  ──────────────────────────────────────────────── */
+
+  .chairman-section {
+    padding: 48px 0;
+  }
+
+  .chairman-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .chairman-portrait-side {
+    align-items: center;
+  }
+
+  .portrait-frame-outer,
+  .portrait-frame-inner {
+    width: 200px;
+    height: 200px;
+  }
+
+  .chairman-name   { font-size: 1.25rem; }
+  .chairman-title  { font-size: 0.9375rem; }
+
+  .message-heading {
+    font-size: 1.375rem;
+    line-height: 1.3;
+  }
+
+  .message-marathi {
+    font-size: 1rem;
+    padding: 16px 18px;
+  }
+
+  .message-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .blessing-text { font-size: 1rem; }
+
+
+  /* ────────────────────────────────────────────────
+     9. FEATURED VIDEOS
+  ──────────────────────────────────────────────── */
+
+  .featured-videos-section {
+    padding: 48px 0;
+  }
+
+  .section-header-centered {
+    margin-bottom: 24px;
+  }
+
+  .videos-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Main video thumb */
+  .video-thumb   { height: 220px; }
+  .video-title   { font-size: 1rem; }
+
+  /* Side videos — horizontal card */
+  .video-card-small {
+    grid-template-columns: 110px 1fr;
+  }
+
+  .video-thumb-small { height: 80px; }
+
+  .video-title-sm { font-size: 0.8125rem; }
+
+  .btn-youtube {
+    padding: 12px;
+    font-size: 0.875rem;
+  }
+
+  /* Video modal */
+  .video-modal-backdrop { padding: 12px; }
+  .video-modal-close    { top: 12px; right: 12px; }
+  .video-modal-info     { padding: 14px 16px; }
+
+
+  /* ────────────────────────────────────────────────
+     10. SOCIAL ACTIVITIES HIGHLIGHTS
+  ──────────────────────────────────────────────── */
+
+  .social-highlights-section {
+    padding: 48px 0;
+  }
+
+  .social-section-header {
+    margin-bottom: 24px;
+  }
+
+  /* 2-column grid on mobile */
+  .social-activities-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .social-activity-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .act-icon-wrap {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 10px;
+  }
+
+  .act-icon-wrap i { font-size: 1.25rem; }
+
+  .act-count { font-size: 1.5rem; }
+  .act-title { font-size: 0.9375rem; }
+  .act-desc  { font-size: 0.8125rem; }
+
+  .btn-social-more {
+    padding: 11px 24px;
+    font-size: 0.9375rem;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     11. DONATION CTA (Home section)
+  ──────────────────────────────────────────────── */
+
+  .donation-cta-section {
+    padding: 48px 0;
+  }
+
+  .donation-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .donation-heading {
+    font-size: 1.625rem;
+    line-height: 1.25;
+  }
+
+  .donation-desc {
+    font-size: 0.9375rem;
+    max-width: 100%;
+  }
+
+  .donation-impact {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .impact-num { font-size: 1.25rem; }
+
+  .trust-badge { gap: 12px; }
+
+  .trust-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .donation-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     12. SPONSORS
+  ──────────────────────────────────────────────── */
+
+  .sponsors-section {
+    padding: 40px 0;
+  }
+
+  .sponsors-header { margin-bottom: 24px; }
+
+  /* Sponsor CTA box — vertical stack */
+  .sponsor-cta-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 16px;
+    gap: 16px;
+    border-radius: 16px;
+  }
+
+  .sponsor-cta-text {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .sponsor-cta-text h3 { font-size: 1.125rem; }
+  .sponsor-cta-text p  { font-size: 0.875rem; }
+
+  .btn-become-sponsor {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     13. FOOTER
+  ──────────────────────────────────────────────── */
+
+  .footer-inner {
+    padding-top: 40px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .footer-logo-img-wrap {
+    width: 52px;
+    height: 52px;
+  }
+
+  .footer-logo h3 { font-size: 1rem; }
+
+  .footer-newsletter {
+    padding: 20px 16px;
+    margin-bottom: 28px;
+    border-radius: 16px;
+  }
+
+  .newsletter-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .newsletter-text {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .newsletter-icon { font-size: 1.75rem; }
+
+  .newsletter-form {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-subscribe {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 20px 0;
+  }
+
+  .footer-bottom-links {
+    justify-content: center;
+  }
+
+  /* Toast — full width on mobile */
+  .footer-toast {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    max-width: none;
+    font-size: 0.9375rem;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     14. GALLERY PAGE
+  ──────────────────────────────────────────────── */
+
+  .gallery-filters {
+    padding: 12px 0;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 7px 14px;
+    font-size: 0.75rem;
+  }
+
+  /* Grid: 2 columns on mobile (not 1) */
+  .gallery-masonry-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-card-item { height: 180px; }
+
+  /* Lightbox */
+  .lightbox-modal { padding: 12px; }
+  .lightbox-prev  { left: 8px; }
+  .lightbox-next  { right: 8px; }
+
+  .lightbox-content-box {
+    max-height: 85vh;
+  }
+
+  .lightbox-content-box img {
+    max-height: 50vh;
+  }
+
+  .lightbox-caption {
+    padding: 14px 16px;
+  }
+
+  .lightbox-caption h3 { font-size: 1rem; }
+  .lightbox-caption p  { font-size: 0.8125rem; }
+
+
+  /* ────────────────────────────────────────────────
+     15. DONATION PAGE
+  ──────────────────────────────────────────────── */
+
+  .donations-banner {
+    padding: 74px 0 48px;
+  }
+
+  .donations-centered-card {
+    padding: 20px 16px !important;
+    border-radius: 14px;
+  }
+
+  .donations-card-title { font-size: 1.25rem; }
+
+  .form-card { padding: 20px 16px; }
+
+  /* Quick amount grid — 2 cols */
+  .amounts-grid-selector {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .amt-btn {
+    padding: 10px 8px;
+    font-size: 0.875rem;
+  }
+
+  /* Submit button */
+  .donate-submit-btn {
+    height: 46px;
+    font-size: 0.875rem;
+  }
+
+  /* Receipt modal */
+  .receipt-overlay { padding: 12px; }
+
+  .receipt-modal {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .receipt-info-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .receipt-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .receipt-signatures {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     16. PAGE HEROES — individual tweaks
+  ──────────────────────────────────────────────── */
+
+  /* Decorative floating elements — reduce or hide */
+  .events-hero-date-pills { display: none; }
+  .about-hero-rings       { display: none; }
+  .committee-hero-crown   { display: none; }
+  .events-hero-calendar   { display: none; }
+
+  /* Hide large decorative orbs that overflow on mobile */
+  .devotee-float-icon:nth-child(n+5) { display: none; }
+  .heart-float:nth-child(n+4)        { display: none; }
+  .coin-float:nth-child(n+5)         { display: none; }
+  .map-pin-float:nth-child(n+4)      { display: none; }
+
+
+  /* ────────────────────────────────────────────────
+     17. FLOATING ELEMENTS / FABs
+  ──────────────────────────────────────────────── */
+
+  /* WhatsApp / Live-darshan floating button — keep safe margins */
+  [class*="floating-btn"],
+  [class*="fab-"],
+  [class*="float-action"] {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     18. DONATION SUCCESS PAGE
+  ──────────────────────────────────────────────── */
+
+  /* Already handled well in DonationSuccess.css at 600px —
+     add extra polish below 480px */
+  .ds-info-label {
+    min-width: 110px;
+  }
+
+  .ds-card__header {
+    padding: 14px 16px 12px;
+  }
+
+  .ds-info-row {
+    padding: 11px 16px;
+  }
+
+  .ds-countdown {
+    padding: 14px 16px;
+  }
+
+  .ds-pdf-error {
+    padding: 12px 14px;
+  }
+
+
+  /* ────────────────────────────────────────────────
+     19. MISC UTILITY OVERRIDES
+  ──────────────────────────────────────────────── */
+
+  /* Section eyebrow chips */
+  .section-eyebrow,
+  .section-eyebrow-light,
+  .section-eyebrow-dark {
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    padding: 5px 12px;
+  }
+
+  /* Remove large translate hover lifts on touch — they feel wrong */
+  @media (hover: none) {
+    .card:hover,
+    .qnav-card:hover,
+    .social-activity-card:hover,
+    .gallery-card:hover,
+    .event-premium-card:hover,
+    .announcement-card:hover {
+      transform: none;
+    }
+
+    .btn-hero-primary:hover,
+    .btn-hero-outline:hover,
+    .btn-view-all:hover,
+    .btn-social-more:hover,
+    .btn-donate-now:hover,
+    .btn-become-sponsor:hover {
+      transform: none;
+    }
+  }
+
+} /* END @media (max-width: 767px) */
+
+
+/* ────────────────────────────────────────────────
+   EXTRA SMALL PHONES (≤ 420px)
+   Only true micro-adjustments below.
+──────────────────────────────────────────────── */
+
+@media (max-width: 420px) {
+
+  .hero-banner {
+    min-height: 490px;
+  }
+
+  /* On very small phones, stack the hero CTA buttons */
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-outline {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Announcements & quick nav → 1 column */
+  .announcements-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-nav-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Gallery → 1 column */
+  .gallery-masonry-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .gallery-card-item { height: 200px; }
+
+  /* Social activities → 1 column */
+  .social-activities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Donation success heading */
+  .ds-heading { font-size: 20px; }
+
+  /* Stats bar → keep 2 cols but smaller */
+  .stat-number { font-size: 1rem; }
+  .stat-label  { font-size: 0.625rem; }
+
+}

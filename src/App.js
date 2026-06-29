@@ -18,6 +18,8 @@ import Events from './pages/Events/Events';
 import News from './pages/News/News';
 import Gallery from './pages/Gallery/Gallery';
 import Donations from './pages/Donations/Donations';
+import DonationSuccess from './pages/Donations/DonationSuccess';
+import ReceiptPage from './pages/Donations/ReceiptPage';
 import ContactUs from './pages/ContactUs/ContactUs';
 import DevoteeServices from './pages/DevoteeServices/DevoteeServices';
 
@@ -51,9 +53,13 @@ function App() {
             <Route path="/news" element={<News />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/donations" element={<Donations />} />
+            <Route path="/donation-success" element={<DonationSuccess />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/devotee-services/*" element={<DevoteeServices />} />
           </Route>
+
+          {/* Receipt Page – standalone, no Navbar/Footer */}
+          <Route path="/receipt/:receiptId" element={<ReceiptPage />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

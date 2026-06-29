@@ -10,9 +10,12 @@ const ContactUs = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    phone: "",
     email: "",
-    subject: "General Inquiry",
-    message: ""
+    subject: "",
+    inquiryType: "General Inquiry",
+    message: "",
+    hp_field: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -21,17 +24,44 @@ const ContactUs = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.name.trim()) {
       toast.error("Please enter your name.");
       return;
     }
+
+    if (!formData.phone.trim()) {
+      toast.error("Please enter your mobile number.");
+      return;
+    }
+    const phoneRegex = /^\+?[0-9\s\-()]{10,15}$/;
+    if (!phoneRegex.test(formData.phone.replace(/\s+/g, ''))) {
+      toast.error("Please enter a valid mobile number (10 to 15 digits).");
+      return;
+    }
+
     if (!formData.email.trim()) {
       toast.error("Please enter your email.");
       return;
     }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    if (!formData.inquiryType) {
+      toast.error("Please select an inquiry type.");
+      return;
+    }
+
+    if (!formData.subject.trim()) {
+      toast.error("Please enter a subject.");
+      return;
+    }
+
     if (!formData.message.trim()) {
       toast.error("Please type your message.");
       return;
@@ -39,11 +69,38 @@ const ContactUs = () => {
 
     setIsSubmitting(true);
     
-    setTimeout(() => {
+    try {
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+      const response = await fetch(`${backendUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit form');
+      }
+      
+      toast.success("Thank you for contacting Dongri Cha Raja. Your message has been successfully submitted. Our team will respond as soon as possible.", { duration: 6000 });
+      setFormData({
+        name: "",
+        phone: "",
+        email: "",
+        subject: "",
+        inquiryType: "General Inquiry",
+        message: "",
+        hp_field: ""
+      });
+    } catch (err) {
+      console.error('Submit error:', err);
+      toast.error(err.message || 'An error occurred while sending your message. Please try again.');
+    } finally {
       setIsSubmitting(false);
-      toast.success("Message sent successfully! Our committee will reply shortly.");
-      setFormData({ name: "", email: "", subject: "General Inquiry", message: "" });
-    }, 1200);
+    }
   };
 
   return (
@@ -104,11 +161,16 @@ const ContactUs = () => {
                   </div>
                 </div>
 
-                <div className="card contact-info-card">
+                <div className="card contact-info-card email-us-card">
                   <i className="fas fa-envelope-open-text contact-card-icon"></i>
                   <div>
-                    <h3>Official Emails</h3>
-                    <p>info@dongricharaja.org <br /> trust@dongricharaja.org</p>
+                    <h3>Email Us</h3>
+                    <p style={{ fontSize: '13px', lineHeight: '1.5', marginBottom: '8px', color: 'var(--gray-dark)' }}>
+                      For donations, sponsorships, event inquiries, volunteer participation, media requests, darshan-related assistance, and general queries, please contact us through the official email address below.
+                    </p>
+                    <a href="mailto:dongricharajamoryamaza@gmail.com" style={{ fontWeight: 'bold', color: 'var(--primary)', textDecoration: 'none' }}>
+                      dongricharajamoryamaza@gmail.com
+                    </a>
                   </div>
                 </div>
 
@@ -126,10 +188,23 @@ const ContactUs = () => {
             <div className="contact-form-card card">
               <h3>Send Us a Message</h3>
               <form onSubmit={handleSubmit} className="mt-4">
+                {/* Honeypot field for spam protection */}
+                <input 
+                  type="text" 
+                  name="hp_field" 
+                  value={formData.hp_field} 
+                  onChange={handleInputChange} 
+                  className="contact-hp-field" 
+                  style={{ display: 'none' }} 
+                  tabIndex="-1" 
+                  autoComplete="off" 
+                />
+
                 <div className="form-group">
-                  <label>Full Name *</label>
+                  <label htmlFor="contact-name">Full Name *</label>
                   <input 
                     type="text" 
+                    id="contact-name"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
@@ -140,9 +215,24 @@ const ContactUs = () => {
                 </div>
 
                 <div className="form-group mt-3">
-                  <label>Email Address *</label>
+                  <label htmlFor="contact-phone">Mobile Number *</label>
+                  <input 
+                    type="tel" 
+                    id="contact-phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder="e.g. 9876543210" 
+                    className="form-control"
+                    required
+                  />
+                </div>
+
+                <div className="form-group mt-3">
+                  <label htmlFor="contact-email">Email Address *</label>
                   <input 
                     type="email" 
+                    id="contact-email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
@@ -153,24 +243,44 @@ const ContactUs = () => {
                 </div>
 
                 <div className="form-group mt-3">
-                  <label>Subject</label>
+                  <label htmlFor="contact-inquiry-type">Inquiry Type *</label>
                   <select 
-                    name="subject"
-                    value={formData.subject}
+                    id="contact-inquiry-type"
+                    name="inquiryType"
+                    value={formData.inquiryType}
                     onChange={handleInputChange}
                     className="form-control"
+                    required
                   >
                     <option value="General Inquiry">General Inquiry</option>
-                    <option value="VIP Passes">VIP Passes & Darshan</option>
-                    <option value="Seva Bookings">Puja & Seva Bookings</option>
-                    <option value="Volunteering">Volunteering Operations</option>
-                    <option value="Sponsorships">Sponsorships & Donations</option>
+                    <option value="Donation">Donation</option>
+                    <option value="Sponsorship">Sponsorship</option>
+                    <option value="Volunteer Registration">Volunteer Registration</option>
+                    <option value="Event Participation">Event Participation</option>
+                    <option value="Media Request">Media Request</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 
                 <div className="form-group mt-3">
-                  <label>Message Details *</label>
+                  <label htmlFor="contact-subject">Subject *</label>
+                  <input 
+                    type="text" 
+                    id="contact-subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    placeholder="Subject of your inquiry" 
+                    className="form-control"
+                    required
+                  />
+                </div>
+
+                <div className="form-group mt-3">
+                  <label htmlFor="contact-message">Message Details *</label>
                   <textarea 
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleInputChange}

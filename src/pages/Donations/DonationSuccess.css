@@ -1,0 +1,513 @@
+/* ============================================================
+   DonationSuccess.css
+   Dongri Cha Raja – Post-payment Success Page
+   Theme: dark crimson (#6b0000 / #0e0206) + gold (#c8860a)
+   ============================================================ */
+
+/* ── Google Font (matches site) ──────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ── CSS custom properties ───────────────────────────────────────────────── */
+:root {
+  --ds-bg-deep:    #0e0206;
+  --ds-bg-mid:     #1a0505;
+  --ds-crimson:    #6b0000;
+  --ds-red-hover:  #8b0000;
+  --ds-gold:       #c8860a;
+  --ds-gold-light: #e5c98a;
+  --ds-gold-pale:  rgba(200,134,10,0.12);
+  --ds-green:      #22c55e;
+  --ds-green-bg:   rgba(34,197,94,0.08);
+  --ds-text-main:  #f0e6d3;
+  --ds-text-muted: #a08060;
+  --ds-card-bg:    rgba(255,255,255,0.035);
+  --ds-card-border:rgba(200,134,10,0.22);
+  --ds-radius:     16px;
+  --ds-radius-sm:  10px;
+  --ds-shadow:     0 24px 64px rgba(0,0,0,0.6);
+}
+
+/* ── Page wrapper ────────────────────────────────────────────────────────── */
+.ds-page {
+  min-height: 100vh;
+  padding: 48px 16px 72px;
+  background: linear-gradient(140deg, var(--ds-bg-deep) 0%, var(--ds-bg-mid) 55%, var(--ds-bg-deep) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  font-family: 'Inter', sans-serif;
+  color: var(--ds-text-main);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle radial glow behind the checkmark */
+.ds-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 520px;
+  height: 320px;
+  background: radial-gradient(ellipse at center, rgba(34,197,94,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ds-page--center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* ── Loading spinner ─────────────────────────────────────────────────────── */
+.ds-spinner-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.ds-spinner {
+  width: 56px;
+  height: 56px;
+  border: 4px solid rgba(200,134,10,0.2);
+  border-top-color: var(--ds-gold);
+  border-radius: 50%;
+  animation: ds-spin 0.85s linear infinite;
+}
+.ds-spinner-text {
+  color: var(--ds-gold-light);
+  font-size: 15px;
+  margin: 0;
+}
+@keyframes ds-spin { to { transform: rotate(360deg); } }
+
+/* ── Error card ──────────────────────────────────────────────────────────── */
+.ds-error-card {
+  background: var(--ds-card-bg);
+  border: 1px solid rgba(200,134,10,0.3);
+  border-radius: var(--ds-radius);
+  padding: 52px 44px;
+  max-width: 460px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  animation: ds-fadeInUp 0.4s ease both;
+}
+.ds-error-icon { font-size: 48px; margin-bottom: 16px; }
+.ds-error-card h2 { font-size: 22px; color: var(--ds-gold-light); margin: 0 0 12px; }
+.ds-error-card p  { font-size: 14px; color: var(--ds-text-muted); margin: 0 0 28px; line-height: 1.6; }
+
+/* ── Hero / success section ──────────────────────────────────────────────── */
+.ds-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  animation: ds-fadeInUp 0.5s ease both;
+}
+
+/* ── Animated SVG checkmark ──────────────────────────────────────────────── */
+.ds-check-wrap {
+  position: relative;
+}
+.ds-check-svg {
+  width: 96px;
+  height: 96px;
+  filter: drop-shadow(0 0 20px rgba(34,197,94,0.4));
+}
+
+/* Circle draw-on animation */
+.ds-check-circle {
+  stroke-dasharray: 226;
+  stroke-dashoffset: 226;
+  animation: ds-draw-circle 0.65s ease-out 0.1s forwards;
+}
+@keyframes ds-draw-circle {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Checkmark draw-on animation */
+.ds-check-mark {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: ds-draw-check 0.45s ease-out 0.7s forwards;
+}
+@keyframes ds-draw-check {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Pulse ring after draw */
+.ds-check-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(34,197,94,0.3);
+  animation: ds-pulse-ring 1.8s ease-out 1.2s infinite;
+}
+@keyframes ds-pulse-ring {
+  0%   { transform: scale(0.9); opacity: 0.7; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+/* ── Heading & subheading ─────────────────────────────────────────────────── */
+.ds-heading {
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 800;
+  color: var(--ds-green);
+  margin: 0;
+  letter-spacing: -0.5px;
+  text-shadow: 0 0 30px rgba(34,197,94,0.25);
+}
+.ds-subheading {
+  font-size: 15px;
+  color: var(--ds-text-main);
+  line-height: 1.75;
+  margin: 0;
+  max-width: 520px;
+}
+.ds-donor-name {
+  font-weight: 700;
+  color: var(--ds-gold-light);
+}
+.ds-bless {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--ds-gold);
+  font-style: italic;
+}
+
+/* ── Glassmorphism card ──────────────────────────────────────────────────── */
+.ds-card {
+  width: 100%;
+  max-width: 580px;
+  background: var(--ds-card-bg);
+  border: 1px solid var(--ds-card-border);
+  border-radius: var(--ds-radius);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow);
+  animation: ds-fadeInUp 0.55s ease 0.15s both;
+}
+
+.ds-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid rgba(200,134,10,0.15);
+  background: rgba(200,134,10,0.06);
+}
+.ds-card__header-icon { font-size: 20px; }
+.ds-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ds-gold-light);
+  margin: 0;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ── Info grid ───────────────────────────────────────────────────────────── */
+.ds-info-grid {
+  display: flex;
+  flex-direction: column;
+}
+.ds-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  gap: 16px;
+  transition: background 0.2s;
+}
+.ds-info-row:last-child { border-bottom: none; }
+.ds-info-row:hover { background: rgba(200,134,10,0.05); }
+
+.ds-info-label {
+  font-size: 12px;
+  color: var(--ds-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  flex-shrink: 0;
+  min-width: 140px;
+}
+.ds-info-value {
+  font-size: 14px;
+  color: var(--ds-text-main);
+  font-weight: 500;
+  text-align: right;
+  word-break: break-all;
+}
+.ds-info-value--bold   { font-weight: 700; color: #fff; }
+.ds-info-value--amount {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ds-gold-light);
+  text-shadow: 0 0 12px rgba(200,134,10,0.3);
+}
+.ds-info-value--receipt {
+  font-weight: 700;
+  color: var(--ds-gold);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+.ds-info-value--mono {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  color: #b0a090;
+}
+
+/* ── Status badge ────────────────────────────────────────────────────────── */
+.ds-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.ds-badge--paid {
+  background: rgba(34,197,94,0.14);
+  color: #4ade80;
+  border: 1px solid rgba(34,197,94,0.35);
+}
+
+/* ── Action buttons ──────────────────────────────────────────────────────── */
+.ds-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 580px;
+  animation: ds-fadeInUp 0.6s ease 0.25s both;
+}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: var(--ds-radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.22s ease;
+  flex: 1;
+  min-width: 150px;
+  max-width: 200px;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Ripple effect on click */
+.ds-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.08);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ds-btn:active::after { opacity: 1; }
+
+/* Primary – gold gradient (Download) */
+.ds-btn--primary {
+  background: linear-gradient(135deg, #b87209 0%, var(--ds-gold) 50%, #d4960f 100%);
+  color: #1a0000;
+  box-shadow: 0 4px 20px rgba(200,134,10,0.35);
+}
+.ds-btn--primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(200,134,10,0.5);
+}
+.ds-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary – glass (View Receipt) */
+.ds-btn--secondary {
+  background: rgba(200,134,10,0.1);
+  border: 1.5px solid rgba(200,134,10,0.4);
+  color: var(--ds-gold-light);
+}
+.ds-btn--secondary:hover {
+  background: rgba(200,134,10,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200,134,10,0.2);
+}
+
+/* Ghost – subtle (Back to Home) */
+.ds-btn--ghost {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  color: var(--ds-text-muted);
+}
+.ds-btn--ghost:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--ds-text-main);
+  transform: translateY(-2px);
+}
+
+/* Retry – small warning button */
+.ds-btn--retry {
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #fca5a5;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  flex: none;
+  min-width: unset;
+  max-width: unset;
+}
+.ds-btn--retry:hover { background: rgba(239,68,68,0.25); }
+
+.ds-btn__icon { font-size: 16px; }
+.ds-btn__label { line-height: 1; }
+
+/* Inline spinner inside button */
+.ds-btn__spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(26,0,0,0.3);
+  border-top-color: #1a0000;
+  border-radius: 50%;
+  animation: ds-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* ── PDF error banner ────────────────────────────────────────────────────── */
+.ds-pdf-error {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: var(--ds-radius-sm);
+  padding: 14px 20px;
+  width: 100%;
+  max-width: 580px;
+  animation: ds-fadeInUp 0.3s ease both;
+  flex-wrap: wrap;
+}
+.ds-pdf-error__icon { font-size: 20px; flex-shrink: 0; }
+.ds-pdf-error__text {
+  font-size: 13px;
+  color: #fca5a5;
+  margin: 0;
+  flex: 1;
+  min-width: 180px;
+  line-height: 1.5;
+}
+
+/* ── Countdown banner ────────────────────────────────────────────────────── */
+.ds-countdown {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--ds-gold-pale);
+  border: 1px solid rgba(200,134,10,0.25);
+  border-radius: var(--ds-radius-sm);
+  padding: 16px 24px;
+  width: 100%;
+  max-width: 580px;
+  animation: ds-fadeInUp 0.65s ease 0.35s both;
+}
+.ds-countdown--cancelled {
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.1);
+}
+.ds-countdown__ring { flex-shrink: 0; }
+.ds-countdown__text { flex: 1; }
+.ds-countdown__text p {
+  font-size: 13px;
+  color: var(--ds-gold-light);
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+.ds-countdown__text p strong { color: var(--ds-gold); }
+
+.ds-countdown__cancel {
+  background: none;
+  border: 1px solid rgba(200,134,10,0.4);
+  color: var(--ds-gold-light);
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+.ds-countdown__cancel:hover {
+  background: rgba(200,134,10,0.15);
+  border-color: var(--ds-gold);
+}
+
+.ds-countdown--cancelled p {
+  font-size: 13px;
+  color: var(--ds-text-muted);
+  margin: 0;
+}
+.ds-countdown__cancelled-icon { font-size: 20px; }
+
+/* ── Entrance animations ──────────────────────────────────────────────────── */
+@keyframes ds-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .ds-page {
+    padding: 32px 12px 60px;
+    gap: 20px;
+  }
+  .ds-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ds-btn {
+    max-width: 100%;
+    flex: none;
+  }
+  .ds-info-label { min-width: 100px; font-size: 11px; }
+  .ds-info-value { font-size: 13px; }
+  .ds-info-value--amount { font-size: 17px; }
+  .ds-countdown { flex-direction: column; text-align: center; }
+  .ds-pdf-error { flex-direction: column; }
+  .ds-info-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .ds-info-value { text-align: left; }
+}
+
+@media (max-width: 400px) {
+  .ds-heading { font-size: 22px; }
+  .ds-check-svg { width: 76px; height: 76px; }
+}
+
+/* ── Print (hidden) ──────────────────────────────────────────────────────── */
+@media print {
+  .ds-actions, .ds-countdown, .ds-pdf-error { display: none !important; }
+}

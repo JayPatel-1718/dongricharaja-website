@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-hot-toast';
-import { useData } from '../../context/DataContext';
 import './Donations.css';
 
 // Payment Information - Mandal committee can easily update these details
@@ -11,20 +11,19 @@ const PAYMENT_INFO = {
 };
 
 const Donations = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { addDonation } = useData();
-
   const [donorInfo, setDonorInfo] = useState({
     name: "",
-    phone: ""
+    phone: "",
+    email: ""
   });
   const [amount, setAmount] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showReceipt, setShowReceipt] = useState(false);
-  const [txDetails, setTxDetails] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,6 +51,16 @@ const Donations = () => {
       return;
     }
 
+    // Optional email validation
+    const emailTrimmed = donorInfo.email.trim();
+    if (emailTrimmed) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailTrimmed)) {
+        toast.error("Please enter a valid email address.");
+        return;
+      }
+    }
+
     const numericAmount = parseFloat(amount);
     if (isNaN(numericAmount) || numericAmount <= 0) {
       toast.error("Please enter a valid donation amount.");
@@ -60,7 +69,7 @@ const Donations = () => {
 
     // Load configurations from environment variables
     const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
-    const razorpayKeyId = process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_placeholder';
+    const razorpayKeyId = process.env.REACT_APP_RAZORPAY_KEY_ID;
 
     // Verify window.Razorpay SDK is loaded from index.html script tag
     if (!window.Razorpay) {
@@ -81,14 +90,36 @@ const Donations = () => {
       });
 
       if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('[Razorpay] Order creation failed:', response.status, errorBody);
         throw new Error("Failed to create order from backend server.");
       }
 
       const orderData = await response.json();
 
+      // Determine key to use: prefer dynamic backend-supplied keyId, fallback to frontend env variable
+      const activeKey = orderData.keyId || razorpayKeyId;
+
+      // DEV: Log details for verification (active only in local development)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[Razorpay] Frontend env key:', razorpayKeyId);
+        console.log('[Razorpay] Backend supplied key:', orderData.keyId);
+        console.log('[Razorpay] Key ID selected for checkout:', activeKey);
+        console.log('[Razorpay] Order details:', orderData);
+      }
+
+      // Validate the key is populated and not a placeholder
+      if (!activeKey || activeKey === 'rzp_test_placeholder') {
+        toast.error("Razorpay is not configured correctly on either the frontend or backend.");
+        console.error('[Razorpay] No valid key ID found. Active key is missing or set to placeholder.');
+        setIsProcessing(false);
+        toast.dismiss(toastId);
+        return;
+      }
+
       // 2. Open Razorpay checkout options
       const options = {
-        key: razorpayKeyId,
+        key: activeKey,
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Dongri Cha Raja",
@@ -105,38 +136,47 @@ const Donations = () => {
           toast.loading("Verifying payment signature...", { id: toastId });
           
           try {
-            // 3. Cryptographically verify signature on the backend
+            // 3. Cryptographically verify signature and save details on the backend
             const verificationResponse = await fetch(`${backendUrl}/api/verify-payment`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 razorpay_order_id: razorpayResponse.razorpay_order_id,
                 razorpay_payment_id: razorpayResponse.razorpay_payment_id,
-                razorpay_signature: razorpayResponse.razorpay_signature
+                razorpay_signature: razorpayResponse.razorpay_signature,
+                donorName: donorInfo.name.trim(),
+                donorPhone: phoneTrimmed,
+                donorEmail: emailTrimmed,
+                amountPaid: numericAmount
               })
             });
 
             if (!verificationResponse.ok) {
+              const errorText = await verificationResponse.text();
+              console.error("[Razorpay] Verification endpoint returned error:", errorText);
               throw new Error("Payment signature verification failed.");
             }
 
-            // 4. Generate transaction receipt upon success
-            const generatedTx = {
-              txId: razorpayResponse.razorpay_payment_id,
-              date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
-              receiptNo: "REC-" + Math.floor(50000 + Math.random() * 50000),
-              donorName: donorInfo.name,
-              donorPhone: phoneTrimmed,
-              amountPaid: numericAmount,
-              fundName: "General Donation"
-            };
+            const data = await verificationResponse.json();
 
-            setTxDetails(generatedTx);
-            setShowReceipt(true);
-            
-            // Track in firebase context
-            addDonation(generatedTx);
+            // DEV: Log verification response and donation details (active only in local development)
+            if (process.env.NODE_ENV === 'development') {
+              console.log("Verification Response:", data);
+              console.log("Donation Object:", data.donation);
+            }
+
+            // Defensive check: validate response status and donation object existence
+            if (data.status !== 'ok' || !data.donation) {
+              throw new Error(data.error || "Backend did not return donation details.");
+            }
+
+            // 4. Persist receipt number for refresh-safety, then navigate to success page
+            sessionStorage.setItem('dcr_last_receipt', data.donation.receiptNo);
             toast.success("Payment Successful! Thank you for your support.", { id: toastId });
+            navigate('/donation-success', {
+              state:   { donation: data.donation },
+              replace: true,  // prevents Back button from re-opening checkout
+            });
           } catch (verifyError) {
             console.error("Signature verification error:", verifyError);
             toast.error("Payment verification failed. Please contact trust committee.", { id: toastId });
@@ -152,6 +192,17 @@ const Donations = () => {
           }
         }
       };
+
+      // DEV: Log checkout options before opening Razorpay
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[Razorpay] Checkout options:', {
+          key: options.key,
+          amount: options.amount,
+          currency: options.currency,
+          order_id: options.order_id,
+          name: options.name
+        });
+      }
 
       const rzp = new window.Razorpay(options);
       
@@ -172,16 +223,7 @@ const Donations = () => {
     }
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
 
-  const resetForm = () => {
-    setDonorInfo({ name: "", phone: "" });
-    setAmount("");
-    setShowReceipt(false);
-    setTxDetails(null);
-  };
 
   return (
     <>
@@ -259,6 +301,22 @@ const Donations = () => {
                       onChange={handleInputChange}
                       className="form-control"
                       required
+                    />
+                  </div>
+                </div>
+
+                {/* Email Address */}
+                <div className="form-group mt-4">
+                  <label className="form-field-label">Email Address <span className="optional-tag" style={{ color: '#888', fontSize: '12px', marginLeft: '5px' }}>(Optional)</span></label>
+                  <div className="input-with-icon">
+                    <i className="far fa-envelope input-icon"></i>
+                    <input 
+                      type="email" 
+                      name="email"
+                      placeholder="Enter your email address" 
+                      value={donorInfo.email}
+                      onChange={handleInputChange}
+                      className="form-control"
                     />
                   </div>
                 </div>
@@ -348,90 +406,7 @@ const Donations = () => {
           </div>
         </section>
 
-        {/* Receipt Modal */}
-        {showReceipt && txDetails && (
-          <div className="receipt-overlay">
-            <div className="receipt-modal card">
-              <div className="receipt-actions">
-                <button className="btn btn-outline btn-sm" onClick={handlePrint}>
-                  <i className="fas fa-print"></i> Print / Save PDF
-                </button>
-                <button className="btn btn-primary btn-sm" onClick={resetForm}>
-                  Close & New Donation
-                </button>
-              </div>
 
-              {/* Printable Area */}
-              <div className="printable-receipt" id="receipt-print-area">
-                <div className="receipt-header">
-                  <i className="fas fa-om receipt-logo"></i>
-                  <div>
-                    <h2>DONGRI CHA RAJA SARVAJANI GANESH UTSAV MANDAL</h2>
-                    <p className="subtitle">Registered Charitable Trust No. E-12435 (MUMBAI) · 80G Approved</p>
-                    <p className="address-line">Dongri Main Street, Mumbai - 400009, Maharashtra, India</p>
-                  </div>
-                </div>
-
-                <hr className="divider" />
-
-                <div className="receipt-title-box">
-                  <h3>DONATION RECEIPT (UNDER SECTION 80G OF INCOME TAX ACT)</h3>
-                </div>
-
-                <div className="receipt-info-grid">
-                  <div>
-                    <strong>Receipt No:</strong> {txDetails.receiptNo}
-                  </div>
-                  <div>
-                    <strong>Date:</strong> {txDetails.date}
-                  </div>
-                  <div>
-                    <strong>Transaction ID:</strong> {txDetails.txId}
-                  </div>
-                  <div>
-                    <strong>Status:</strong> <span className="success-tag">PAID</span>
-                  </div>
-                </div>
-
-                <table className="receipt-details-table">
-                  <tbody>
-                    <tr>
-                      <td className="lbl">Received with thanks from:</td>
-                      <td className="val font-semibold">{txDetails.donorName}</td>
-                    </tr>
-                    <tr>
-                      <td className="lbl">Mobile Number:</td>
-                      <td className="val">{txDetails.donorPhone}</td>
-                    </tr>
-                    <tr>
-                      <td className="lbl">Purpose / Fund:</td>
-                      <td className="val">{txDetails.fundName}</td>
-                    </tr>
-                    <tr className="amount-row">
-                      <td className="lbl font-bold text-lg">Total Amount Contributed:</td>
-                      <td className="val font-bold text-lg text-primary">₹{txDetails.amountPaid.toLocaleString('en-IN')}</td>
-                    </tr>
-                  </tbody>
-                </table>
-
-                <div className="receipt-footer-notes">
-                  <p>Certified that the donation received will be utilized strictly for charitable objectives and religious events program.</p>
-                  <p><em>* This is a computer-generated tax certificate and does not require a physical signature. The trust claims exemption under Section 80G of the IT Act.</em></p>
-                </div>
-
-                <div className="receipt-signatures">
-                  <div className="sig-block">
-                    <span className="signature-line">Madhusudan Sharda Mahadev Amre</span>
-                    <span className="role">Trust President</span>
-                  </div>
-                  <div className="sig-block text-right">
-                    <div className="mock-seal">TRUST SEAL APPROVED</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
     </>
   );

@@ -2,15 +2,6 @@
    ABOUT US PAGE — CSS
    ───────────────────────────────────────── */
 
-/* Legacy unused banner style kept for safety */
-.about-banner {
-  position: relative;
-  background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--secondary) 50%, var(--primary-dark) 100%);
-  padding: 100px 0;
-  text-align: center;
-  color: var(--white);
-  overflow: hidden;
-}
 
 /* ── Info Table Section ── */
 .section-info-table {
@@ -31,6 +22,9 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .info-table-header::before {
@@ -43,29 +37,44 @@
 
 .info-badge {
   display: inline-block;
-  background: var(--primary);
-  color: var(--white);
-  font-size: var(--text-xs);
+  background: none;
+  border: none;
+  color: var(--primary-light);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  padding: 6px 18px;
-  border-radius: var(--radius-full);
+  padding: 0;
   margin-bottom: var(--spacing-4);
-  border: 1px solid rgba(255, 215, 0, 0.4);
+  box-shadow: none;
 }
 
 .info-table-header .section-title {
   color: var(--white) !important;
   background: none !important;
   -webkit-text-fill-color: var(--white) !important;
-  font-size: var(--text-4xl);
-  margin-bottom: var(--spacing-2);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+  margin-bottom: var(--spacing-3);
+}
+
+/* Hide global section-title decorators (underline + ornament) inside the dark card header */
+.info-table-header .section-title::before,
+.info-table-header .section-title::after {
+  display: none;
 }
 
 .info-table-header .section-subtitle {
-  color: rgba(255, 255, 255, 0.82);
-  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-lg);
+  font-family: var(--font-primary);
+  font-weight: 500;
+  letter-spacing: 0.03em;
   margin: 0;
 }
 
@@ -255,18 +264,19 @@
 
 .about-card-badge {
   position: absolute;
-  top: 24px;
-  left: 24px;
-  background: var(--primary);
-  color: var(--white);
-  font-size: var(--text-xs);
+  top: 28px;
+  left: 28px;
+  background: none;
+  border: none;
+  color: var(--primary-light);
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: var(--radius-full);
+  padding: 0;
   z-index: 2;
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: none;
 }
 
 /* ── Founder Section ── */
@@ -633,6 +643,41 @@
   text-align: center;
 }
 
+/* ── Hero Banner Spacing Overrides ── */
+.about-page .committee-banner__subtitle {
+  margin-bottom: var(--spacing-5); /* slightly increase bottom margin to 20px */
+}
+
+/* ── Vision & Mission Section Title Override (white on dark bg) ── */
+.vm-section-title {
+  background: linear-gradient(135deg, var(--white) 0%, var(--cream-dark) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  margin-bottom: var(--spacing-10);
+}
+
+.vm-section-title::before {
+  background: linear-gradient(90deg, transparent, var(--primary-light), transparent) !important;
+}
+
+/* ── Social Section Subtitle & CTA ── */
+.social-subtitle {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: var(--spacing-5);
+  text-align: left;
+  font-family: var(--font-primary);
+  opacity: 0.9;
+}
+
+.social-cta {
+  display: inline-flex;
+  margin-top: var(--spacing-2);
+}
+
 /* ── Festival Highlights ── */
 .section-festival-highlights {
   background: linear-gradient(135deg, var(--secondary-dark) 0%, var(--royal-indigo) 100%);
@@ -764,6 +809,10 @@
     padding-right: 0;
   }
 
+  .about-image-card {
+    height: 240px;
+  }
+
   .founder-card {
     flex-direction: column;
   }
@@ -787,5 +836,25 @@
 
   .founder-ctas {
     flex-direction: column;
+  }
+
+  .founder-ctas .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .about-page .committee-banner__subtitle {
+    margin-bottom: var(--spacing-3);
+  }
+
+  .social-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page .committee-banner__subtitle {
+    margin-bottom: var(--spacing-2);
   }
 }

@@ -54,8 +54,8 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: 'fab fa-facebook-f', url: 'https://facebook.com/dongricharaja', color: '#1877F2', label: 'Facebook' },
-    { icon: 'fab fa-instagram', url: 'https://instagram.com/dongricharaja', color: '#E4405F', label: 'Instagram' },
+    { icon: 'fab fa-facebook-f', url: 'https://www.facebook.com/share/1SAj1m6dkw/?mibextid=wwXIfr', color: '#1877F2', label: 'Facebook' },
+    { icon: 'fab fa-instagram', url: 'https://www.instagram.com/dongricharaja?igsh=MThsNjJ4djNzYzhlZg%3D%3D&utm_source=qr', color: '#E4405F', label: 'Instagram' },
     { icon: 'fab fa-youtube', url: 'https://youtube.com/dongricharaja', color: '#FF0000', label: 'YouTube' },
     { icon: 'fab fa-twitter', url: 'https://twitter.com/dongricharaja', color: '#1DA1F2', label: 'Twitter' },
     { icon: 'fab fa-whatsapp', url: 'https://wa.me/919876543210', color: '#25D366', label: 'WhatsApp' },
@@ -183,7 +183,7 @@ const Footer = () => {
                     </div>
                     <div>
                       <strong>{t('footer.email')}</strong>
-                      <a href="mailto:info@dongricharaja.org"><span>info@dongricharaja.org</span></a>
+                      <a href="mailto:dongricharajamoryamaza@gmail.com"><span>dongricharajamoryamaza@gmail.com</span></a>
                     </div>
                   </li>
                   <li>

@@ -23,6 +23,7 @@ const COLLECTIONS = {
   NEWS: 'news',
   DONATIONS: 'donations',
   SETTINGS: 'settings',
+  INQUIRIES: 'inquiries',
 };
 
 // ─── CONTEXT ─────────────────────────────────────────────────────────────────
@@ -35,6 +36,7 @@ export const DataProvider = ({ children }) => {
   const [events, setEventsState] = useState([]);
   const [news, setNewsState] = useState([]);
   const [donations, setDonationsState] = useState([]);
+  const [inquiries, setInquiriesState] = useState([]);
   const [settings, setSettingsState] = useState(DEFAULT_SETTINGS);
 
   // Setup Firestore listeners and initial populate
@@ -73,6 +75,10 @@ export const DataProvider = ({ children }) => {
       }
     }, (error) => console.warn('Settings snapshot error:', error.message));
 
+    const unsubInquiries = onSnapshot(collection(db, COLLECTIONS.INQUIRIES), (snap) => {
+      setInquiriesState(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    }, (error) => console.warn('Inquiries snapshot error:', error.message));
+
     return () => {
       unsubAnnouncements();
       unsubGallery();
@@ -80,6 +86,7 @@ export const DataProvider = ({ children }) => {
       unsubNews();
       unsubDonations();
       unsubSettings();
+      unsubInquiries();
     };
   }, []);
 
@@ -146,6 +153,15 @@ export const DataProvider = ({ children }) => {
     await setDoc(doc(db, COLLECTIONS.SETTINGS, 'main'), updated, { merge: true });
   }, []);
 
+  // ── Inquiries ──
+  const updateInquiryStatus = useCallback(async (id, status) => {
+    await updateDoc(doc(db, COLLECTIONS.INQUIRIES, id), { status });
+  }, []);
+
+  const deleteInquiry = useCallback(async (id) => {
+    await deleteDoc(doc(db, COLLECTIONS.INQUIRIES, id));
+  }, []);
+
   // ── Reset all to defaults ──
   const resetAllToDefaults = useCallback(() => {
     console.warn("Reset to defaults disabled on Firebase migration.");
@@ -168,6 +184,8 @@ export const DataProvider = ({ children }) => {
     updateNews, addNews, editNews, deleteNews,
     // Donations
     addDonation, clearDonations,
+    // Inquiries
+    inquiries, updateInquiryStatus, deleteInquiry,
     // Settings
     updateSettings,
     // Reset

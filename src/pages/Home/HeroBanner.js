@@ -114,7 +114,7 @@ const HeroBanner = () => {
             <div className="stat-item">
               <div className="stat-icon"><i className="fas fa-history"></i></div>
               <div className="stat-info">
-                <span className="stat-number">50+</span>
+                <span className="stat-number">88</span>
                 <span className="stat-label">{t('hero.yearsLegacy')}</span>
               </div>
             </div>
