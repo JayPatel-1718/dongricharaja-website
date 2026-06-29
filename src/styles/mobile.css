@@ -135,24 +135,26 @@
     overflow: hidden;
   }
 
-  .hero-content {
+  .hero-banner .hero-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* flex-start keeps ordering natural; image container flex:1 fills leftover space */
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     box-sizing: border-box;
     width: 100%;
+    max-width: 100%;         /* override .container max-width on mobile */
     height: 100%;
     margin: 0 auto;
-    padding-top: clamp(68px, 11dvh, 82px);
-    padding-bottom: clamp(125px, 17dvh, 142px);
+    padding-top: clamp(80px, 12dvh, 96px); /* increased to completely clear the fixed navbar and tagline pill */
+    padding-bottom: clamp(124px, 17.5dvh, 145px); /* keeps content clear of stats bar */
     padding-left: 16px;
     padding-right: 16px;
-    gap: clamp(8px, 2.5dvh, 18px);
+    gap: clamp(6px, 1.8dvh, 14px);
   }
 
-  .hero-text {
+  .hero-banner .hero-text {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -164,14 +166,14 @@
   }
 
   /* Logo image in hero text */
-  .hero-text-logo-img {
+  .hero-banner .hero-text-logo-img {
     max-width: clamp(140px, 35vw, 190px);
     height: auto;
     margin-bottom: clamp(6px, 1.2dvh, 10px);
   }
 
   /* Tagline pill */
-  .hero-tag {
+  .hero-banner .hero-tag {
     font-size: clamp(0.6875rem, 2.2vw, 0.75rem);
     padding: 4px 10px;
     margin-bottom: clamp(6px, 1.2dvh, 10px);
@@ -179,13 +181,13 @@
     -webkit-backdrop-filter: blur(8px);
   }
 
-  .hero-badge {
+  .hero-banner .hero-badge {
     font-size: 0.875rem;
     margin-bottom: 10px;
   }
 
   /* Main headline */
-  .hero-headline {
+  .hero-banner .hero-headline {
     font-size: clamp(1.4rem, 5.5vw, 2rem);
     line-height: 1.2;
     margin-bottom: clamp(6px, 1.2dvh, 10px);
@@ -193,7 +195,7 @@
   }
 
   /* Paragraph — shorter, tighter */
-  .hero-desc {
+  .hero-banner .hero-desc {
     font-size: clamp(0.8rem, 2.8vw, 0.9rem);
     line-height: 1.45;
     margin-bottom: clamp(12px, 2.2dvh, 18px);
@@ -202,7 +204,7 @@
   }
 
   /* CTA buttons — side by side, not stacked */
-  .hero-buttons {
+  .hero-banner .hero-buttons {
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -214,8 +216,8 @@
     flex-shrink: 0;
   }
 
-  .btn-hero-primary,
-  .btn-hero-outline {
+  .hero-banner .btn-hero-primary,
+  .hero-banner .btn-hero-outline {
     padding: clamp(8px, 1.8dvh, 11px) 14px;
     font-size: clamp(0.75rem, 2.6vw, 0.85rem);
     flex: 1;
@@ -226,28 +228,25 @@
   }
 
   /* Ganpati image — visible but compact */
-  .hero-image-container {
+  .hero-banner .hero-image-container {
     flex: 1;
-    min-height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-height: 32dvh;
     margin-top: 0;
     z-index: 1;
   }
 
-  .hero-ganesha-img {
-    max-height: 100%;
-    max-width: 100%;
+  .hero-banner .hero-ganesha-img {
+    height: clamp(150px, 32dvh, 290px); /* optimized height prevents collapsing and scales larger on modern screen heights */
     width: auto;
-    height: auto;
+    max-width: 100%;
     object-fit: contain;
   }
 
   /* Stats bar — 2×2 grid instead of 1 row */
-  .hero-stats-bar {
+  .hero-banner .hero-stats-bar {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -263,42 +262,52 @@
     box-sizing: border-box;
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    padding: clamp(8px, 1.5dvh, 12px) 16px;
-    gap: 0;
+  /*
+   * IMPORTANT: stats-grid contains stat-item + stat-divider elements
+   * interleaved (item, divider, item, divider, item, divider, item).
+   * CSS Grid would assign grid cells to hidden dividers, creating ghost gaps.
+   * Using flexbox with flex-wrap:wrap makes hidden dividers take zero space,
+   * and the 4 stat-items naturally form a 2x2 layout with width:50%.
+   */
+  .hero-banner .stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: clamp(6px, 1.2dvh, 10px) 8px;
     width: 100%;
     box-sizing: border-box;
   }
 
-  .stat-divider { 
-    display: none; 
+  .hero-banner .stat-divider { 
+    display: none;  /* removes from layout entirely — no ghost grid cell */
   }
 
-  .stat-item {
+  .hero-banner .stat-item {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: clamp(6px, 1.8vw, 10px);
-    padding: clamp(6px, 1.2dvh, 8px) 4px;
+    padding: clamp(5px, 1dvh, 8px) 4px;
     box-sizing: border-box;
+    width: 50%;           /* exactly 2 per row */
+    flex-shrink: 0;
   }
 
-  /* Border line dividers between items in 2x2 grid */
-  .stat-item:nth-child(-n+2) {
+  /*
+   * Divider lines — use nth-of-type since stat-dividers are siblings.
+   * stat-item:nth-of-type positions: 1=top-left, 2=top-right, 3=bot-left, 4=bot-right
+   */
+  .hero-banner .stat-item:nth-of-type(-n+2) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .stat-item:nth-child(odd) {
+  .hero-banner .stat-item:nth-of-type(odd) {
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  .stat-icon {
-    width: clamp(28px, 8vw, 36px);
-    height: clamp(28px, 8vw, 36px);
+  .hero-banner .stat-icon {
+    width: clamp(26px, 7.5vw, 34px);
+    height: clamp(26px, 7.5vw, 34px);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -306,31 +315,37 @@
     flex-shrink: 0;
   }
 
-  .stat-icon i { 
-    font-size: clamp(0.75rem, 2.5vw, 0.9rem); 
+  .hero-banner .stat-icon i { 
+    font-size: clamp(0.7rem, 2.4vw, 0.875rem); 
   }
 
-  .stat-info {
+  .hero-banner .stat-info {
     text-align: left;
     display: flex;
     flex-direction: column;
   }
 
-  .stat-number { 
-    font-size: clamp(0.95rem, 3.2vw, 1.2rem); 
+  .hero-banner .stat-number { 
+    font-size: clamp(0.875rem, 3vw, 1.125rem); 
     line-height: 1.1;
   }
   
-  .stat-label { 
-    font-size: clamp(0.6rem, 1.8vw, 0.7rem); 
+  .hero-banner .stat-label { 
+    font-size: clamp(0.5625rem, 1.6vw, 0.6875rem); 
     margin-top: 1px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
-  /* Slide controls */
-  .hero-controls {
+  /* Slide controls — positioned above the stats bar.
+   * Stats bar height at 2x2 grid: ~2 rows × ~26px each + padding ≈ 100–115px.
+   * Using 108px as a safe midpoint (tested across 320–480px heights).
+   */
+  .hero-banner .hero-controls {
     position: absolute;
-    bottom: calc(116px + 12px); /* place exactly above the 116px stats bar */
-    right: 16px;
+    bottom: 110px;
+    right: 14px;
+    display: flex;
     flex-direction: column;
     gap: 8px;
     z-index: 10;
@@ -1165,26 +1180,30 @@
   }
   .hero-image-container {
     flex: 0.9 !important;
-    max-height: 65vh !important;
     justify-content: center !important;
   }
   .hero-ganesha-img {
-    max-height: 55vh !important;
+    height: 52vh !important;  /* explicit viewport height in landscape prevents collapsing to 0 */
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
   }
   .hero-stats-bar {
     position: relative !important;
     z-index: 10 !important;
   }
   .stats-grid {
-    grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: auto !important;
-    padding: 12px 24px !important;
+    /* Switch to 4-across row in landscape — use flex since grid has divider ghost cells */
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    padding: 10px 20px !important;
   }
   .stat-item {
+    width: 25% !important;           /* 4 items, 1 row */
     border-bottom: none !important;
     border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
   }
-  .stat-item:last-child {
+  .stat-item:nth-of-type(4) {
     border-right: none !important;
   }
   .hero-controls {
